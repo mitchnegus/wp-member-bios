@@ -4,7 +4,7 @@ A plugin for managing a group's member pages, including automatic submission of 
 
 (_Automatic submission functionality still in progress_)
 
-**_This project is based on the [WordPress Plugin Boilerplate]() template._**
+**_This project is based on the [WordPress Plugin Boilerplate](https://github.com/DevinVinson/WordPress-Plugin-Boilerplate) template._**
 
 A standardized, organized, object-oriented foundation for building high-quality WordPress Plugins.
 
