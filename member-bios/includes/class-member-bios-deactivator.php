@@ -6,8 +6,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Member_Bios
+ * @subpackage Member_Bios/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @package    Member_Bios
+ * @subpackage Member_Bios/includes
+ * @author     Mitch Negus <mitchell.negus.57@gmail.com>
  */
-class Plugin_Name_Deactivator {
+class Member_Bios_Deactivator {
 
 	/**
 	 * Short Description. (use period)

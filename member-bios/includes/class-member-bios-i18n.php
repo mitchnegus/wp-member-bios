@@ -9,8 +9,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Member_Bios
+ * @subpackage Member_Bios/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @package    Member_Bios
+ * @subpackage Member_Bios/includes
+ * @author     Mitch Negus <mitchell.negus.57@gmail.com>
  */
-class Plugin_Name_i18n {
+class Member_Bios_i18n {
 
 
 	/**
