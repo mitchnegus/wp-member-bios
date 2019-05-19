@@ -57,7 +57,7 @@ function check_file_meets_specs()
 {
 		global $max_headshot_size;
 		$allowed_image_types = array('image/jpeg', 'image/png');
-		if (!isset($_FILES['photo']['size']) || $_FILES['photo']['size'] = 0)
+		if (!isset($_FILES['photo']['size']) || $_FILES['photo']['size'] == 0)
 				return false;
 		if (!in_array($_FILES['photo']['type'], $allowed_image_types))
 				return false;
