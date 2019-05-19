@@ -17,7 +17,7 @@ get_header(); ?>
 		<main id="main" class="site-main">
 		
 		<h1>Thank you!</h1>
-		Look for your profile to appear on the site soon!
+		<p>Look for your profile to appear on the site soon.</p>
 		
 		</main><!-- #main -->
 	</div><!-- #primary -->

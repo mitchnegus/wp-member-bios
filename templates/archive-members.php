@@ -53,7 +53,7 @@ get_header(); ?>
 
 				<div class="contact-block">
 					Don't see yourself? New to the group? 
-					<a href="../spg-new-member">
+					<a href="<?php echo home_url() . '/new-member' ?>">
 					Click here and send us your info to include on the site!
 					<a>
 				</div>

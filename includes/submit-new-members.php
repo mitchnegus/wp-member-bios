@@ -22,6 +22,7 @@ function submit_new_member_form()
 		}
 		// Set the image as the post thumbnail
 		set_post_thumbnail($post_id, $attachment_id);
+		wp_redirect(home_url().'/new-member-confirmation');
 }
 
 // Check that a nonce was provided and is valid, otherwise kill execution
@@ -35,7 +36,7 @@ function check_nonce()
 }
 
 // Check whether the user has uploaded an image
-function check_upload_presence()
+function check_upload_present()
 {
 		if (empty($_FILES) || !isset($_FILES['photo'])) {
 				return false;
