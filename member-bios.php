@@ -42,16 +42,21 @@ if (!defined('ABSPATH')) {
 global $PLUGIN_DIR;
 $PLUGIN_DIR = plugin_dir_path(__FILE__);
 
+// Set the maximum image size to be allowed in an upload
+global $max_headshot_size;
+$max_headshot_size = set_plugin_max_headshot_size();
+
 require($PLUGIN_DIR . '/includes/define-members-post-type.php');
-require($PLUGIN_DIR . '/includes/define-new-members-page.php');
+require($PLUGIN_DIR . '/includes/define-new-members-form.php');
 require($PLUGIN_DIR . '/includes/submit-new-members.php');
 
 // Add theme support for thumbnails if not already included
 add_theme_support('post-thumbnails');
 set_post_thumbnail_size(200, 200);
 // Add new member submission page on activation
-register_activation_hook(__FILE__, 'add_new_member_page');
-register_deactivation_hook(__FILE__, 'remove_new_member_page');
+register_activation_hook(__FILE__, 'add_new_member_form_page');
+register_activation_hook(__FILE__, 'add_new_member_confirmation_page');
+register_deactivation_hook(__FILE__, 'remove_new_member_pages');
 // Include the CSS stylesheet for the plugin
 add_action('init', 'enqueue_resources'); 
 // Hook up our custom post to theme setup
@@ -63,11 +68,12 @@ add_action('save_post', 'save_member_details');
 // Update the columns on the browse members page
 add_action('manage_members_posts_custom_column', 'add_member_columns', 10, 2);
 add_filter('manage_members_posts_columns', 'set_member_columns');
-// Use a custom template for the member pages, from the plugin
+// Use a custom template for the member pages
 add_filter('single_template', 'use_custom_member_single_template');
 add_filter('archive_template', 'use_custom_member_archive_template');
-// Use a custom template for the new member page, from the plugin
+// Use a custom template for the new member and submission sucess pages
 add_filter('template_include', 'include_new_member_template');
+add_filter('template_include', 'include_submit_confirmation_template');
 // Format the "Members" page properly
 add_action('pre_get_posts', 'show_all_members');
 add_action('pre_get_posts', 'alpha_order_classes');
@@ -82,5 +88,14 @@ function enqueue_resources()
 	 wp_enqueue_style('member-bios');
 }
 
-
-
+// Set the maximum image size for user uploaded headshots
+function set_plugin_max_headshot_size()
+{
+		$max_wordpress_upload_size = wp_max_upload_size();
+		if ($max_wordpress_upload_size > 1e6) {
+    		$plugin_max_headshot_size = 1e6;   // (Approx. 1 MB)
+    } else {
+        $plugin_max_headshot_size = $max_wordpress_upload_size;
+    }
+		return $plugin_max_headshot_size;
+}

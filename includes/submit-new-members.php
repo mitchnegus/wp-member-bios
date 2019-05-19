@@ -6,38 +6,27 @@
 // Define a function to accept user input
 function submit_new_member_form()
 {
+		// Check submission validity
 		check_nonce();
+		$upload_present = check_upload_present();
+		if ($upload_present) 
+				check_upload_validity();
+		// Create a new post for the member
 		$inputs = sanitize_input_fields();
 		$post_id = create_new_post($inputs);
-		if (check_file_uploaded()) {
-				// Upload the image to the 'uploads' directory
-			  $photo = $_FILES['photo'];
-				$overrides = array('test_form' => false);
-				$img_upload = wp_handle_upload($photo, $overrides);
-				$img_path = $img_upload['file'];
-				// Check file type, size, etc.
-				// Specify the attachment attributes
-				$attachment = array(
-					'guid' 						=> $img_upload['url'],
-					'post_mime_type'  => $img_upload['type'],
-					'post_title'			=> sanitize_file_name($img_path), 
-					'post_content'    => '',
-					'post_status'			=> 'inherit'
-				);
-				// Set the metadata for the image attachment
-				$attach_id = wp_insert_attachment($attachment, $img_path, $post_id);
-				$attach_data = wp_generate_attachment_metadata($attach_id, $img_path); 
-				wp_update_attachment_metadata($attach_id, $attach_data);
-				// Assign the image to the post
-				set_post_thumbnail($post_id, $attach_id);
+	  if ($upload_present) {	
+				// Upload the image to the media library and assign to the post
+				$attachment_id = media_handle_upload('photo', $post_id);
 		} else {
-				// Set the post image to the template headshot image
+				// Set the default headshot as the post image
 		}
+		// Set the image as the post thumbnail
+		set_post_thumbnail($post_id, $attachment_id);
 }
 
+// Check that a nonce was provided and is valid, otherwise kill execution
 function check_nonce()
 {
-		// Check that a nonce was provided and is valid, otherwise kill execution
 		$nonce = $_POST['new_member_form_nonce'];
 		$nonce_action = 'add_new_member_nonce';
 		if (!isset($nonce) || !wp_verify_nonce($nonce, $nonce_action)) {
@@ -45,14 +34,40 @@ function check_nonce()
 		}
 }
 
-function check_file_uploaded()
+// Check whether the user has uploaded an image
+function check_upload_presence()
 {
-		return (!empty($_FILES) && isset($_FILES['photo']));
+		if (empty($_FILES) || !isset($_FILES['photo'])) {
+				return false;
+		} else {
+				return true;
+		}
+}
+// Check that the upload is valid, otherwise stop.
+function check_upload_validity()
+{
+		if (!check_file_meets_specs()) {
+				wp_die('The image you uploaded does not meet the specifications. Please go back and upload a new image.', 'Error', array('response'=> 403));
+		}
 }
 
+// Check that the file was uploaded and meets specifications
+function check_file_meets_specs()
+{
+		global $max_headshot_size;
+		$allowed_image_types = array('image/jpeg', 'image/png');
+		if (!isset($_FILES['photo']['size']) || $_FILES['photo']['size'] = 0)
+				return false;
+		if (!in_array($_FILES['photo']['type'], $allowed_image_types))
+				return false;
+		if ($_FILES['photo']['size'] > $max_headshot_size)
+		 		return false;	
+		return true;
+}
+
+// Sanitize all text input fields
 function sanitize_input_fields()
 {
-		// Sanitize all text input fields
 		$sanitized_inputs = array(
 				'name' 			=> sanitize_text_field($_POST['name']),
 				'email' 		=> sanitize_email($_POST['email']),
@@ -64,16 +79,17 @@ function sanitize_input_fields()
 		return $sanitized_inputs;
 }
 
+// Create a new post based on the user inputs
 function create_new_post($inputs)
 {
-		// Create a new post based on the user inputs
+		// Assign data for the post
 		$post_arr = array(
 				'post_type'    => 'members',
 				'post_title'   => $inputs['name'],
 				'post_content' => $inputs['bio'],
 				'post_name'    => 'test-new-member'
 		);
-		// Insert a new post for the new member with accompanying metadata
+		// Insert a post for the new member with accompanying metadata
 		$post_id = wp_insert_post($post_arr);
 		update_post_meta($post_id, 'subject', $inputs['subject']);
 		update_post_meta($post_id, 'grad_date', $inputs['grad_date']);

@@ -11,6 +11,8 @@
  * @link https://codex.wordpress.org/Template_Hierarchy
  */
 
+global $max_headshot_size;
+
 get_header(); ?>
 
 	<div id="primary" class="content-area">
@@ -73,7 +75,7 @@ get_header(); ?>
 			</div>
 			<div class="new-member-form-element">
 				<label for="photo" class="new-member-form-label">
-					Photo
+				Photo (<?php echo floor($max_headshot_size/1e6); ?>MB maximum file size)
 				</label>
 				<br>
 				<input type="file" id="photo" name="photo" value="" />
