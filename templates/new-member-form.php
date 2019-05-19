@@ -40,7 +40,7 @@ get_header(); ?>
 				</div>
 				<div class="new-member-form-element" style="flex-grow: 2;" >
 					<label for="email" class="new-member-form-label">
-						Email 
+						<?php echo esc_html(get_option('organization_name')); ?> email
 						<span class="new-member-form-label-required">(required)</span>
 					</label>
 					<input type="text" id="email" name="email" class="full-width" required/>

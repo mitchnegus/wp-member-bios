@@ -37,12 +37,25 @@ function add_setup_options()
 		<?php
 }
 
+function add_member_bios_settings()
+{
+		register_member_bios_settings();
+		add_settings_sections();
+		add_email_settings_fields();
+		add_spam_filter_settings_fields();
+}
+
+// Register new settings for the plugin's settings page
 function register_member_bios_settings()
 {
-		// Register new settings for the plugin's settings page
 		register_setting('member-bios-option-group', 'organization_name');
+		register_setting('member-bios-option-group', 'organization_domain');
 		register_setting('member-bios-option-group', 'notification_email');
-		// Register a new settings sections on the plugin's settings page
+}
+
+// Register new settings sections on the plugin's settings page
+function add_settings_sections()
+{
 		add_settings_section(
 				'email-notifications',
 				'Email Notifications',
@@ -55,7 +68,11 @@ function register_member_bios_settings()
 				'define_spam_filter_section',
 				'member-bios'
 		);
-		// Register settings fields for email notifications
+}
+
+// Register settings fields for email notifications
+function add_email_settings_fields()
+{
 		add_settings_field(
 				'notification_email',
 				'Notification Email',
@@ -64,7 +81,11 @@ function register_member_bios_settings()
 				'email-notifications',
 				array('label_for' => 'notification_email')
 		);
-		// Register settings fields for email based spam filtering
+}
+
+// Register settings fields for email based spam filtering
+function add_spam_filter_settings_fields()
+{
 		add_settings_field(
 				'organization_name',
 				'Organization Name',
@@ -104,32 +125,31 @@ function define_spam_filter_section($args)
 function collect_notification_email_setting($args)
 {
 		// Get the value of the setting already registered
-		$options = get_option('notification_email');
+		$option = get_option('notification_email');
 		// Output the field
 		$opt_name = esc_attr($args['label_for']);
 		?>
-		<input id="<?php echo $opt_name; ?>" name="<?php echo $opt_name; ?>" type="text"/>
+			<input id="<?php echo $opt_name; ?>" name="<?php echo $opt_name; ?>" type="text" value="<?php echo esc_attr($option) ?>"/>
 		<?php
 }
 
 function collect_organization_name_setting($args)
 {
 		// Get the value of the setting already registered
-		$options = get_option('organization_name');
+		$option = get_option('organization_name');
 		// Output the field
 		$opt_name = esc_attr($args['label_for']);
 		?>
-		<input id="<?php echo $opt_name; ?>" name="<?php echo $opt_name; ?>" type="text"/>
+			<input id="<?php echo $opt_name; ?>" name="<?php echo $opt_name; ?>" type="text" value="<?php echo esc_attr($option) ?>"/>
 		<?php
 }
 
 function collect_organization_domain_setting($args)
 {
 		// Get the value of the setting already registered
-		$options = get_option('organization_domain');
+		$option = get_option('organization_domain');
 		// Output the field
 		$opt_name = esc_attr($args['label_for']);
 		?>
-		<input id="<?php echo $opt_name; ?>" name="<?php echo $opt_name; ?>" type="text"/>
-		<?php
+			<input id="<?php echo $opt_name; ?>" name="<?php echo $opt_name; ?>" type="text" value="<?php echo esc_attr($option) ?>"/> <?php
 }
