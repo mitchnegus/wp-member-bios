@@ -24,6 +24,7 @@ function submit_new_member_form()
 		// Set the image as the post thumbnail
 		set_post_thumbnail($post_id, $attachment_id);
 		wp_redirect(home_url().'/new-member-confirmation');
+		notify_admin_on_submission($inputs);
 }
 
 // Check that a nonce was provided and is valid, otherwise kill execution
@@ -53,7 +54,8 @@ function check_email()
 // Check whether the user has uploaded an image
 function check_upload_present()
 {
-		if (empty($_FILES) || !isset($_FILES['photo'])) {
+		$photo = $_FILES['photo'];
+		if (empty($_FILES) || !isset($photo) || $photo['error'] == 4) {
 				return false;
 		} else {
 				return true;
@@ -111,4 +113,13 @@ function create_new_post($inputs)
 		update_post_meta($post_id, 'grad_date', $inputs['grad_date']);
 		update_post_meta($post_id, 'interests', $inputs['interests']);
 		return $post_id;
+}
+
+// Notify the site administrator when someone submits the form
+function notify_admin_on_submission($inputs)
+{
+		$recipient = get_option('admin_email');
+		$subject = 'SPG new member: ' . $inputs['name'];
+		$message = $inputs['name'] . ' has submitted a new member request.';
+		wp_mail($recipient, $subject, $message);
 }
