@@ -10,8 +10,26 @@ function submit_new_member_form()
 		$inputs = sanitize_input_fields();
 		$post_id = create_new_post($inputs);
 		if (check_file_uploaded()) {
-				// Upload the image to the wordpress media library and set post metadata
-				wp_handle_upload($_FILES['photo']);
+				// Upload the image to the 'uploads' directory
+			  $photo = $_FILES['photo'];
+				$overrides = array('test_form' => false);
+				$img_upload = wp_handle_upload($photo, $overrides);
+				$img_path = $img_upload['file'];
+				// Check file type, size, etc.
+				// Specify the attachment attributes
+				$attachment = array(
+					'guid' 						=> $img_upload['url'],
+					'post_mime_type'  => $img_upload['type'],
+					'post_title'			=> sanitize_file_name($img_path), 
+					'post_content'    => '',
+					'post_status'			=> 'inherit'
+				);
+				// Set the metadata for the image attachment
+				$attach_id = wp_insert_attachment($attachment, $img_path, $post_id);
+				$attach_data = wp_generate_attachment_metadata($attach_id, $img_path); 
+				wp_update_attachment_metadata($attach_id, $attach_data);
+				// Assign the image to the post
+				set_post_thumbnail($post_id, $attach_id);
 		} else {
 				// Set the post image to the template headshot image
 		}
@@ -21,10 +39,11 @@ function check_nonce()
 {
 		// Check that a nonce was provided and is valid, otherwise kill execution
 		$nonce = $_POST['new_member_form_nonce'];
-		$nonce_action = 'add_new_member_form_nonce';
+		$nonce_action = 'add_new_member_nonce';
 		if (!isset($nonce) || !wp_verify_nonce($nonce, $nonce_action)) {
 				wp_die('Invalid nonce specified', 'Error', array('response'=> 403));
 		}
+}
 
 function check_file_uploaded()
 {
@@ -61,4 +80,3 @@ function create_new_post($inputs)
 		update_post_meta($post_id, 'interests', $inputs['interests']);
 		return $post_id;
 }
-

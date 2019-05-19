@@ -25,7 +25,7 @@ get_header(); ?>
 			<li>a photo (square images work best)</li>
 		</ul>
 
-		<form id="new-member-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+		<form id="new-member-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" enctype="multipart/form-data" method="post">
 			<input type="hidden" name="action" value="submit_member" />
 			<?php wp_nonce_field('add_new_member_nonce', 'new_member_form_nonce'); ?>
 			<div style="display: flex; width: 70%;">
