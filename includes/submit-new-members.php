@@ -9,6 +9,12 @@ function submit_new_member_form()
 		check_nonce();
 		$inputs = sanitize_input_fields();
 		$post_id = create_new_post($inputs);
+		if (check_file_uploaded()) {
+				// Upload the image to the wordpress media library and set post metadata
+				wp_handle_upload($_FILES['photo']);
+		} else {
+				// Set the post image to the template headshot image
+		}
 }
 
 function check_nonce()
@@ -19,6 +25,11 @@ function check_nonce()
 		if (!isset($nonce) || !wp_verify_nonce($nonce, $nonce_action)) {
 				wp_die('Invalid nonce specified', 'Error', array('response'=> 403));
 		}
+
+function check_file_uploaded()
+{
+		return (!empty($_FILES) && isset($_FILES['photo']));
+}
 
 function sanitize_input_fields()
 {
@@ -50,3 +61,4 @@ function create_new_post($inputs)
 		update_post_meta($post_id, 'interests', $inputs['interests']);
 		return $post_id;
 }
+
