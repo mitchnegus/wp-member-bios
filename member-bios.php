@@ -48,6 +48,7 @@ $max_headshot_size = set_plugin_max_headshot_size();
 
 // Plugin specific files to include
 require($PLUGIN_DIR . '/includes/define-members-post-type.php');
+require($PLUGIN_DIR . '/includes/define-admin-setup-menu.php');
 require($PLUGIN_DIR . '/includes/define-new-members-form.php');
 require($PLUGIN_DIR . '/includes/submit-new-members.php');
 
@@ -68,6 +69,9 @@ add_action('init', 'enqueue_resources');
 // Hook up our custom post to theme setup
 add_action('init', 'register_member_post_type');
 add_action('init', 'register_positions_taxonomy');
+// Add an options page in the admin area
+add_action('admin_menu', 'add_setup_menu_page');
+add_action('admin_init', 'register_member_bios_settings');
 // Add custom fields to the custom post; save them on post
 add_action('admin_init', 'add_admin_fields');
 add_action('save_post', 'save_member_details');
