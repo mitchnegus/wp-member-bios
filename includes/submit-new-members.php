@@ -8,6 +8,7 @@ function submit_new_member_form()
 {
 		// Check submission validity
 		check_nonce();
+		check_email();
 		$upload_present = check_upload_present();
 		if ($upload_present) 
 				check_upload_validity();
@@ -30,9 +31,23 @@ function check_nonce()
 {
 		$nonce = $_POST['new_member_form_nonce'];
 		$nonce_action = 'add_new_member_nonce';
-		if (!isset($nonce) || !wp_verify_nonce($nonce, $nonce_action)) {
+		if (!isset($nonce) || !wp_verify_nonce($nonce, $nonce_action))
 				wp_die('Invalid nonce specified', 'Error', array('response'=> 403));
-		}
+}
+
+// Check the user-provided email
+function check_email()
+{
+		// Check that the email is of the correct format
+		$email = $_POST['email'];
+		if (!is_email($email))
+				wp_die('Invalid email provided. Please go back and use a different one.', 'Error', array('response'=> 403));
+		// Check that the email is from the correct organization domain (not spam)
+		$org = get_option('organization_name');
+		$org_domain = get_option('organization_domain');
+		$submitted_domain = substr($email, -strlen($org_domain));
+		if ($submitted_domain != $org_domain)
+				wp_die('Invalid email provided. Please go back and make sure to use your ' . esc_html($org) . ' email address.', 'Error', array('response'=> 403));
 }
 
 // Check whether the user has uploaded an image
