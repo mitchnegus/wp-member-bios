@@ -39,8 +39,9 @@ if (!defined('ABSPATH')) {
 }
 
 // Plugin directory must be set global to use in activation hook
-global $PLUGIN_DIR;
+global $PLUGIN_DIR, $PLUGIN_URL;
 $PLUGIN_DIR = plugin_dir_path(__FILE__);
+$PLUGIN_URL = plugin_dir_url(__FILE__);
 
 // Set the maximum image size to be allowed in an upload
 global $max_headshot_size;

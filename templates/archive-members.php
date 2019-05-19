@@ -5,6 +5,8 @@
  * @link https://codex.wordpress.org/Template_Hierarchy
  */
 
+global $PLUGIN_URL;
+
 get_header(); ?>
 
 <div id="primary" class="content-area">
@@ -33,7 +35,14 @@ get_header(); ?>
 
 										<a href="<?php echo esc_url(get_page_link()) ?>">
 												<div class="mtile-container">
-														<?php	the_post_thumbnail(); ?>
+														<?php
+										 				if (has_post_thumbnail()) {
+																the_post_thumbnail();
+														} else {
+																?>
+																<img src="<?php echo $PLUGIN_URL . 'img/headshot_template.png';  ?>" style="width: 200px; height: 200px;" />
+																<?php
+														}?>
 														<div class="mtile-overlay">
 																<div class="mtile-text mtile-text1">
 																		<?php echo esc_html($name); ?>

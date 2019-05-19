@@ -10,6 +10,8 @@
  * @link https://codex.wordpress.org/Template_Hierarchy
  */
 
+global $PLUGIN_URL, $_wp_additional_image_sizes;
+
 get_header(); ?>
 
 	<div id="primary" class="content-area">
@@ -25,6 +27,10 @@ get_header(); ?>
 						// Display the thumbnail
 						if (has_post_thumbnail()) {
 								the_post_thumbnail();
+						} else {
+								?>
+								<img src="<?php echo $PLUGIN_URL . 'img/headshot_template.png';  ?>" style="width: 200px; height: 200px;" />
+								<?php
 						}?>
 				</div>
 			

@@ -18,11 +18,9 @@ function submit_new_member_form()
 	  if ($upload_present) {	
 				// Upload the image to the media library and assign to the post
 				$attachment_id = media_handle_upload('photo', $post_id);
-		} else {
-				// Set the default headshot as the post image
+				set_post_thumbnail($post_id, $attachment_id);
 		}
 		// Set the image as the post thumbnail
-		set_post_thumbnail($post_id, $attachment_id);
 		wp_redirect(home_url().'/new-member-confirmation');
 		notify_admin_on_submission($inputs);
 }
