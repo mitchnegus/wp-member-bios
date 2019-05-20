@@ -1,6 +1,6 @@
 <?php
 /**
- * Function definitions for the "Members" custom post type
+ * Function definitions for plugin settings in the admin area
  */
 
 // Define a function to load a setup menu page for the plugin
@@ -108,7 +108,7 @@ function define_email_notification_section($args)
 {
 		?>
 		<p id="<?php echo esc_attr($args['id']); ?>">
-				To receive an email notification whenever someone submits a new member form, fill out the following info:
+				Indicate whether the admin should receive an email whenever a new member form is submitted.
 		</p>
 		<?php
 }
@@ -129,7 +129,7 @@ function collect_notification_email_setting($args)
 		// Output the field
 		$opt_name = esc_attr($args['label_for']);
 		?>
-			<input id="<?php echo $opt_name; ?>" name="<?php echo $opt_name; ?>" type="text" value="<?php echo esc_attr($option) ?>"/>
+			<input id="<?php echo $opt_name; ?>" name="<?php echo $opt_name; ?>" type="checkbox" value="checked" <?php echo esc_attr($option) ?>/>
 		<?php
 }
 

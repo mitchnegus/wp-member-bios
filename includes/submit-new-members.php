@@ -22,7 +22,8 @@ function submit_new_member_form()
 		}
 		// Set the image as the post thumbnail
 		wp_redirect(home_url().'/new-member-confirmation');
-		notify_admin_on_submission($inputs);
+		if (get_option('notification_email') == 'checked')
+				notify_admin_on_submission($inputs);
 }
 
 // Check that a nonce was provided and is valid, otherwise kill execution
