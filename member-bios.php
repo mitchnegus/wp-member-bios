@@ -81,12 +81,18 @@ function activate_member_bios() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-member-bios-activator.php';
 	Member_Bios_Activator::activate();
 }
+
+function deactivate_member_bios() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-member-bios-deactivator.php';
+	Member_Bios_Deactivator::deactivate();
+}
+
 // Add theme support for thumbnails if not already included
 add_theme_support('post-thumbnails');
 set_post_thumbnail_size(200, 200);
 // Add new member submission page on activation
 register_activation_hook(__FILE__, 'activate_member_bios');
-register_deactivation_hook(__FILE__, 'remove_new_member_pages');
+register_deactivation_hook(__FILE__, 'deactivate_member_bios');
 // Include the CSS stylesheet for the plugin
 add_action('init', 'enqueue_resources'); 
 // Hook up our custom post to theme setup
