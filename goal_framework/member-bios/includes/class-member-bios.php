@@ -27,7 +27,7 @@
  * @subpackage Member-Bios/includes
  * @author     Mitch Negus <mitchell.negus.57@gmail.com>
  */
-class Plugin_Name {
+class Member_Bios {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -152,7 +152,7 @@ class Plugin_Name {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Plugin_Name_Admin( $this->get_member_bios(), $this->get_version() );
+		$plugin_admin = new Member_Bios_Admin( $this->get_member_bios(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
