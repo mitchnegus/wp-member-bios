@@ -57,13 +57,35 @@ require($PLUGIN_DIR . '/includes/submit-new-members.php');
 require_once(ABSPATH . 'wp-admin/includes/image.php');
 require_once(ABSPATH . 'wp-admin/includes/file.php');
 require_once(ABSPATH . 'wp-admin/includes/media.php');
+ 
+// Include CSS stylesheet
+function enqueue_resources()
+{
+   wp_register_style('member-bios', plugins_url('style.css', __FILE__));
+	 wp_enqueue_style('member-bios');
+}
 
+// Set the maximum image size for user uploaded headshots
+function set_plugin_max_headshot_size()
+{
+		$max_wordpress_upload_size = wp_max_upload_size();
+		if ($max_wordpress_upload_size > 1e6) {
+    		$plugin_max_headshot_size = 1e6;   // (Approx. 1 MB)
+    } else {
+        $plugin_max_headshot_size = $max_wordpress_upload_size;
+    }
+		return $plugin_max_headshot_size;
+}
+
+function activate_member_bios() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-member-bios-activator.php';
+	Member_Bios_Activator::activate();
+}
 // Add theme support for thumbnails if not already included
 add_theme_support('post-thumbnails');
 set_post_thumbnail_size(200, 200);
 // Add new member submission page on activation
-register_activation_hook(__FILE__, 'add_new_member_form_page');
-register_activation_hook(__FILE__, 'add_new_member_confirmation_page');
+register_activation_hook(__FILE__, 'activate_member_bios');
 register_deactivation_hook(__FILE__, 'remove_new_member_pages');
 // Include the CSS stylesheet for the plugin
 add_action('init', 'enqueue_resources'); 
@@ -91,22 +113,3 @@ add_action('pre_get_posts', 'alpha_order_classes');
 // Accept user input
 add_action('admin_post_submit_member', 'submit_new_member_form');
 add_action('admin_post_nopriv_submit_member', 'submit_new_member_form');
- 
-// Include CSS stylesheet
-function enqueue_resources()
-{
-   wp_register_style('member-bios', plugins_url('style.css', __FILE__));
-	 wp_enqueue_style('member-bios');
-}
-
-// Set the maximum image size for user uploaded headshots
-function set_plugin_max_headshot_size()
-{
-		$max_wordpress_upload_size = wp_max_upload_size();
-		if ($max_wordpress_upload_size > 1e6) {
-    		$plugin_max_headshot_size = 1e6;   // (Approx. 1 MB)
-    } else {
-        $plugin_max_headshot_size = $max_wordpress_upload_size;
-    }
-		return $plugin_max_headshot_size;
-}
