@@ -45,14 +45,19 @@ class Member_Bios_Activator {
 	 */
 
 	public static function activate() {
+
 		Member_Bios_Activator::add_new_member_form_page();
 		Member_Bios_Activator::add_new_member_confirmation_page();
+
 	}
 
 	public static function add_new_member_form_page() {
+
 		global $new_member_form_template, $new_member_form_title; 
+		
 		// Create the page if it doesn't already exist
 		$page = get_page_by_title( $new_member_form_title ); 
+
 		if ( ! isset( $page->ID ) ) {
 				$page_title = $new_member_form_title;
 				$page_arr = array(
@@ -64,14 +69,18 @@ class Member_Bios_Activator {
 				$page_id = wp_insert_post( $page_arr );
 				$template = $new_member_form_template;
 				update_post_meta( $page_id, '_wp_page_template', $template );
+
 		}
 
 	}
 
 	public static function add_new_member_confirmation_page() {
+
 		global $new_member_confirmation_template, $new_member_confirmation_title;
+
 		// Create the page if it doesn't already exist
 		$page = get_page_by_title( $new_member_confirmation_title ); 
+
 		if ( ! isset ( $page->ID ) ) {
 				$page_title = $new_member_confirmation_title;
 				$page_arr = array(
@@ -83,6 +92,7 @@ class Member_Bios_Activator {
 				$page_id = wp_insert_post( $page_arr );
 				$template = $new_member_confirmation_template;
 				update_post_meta( $page_id, '_wp_page_template', $template );
+
 		}
 
 	}

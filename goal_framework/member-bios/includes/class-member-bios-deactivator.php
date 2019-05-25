@@ -40,20 +40,28 @@ class Member_Bios_Deactivator {
 	 */
 
 	public static function deactivate() {
+
 		Member_Bios_Deactivator::remove_new_member_form_page();
 		Member_Bios_Deactivator::remove_new_member_confirmation_page();
+
 	}
 
 	public static function remove_new_member_form_page(){
+
 		global $new_member_form_title;
+
 		$form_page = get_page_by_title( $new_member_form_title );
 		wp_delete_post( $form_page->ID, true );
+
 	}
 
 	public static function remove_new_member_confirmation_page(){
+
 		global $new_member_confirmation_title;
+
 		$confirmation_page = get_page_by_title( $new_member_confirmation_title );
 		wp_delete_post( $confirmation_page->ID, true );
+
 	}
 
 }
