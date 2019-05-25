@@ -81,9 +81,11 @@ require $PLUGIN_DIR . '/goal_framework/member-bios/member-bios.php';
 // Add theme support for thumbnails if not already included
 add_theme_support('post-thumbnails');
 set_post_thumbnail_size(200, 200);
+
 // Add new member submission page on activation
 register_activation_hook(__FILE__, 'activate_member_bios');
 register_deactivation_hook(__FILE__, 'deactivate_member_bios');
+
 // Include the CSS stylesheet for the plugin
 add_action('init', 'enqueue_resources'); 
 // Hook up our custom post to theme setup
