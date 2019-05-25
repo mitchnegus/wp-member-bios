@@ -10,6 +10,15 @@
  * @subpackage Member_Bios/includes
  */
 
+global $PLUGIN_DIR;
+global $new_member_form_template, $new_member_confirmation_template;
+global $new_member_form_title, $new_member_confirmation_title;
+
+$new_member_form_template = $PLUGIN_DIR . 'templates/new-member-form.php';
+$new_member_confirmation_template = $PLUGIN_DIR . 'templates/new-member-confirmation.php';
+$new_member_form_title = 'New Member';
+$new_member_confirmation_title = 'Submission accepted';
+
 /**
  * Fired during plugin activation.
  *
@@ -20,16 +29,6 @@
  * @subpackage Member_Bios/includes
  * @author     Mitch Negus <mitchell.negus.57@gmail.com>
  */
-
-global $PLUGIN_DIR;
-global $new_member_form_template, $new_member_confirmation_template;
-global $new_member_form_title, $new_member_confirmation_title;
-
-$new_member_form_template = $PLUGIN_DIR . 'templates/new-member-form.php';
-$new_member_confirmation_template = $PLUGIN_DIR . 'templates/new-member-confirmation.php';
-$new_member_form_title = 'New Member';
-$new_member_confirmation_title = 'Submission accepted';
-
 class Member_Bios_Activator {
 
 	/**
@@ -43,7 +42,6 @@ class Member_Bios_Activator {
 	 *
 	 * @since    1.0.0
 	 */
-
 	public static function activate() {
 
 		Member_Bios_Activator::add_new_member_form_page();
@@ -51,6 +49,11 @@ class Member_Bios_Activator {
 
 	}
 
+	/**
+	 * Add a page with a new member form using the given template and title.
+	 *
+	 * @since    1.0.0
+	 */
 	public static function add_new_member_form_page() {
 
 		global $new_member_form_template, $new_member_form_title; 
@@ -74,6 +77,11 @@ class Member_Bios_Activator {
 
 	}
 
+	/**
+	 * Add a submission confirmation page using the given template and title.
+	 *
+	 * @since    1.0.0
+	 */
 	public static function add_new_member_confirmation_page() {
 
 		global $new_member_confirmation_template, $new_member_confirmation_title;

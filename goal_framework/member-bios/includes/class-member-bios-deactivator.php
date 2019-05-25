@@ -10,6 +10,12 @@
  * @subpackage Member_Bios/includes
  */
 
+global $PLUGIN_DIR;
+global $new_member_form_title, $new_member_confirmation_title;
+
+$new_member_form_title = 'New Member';
+$new_member_confirmation_title = 'Submission accepted';
+
 /**
  * Fired during plugin deactivation.
  *
@@ -20,13 +26,6 @@
  * @subpackage Member_Bios/includes
  * @author     Mitch Negus <mitchell.negus.57@gmail.com>
  */
-
-global $PLUGIN_DIR;
-global $new_member_form_title, $new_member_confirmation_title;
-
-$new_member_form_title = 'New Member';
-$new_member_confirmation_title = 'Submission accepted';
-
 class Member_Bios_Deactivator {
 
 	/**
@@ -38,7 +37,6 @@ class Member_Bios_Deactivator {
 	 *
 	 * @since    1.0.0
 	 */
-
 	public static function deactivate() {
 
 		Member_Bios_Deactivator::remove_new_member_form_page();
@@ -46,6 +44,11 @@ class Member_Bios_Deactivator {
 
 	}
 
+	/**
+	 * Remove the new member form page from the database.
+	 *
+	 * @since    1.0.0
+	 */
 	public static function remove_new_member_form_page(){
 
 		global $new_member_form_title;
@@ -55,6 +58,11 @@ class Member_Bios_Deactivator {
 
 	}
 
+	/**
+	 * Remove the submission confirmation page from the database.
+	 *
+	 * @since    1.0.0
+	 */
 	public static function remove_new_member_confirmation_page(){
 
 		global $new_member_confirmation_title;
