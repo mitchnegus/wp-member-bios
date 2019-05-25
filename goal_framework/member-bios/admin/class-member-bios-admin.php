@@ -13,8 +13,13 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
+ * Defines the plugin name, version, and hooks for managing the admin area
+ * (inlcuding enqueuing the admin-specific stylesheet and JavaScript). An
+ * instance of this class should be passed to the run() function defined
+ * in Member_Bios_Loader as all of the hooks are actually defined in that
+ * particular class. The Member_Bios_Loader will then create the
+ * relationship between the defined hooks and the functions defined in this
+ * class.
  *
  * @package    Member_Bios
  * @subpackage Member_Bios/admin
@@ -61,19 +66,7 @@ class Member_Bios_Admin {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_Name_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Member_Bios_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		$stylesheet = plugin_dir_url( __FILE__ ) . 'css/member-bios-admin.css'
+		$stylesheet = plugin_dir_url( __FILE__ ) . 'css/member-bios-admin.css';
 		wp_enqueue_style( 
 			$this->member_bios, 
 			$stylesheet,
@@ -90,26 +83,48 @@ class Member_Bios_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Member_Bios_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Member_Bios_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+		$script = plugin_dir_url( __FILE__ ) . 'js/member-bios-admin.js';
+		wp_enqueue_script(
+		 	$this->member_bios,
+			$script,
+			array( 'jquery' ),
+			$this->version,
+			false
+		);
 
-		$script = plugin_dir_url( __FILE__ ) . 'js/member-bios-admin.js'
-			wp_enqueue_script(
-			 	$this->member_bios,
-				$script,
-				array( 'jquery' ),
-				$this->version,
-				false
-			);
+	}
+
+	/**
+	 * Define a function to load a setup menu page for the plugin.
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_settings_page() {
+		
+		add_options_page(
+				'Member Bios Settings',
+				'Member Bios',
+				'manage_options',
+				'member-bios',
+				[$this, 'add_settings_options']
+		);
+	}
+
+	/**
+	 * Define specific menu items on the menu page.
+	 *
+	 * @since    1.0.0
+	 */
+	private function add_settings_options() {
+		
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		}
+
+		require_once plugin_dir_path( __FILE__ ) . 'partials/member-bios-admin-display.php';
+		$option_group = 'member-bios-option-group';
+		$page_slug = 'member-bios';
+		display_settings( $option_group, $page_slug );
 
 	}
 

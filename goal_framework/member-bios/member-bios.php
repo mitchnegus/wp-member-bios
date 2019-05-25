@@ -78,4 +78,4 @@ function run_member_bios() {
 	$plugin->run();
 
 }
-run_member_bios()
+run_member_bios();

@@ -21,7 +21,7 @@
  * @subpackage Member-Bios/includes
  * @author     Mitch Negus <mitchell.negus.57@gmail.com>
  */
-class Member-Bios_Loader {
+class Member_Bios_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

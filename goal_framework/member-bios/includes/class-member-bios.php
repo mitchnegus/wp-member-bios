@@ -35,7 +35,7 @@ class Member_Bios {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Member-Bios_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Member_Bios_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -156,6 +156,7 @@ class Member_Bios {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_settings_page' );
 
 	}
 
