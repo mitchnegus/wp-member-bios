@@ -78,12 +78,12 @@ function set_plugin_max_headshot_size()
 }
 
 function activate_member_bios() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-member-bios-activator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'goal_framework/member-bios/includes/class-member-bios-activator.php';
 	Member_Bios_Activator::activate();
 }
 
 function deactivate_member_bios() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-member-bios-deactivator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'goal_framework/member-bios/includes/class-member-bios-deactivator.php';
 	Member_Bios_Deactivator::deactivate();
 }
 

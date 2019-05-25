@@ -54,7 +54,7 @@ class Member_Bios_Activator {
 	public static function add_new_member_form_page() {
 
 		global $new_member_form_template, $new_member_form_title; 
-		
+
 		// Create the page if it doesn't already exist
 		$page = get_page_by_title( $new_member_form_title ); 
 
