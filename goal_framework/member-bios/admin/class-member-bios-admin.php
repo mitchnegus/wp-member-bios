@@ -56,6 +56,8 @@ class Member_Bios_Admin {
 
 		$this->member_bios = $member_bios;
 		$this->version = $version;
+		$this->settings_page_slug = 'member-bios-settings';
+		$this->option_group = 'member-bios-option-group';
 		// All functions prefixed with 'display_' come from `partials`
 		require_once plugin_dir_path( __FILE__ ) . 'partials/member-bios-admin-display.php';
 	}
@@ -102,11 +104,13 @@ class Member_Bios_Admin {
 	 */
 	public function add_settings_page() {
 		
+		$page_title = 'Member Bios Settings';
+		$menu_title = 'Member Bios';
 		add_options_page(
-				'Member Bios Settings',
-				'Member Bios',
+				$page_title,
+				$menu_title,
 				'manage_options',
-				'member-bios',
+				$this->settings_page_slug,
 				[$this, 'add_settings_options']
 		);
 	}
@@ -129,15 +133,13 @@ class Member_Bios_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	private function add_settings_options() {
+	public function add_settings_options() {
 		
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		$option_group = 'member-bios-option-group';
-		$page_slug = 'member-bios';
-		display_settings( $option_group, $page_slug );
+		display_settings( $this->option_group, $this->settings_page_slug );
 
 	}
 
@@ -148,10 +150,9 @@ class Member_Bios_Admin {
 	 */
 	private function register_settings() {
 
-		$option_group = 'member-bios-option-group';
-		register_setting( $option_group, 'organization_name' );
-		register_setting( $option_group, 'organization_domain' );
-		register_setting( $option_group, 'notification_email' );
+		register_setting( $this->option_group, 'organization_name' );
+		register_setting( $this->option_group, 'organization_domain' );
+		register_setting( $this->option_group, 'notification_email' );
 		
 	}
 
@@ -162,20 +163,24 @@ class Member_Bios_Admin {
 	 */
 	private function add_email_notification_settings() {
 
+		$section_id = 'email-notifications';
+		$section_label = 'Email Notifications';
 		add_settings_section(
-				'email-notifications',
-				'Email Notifications',
+				$section_id,
+				$section_label,
 				'display_email_notification_section',
-				'member-bios'
+				$this->settings_page_slug
 		);
 
+		$notification_email_id = 'notification_email';
+		$notification_email_label = 'Notification Email';
 		add_settings_field(
-				'notification_email',
-				'Notification Email',
-				[$this, 'collect_email_preference'],
-				'member-bios',
-				'email-notifications',
-				array('label_for' => 'notification_email')
+				$notification_email_id,
+				$notification_email_label,
+				[$this, 'collect_checkbox_preference'],
+				$this->settings_page_slug,
+				$section_id,	
+				array('label_for' => $notification_email_id)
 		);
 		
 	}
@@ -187,28 +192,34 @@ class Member_Bios_Admin {
 	 */
 	private function add_spam_filtering_settings() {
 
+		$section_id = 'spam-filter';
+		$section_label = 'Email-based Spam Filtering';
 		add_settings_section(
-				'email-spam-filter',
-				'Email-based Spam Filtering',
+				$section_id,
+				$section_label,
 				'display_spam_filter_section',
-				'member-bios'
+				$this->settings_page_slug
 		);
 
+		$organization_name_id = 'organization_name';
+		$organization_name_label = 'Organization Name';
 		add_settings_field(
-				'organization_name',
-				'Organization Name',
-				[$this, 'collect_organization_name'],
-				'member-bios',
-				'email-spam-filter',
-				array('label_for' => 'organization_name')
+				$organization_name_id,
+				$organization_name_label,
+				[$this, 'collect_text_input'],
+				$this->settings_page_slug,
+				$section_id,
+				array('label_for' => $organization_name_id)
 		);
+		$organization_domain_id = 'organization_domain';
+		$organization_domain_label = 'Organization Email Domain (e.g. berkeley.edu)';
 		add_settings_field(
-				'organization_domain',
-				'Organization Email Domain (e.g. berkeley.edu)',
-				[$this, 'collect_organization_domain'],
-				'member-bios',
-				'email-spam-filter',
-				array('label_for' => 'organization_domain')
+				$organization_domain_id,
+				$organization_domain_label,
+				[$this, 'collect_text_input'],
+				$this->settings_page_slug,
+				$section_id,
+				array('label_for' => $organization_domain_id)
 		);
 
 	}
@@ -218,36 +229,23 @@ class Member_Bios_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	private function collect_email_preference( $args ) {
+	public function collect_checkbox_preference( $args ) {
 
 		$option_name = $args['label_for'];
-		$option_default = get_option('notification_email');
+		$option_default = get_option( $option_name );
 		display_checkbox( $option_name, $option_default );
 
 	}
 
 	/**
-	 * Collect the organization name.
+	 * Collect the text input from a formatted input box.
 	 *
 	 * @since 1.0.0
 	 */
-	private function collect_organization_name( $args ) {
+	public function collect_text_input( $args ) {
 
 		$option_name = $args['label_for'];
-		$option_default = get_option('organization_name');
-		display_text_input( $option_name, $option_default );
-
-	}
-
-	/**
-	 * Collect the organization domain.
-	 *
-	 * @since 1.0.0
-	 */
-	private function collect_organization_domain( $args ) {
-
-		$option_name = $args['label_for'];
-		$option_default = get_option('organization_domain');
+		$option_default = get_option( $option_name );
 		display_text_input( $option_name, $option_default );
 
 	}
