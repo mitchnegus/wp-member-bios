@@ -22,18 +22,18 @@
  */
 
 global $PLUGIN_DIR;
-global $new_member_form_template, $new_member_form_title;
-global $new_member_confirmation_template, $new_member_confirmation_title;
+global $new_member_form_template, $new_member_confirmation_template;
+global $new_member_form_title, $new_member_confirmation_title;
 
 $new_member_form_template = $PLUGIN_DIR . 'templates/new-member-form.php';
-$new_member_form_title = 'New Member';
 $new_member_confirmation_template = $PLUGIN_DIR . 'templates/new-member-confirmation.php';
+$new_member_form_title = 'New Member';
 $new_member_confirmation_title = 'Submission accepted';
 
 class Member_Bios_Activator {
 
 	/**
-	 * Activates the member bios plugin, specifically new member request page.
+	 * Activate the plugin, specifically creating the new member request page.
 	 *
 	 * The Member Bios plugin accepts user submissions with profile information.
 	 * This information is provided on a special template form page, and this
@@ -43,6 +43,7 @@ class Member_Bios_Activator {
 	 *
 	 * @since    1.0.0
 	 */
+
 	public static function activate() {
 		Member_Bios_Activator::add_new_member_form_page();
 		Member_Bios_Activator::add_new_member_confirmation_page();
@@ -64,6 +65,7 @@ class Member_Bios_Activator {
 				$template = $new_member_form_template;
 				update_post_meta( $page_id, '_wp_page_template', $template );
 		}
+
 	}
 
 	public static function add_new_member_confirmation_page() {
@@ -82,5 +84,7 @@ class Member_Bios_Activator {
 				$template = $new_member_confirmation_template;
 				update_post_meta( $page_id, '_wp_page_template', $template );
 		}
+
 	}
+
 }
