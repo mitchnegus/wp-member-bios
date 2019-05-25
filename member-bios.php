@@ -77,15 +77,7 @@ function set_plugin_max_headshot_size()
 		return $plugin_max_headshot_size;
 }
 
-function activate_member_bios() {
-	require_once plugin_dir_path( __FILE__ ) . 'goal_framework/member-bios/includes/class-member-bios-activator.php';
-	Member_Bios_Activator::activate();
-}
-
-function deactivate_member_bios() {
-	require_once plugin_dir_path( __FILE__ ) . 'goal_framework/member-bios/includes/class-member-bios-deactivator.php';
-	Member_Bios_Deactivator::deactivate();
-}
+require $PLUGIN_DIR . '/goal_framework/member-bios/member-bios.php';
 
 // Add theme support for thumbnails if not already included
 add_theme_support('post-thumbnails');
