@@ -3,7 +3,8 @@
 /**
  * Provide a admin area view for the plugin
  *
- * This file is used to markup the admin-facing aspects of the plugin.
+ * This file is used to markup the admin-facing aspects of the plugin. This
+ * file should primarily consist of HTML with a little bit of PHP.
  *
  * @link       http://example.com
  * @since      1.0.0
@@ -12,16 +13,12 @@
  * @subpackage Member_Bios/admin/partials
  */
 
-?>
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
-<?php
-
 /**
  * Display settings on the admin menu page.
  *
  * @since    1.0.0
  */
-private function display_settings( $option_group, $page_slug ) {
+function display_settings( $option_group, $page_slug ) {
 	?>
 
 	<div class="wrap">
@@ -37,6 +34,42 @@ private function display_settings( $option_group, $page_slug ) {
 
 		</form>
 	</div>
+
+	<?php
+}
+
+function display_email_notification_section( $args ) {
+	?>
+
+	<p id="<?php echo esc_attr($args['id']); ?>">
+		Indicate whether the admin should receive an email whenever a new member form is submitted.
+	</p>
+
+	<?php
+}
+
+function display_checkbox( $option_name, $option_default ) {
+	?>
+
+	<input id="<?php echo esc_attr($option_name); ?>" name="<?php echo esc_attr($option_name); ?>" type="checkbox" value="checked" <?php echo esc_attr($option_default) ?>/>
+
+	<?php
+}
+
+function display_spam_filter_section( $args ) {
+	?>
+
+	<p id="<?php echo esc_attr($args['id']); ?>">
+		Users must provide an organizational email as a simple precaution against spam submissions. A user will be prompted for the email for the named organization, and the email provided will be checked for the proper domain.
+	</p>
+
+	<?php
+}
+
+function display_text_input( $option_name, $option_default ) {
+	?>
+
+	<input id="<?php echo esc_attr($option_name); ?>" name="<?php echo esc_attr($option_name); ?>" type="text" value="<?php echo esc_attr($option_default) ?>"/>
 
 	<?php
 }
