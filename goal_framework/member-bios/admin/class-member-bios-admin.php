@@ -152,7 +152,7 @@ class Member_Bios_Admin {
 		add_meta_box(
 				'subject-meta',
 				'Subject',
-				'get_subject',
+				[$this, 'get_subject'],
 				'members',
 				'normal',
 				'low'
@@ -160,7 +160,7 @@ class Member_Bios_Admin {
 		add_meta_box(
 				'grad_date-meta',
 				'Graduation',
-				'get_grad_date',
+				[$this, 'get_grad_date'],
 				'members',
 				'normal',
 				'low'
@@ -168,7 +168,7 @@ class Member_Bios_Admin {
 		add_meta_box(
 				'interests-meta',
 				'Interests',
-				'get_interests',
+				[$this, 'get_interests'],
 				'members',
 				'normal',
 				'low'
@@ -294,8 +294,50 @@ class Member_Bios_Admin {
 
 		$option_name = $args['label_for'];
 		$option_default = get_option( $option_name );
-		display_text_input( $option_name, $option_default );
+		display_text_input( $option_name, $option_default, $required=false );
 
 	}
 
+	// Function for collecting custom data on the admin page (member's discipline)
+	public function get_subject() {
+
+		global $post;
+
+		$custom = get_post_custom($post->ID);
+		$subject = $custom['subject'][0];
+		?>
+		<label for="subject">Subject area:</label>
+		<?php
+		display_text_input( 'subject', $subject, $required=true );
+
+	}
+
+	// Function for collecting custom data on the admin page (graduation date)
+	public function get_grad_date()
+	{
+			global $post;
+
+			$custom = get_post_custom($post->ID);
+			$grad_date = $custom['grad_date'][0];
+			?>
+			<label for="grad_date">Expected Graduation Date:</label>
+			<?php
+			display_text_input( 'grad_date', $grad_date, $required=true );
+
+	}
+	
+	// Function for collecting custom data on the admin page (member's interests)
+	public function get_interests()
+	{
+			global $post;
+			$custom = get_post_custom($post->ID);
+			$interests = $custom['interests'][0];
+			?>
+			<label for="interests">Member interests:</label>
+			<br>
+			<textarea id="interests" name="interests" cols="50" rows="2"  required><?php
+			echo esc_textarea($interests);
+			?></textarea>
+			<?php
+	}
 }
