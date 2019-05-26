@@ -79,9 +79,6 @@ set_post_thumbnail_size(200, 200);
 register_activation_hook(__FILE__, 'activate_member_bios');
 register_deactivation_hook(__FILE__, 'deactivate_member_bios');
 
-// Hook up our custom post to theme setup
-add_action('init', 'register_member_post_type');
-add_action('init', 'register_positions_taxonomy');
 // Add custom fields to the custom post; save them on post
 add_action('admin_init', 'add_admin_fields');
 add_action('save_post', 'save_member_details');

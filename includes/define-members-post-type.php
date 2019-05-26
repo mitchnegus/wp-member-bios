@@ -3,44 +3,6 @@
  * Function definitions for the "Members" custom post type
  */
 
-// Define a function to create a custom post type
-function register_member_post_type()
-{
-	$labels = array(
-		'name' 					=> __('Members'),
-		'singular_name' => __('Member'),
-		'add_new_item' 	=> __('Add New Member'),
-		'edit_item' 		=> __('Edit Member')
-	);
-
-	$args = array(
-		'labels' 			=> $labels,
-		'public'			=> true,
-		'has_archive' => true,
-		'rewrite' 		=> array('slug' => 'members'),
-		'supports' 		=> array('title', 'editor', 'thumbnail'),
-		'menu_icon' 	=> 'dashicons-groups'
-	);
-
-	register_post_type('members', $args);
-	flush_rewrite_rules();
-}
-
-// Create a substructure for recording membership positions
-function register_positions_taxonomy()
-{
-  	$labels = array(
-				'name' 					=> __('Positions'),
-				'singular_name' => __('Position'),
-				'add_new_item' 	=> __('Add New Position')
-		);
-		$args = array(
-				'labels' 	=> $labels,
-				'rewrite'	=> array('slug' => 'spg-position')
-		);
-		register_taxonomy('positions', array('members'), $args);
-}
-
 // Create fields on the admin page for the custom data
 function add_admin_fields()
 {
