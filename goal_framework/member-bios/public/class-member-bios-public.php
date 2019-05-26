@@ -13,10 +13,8 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the public-facing stylesheet and JavaScript.
  * Defines the plugin name, version, and hooks for managing the public front
- * end (including enqueuing the admin-specific stylesheet and JavaScript). An
+ * end (including enqueuing the public-facing stylesheet and JavaScript). An
  * instance of this class should be passed to the run() function defined
  * in Member_Bios_Loader as all of the hooks are actually defined in that
  * particular class. The Member_Bios_Loader will then create the
@@ -95,7 +93,7 @@ class Member_Bios_Public {
 
 	}
 
-	/**
+ 	/**
 	 * Register the custom post type for a member.
 	 *
 	 * Each group member has an individual post that stores their information
@@ -154,4 +152,193 @@ class Member_Bios_Public {
 
 	}
 
+	/**
+	 * Accept user input from the new member form page.
+	 *
+	 * After a member submits information through the new member page, process
+	 * that information and create a new post from that information. The new post
+	 * is saved as a draft, and can be found under the 'Members' section in the
+	 * admin area. This function includes checks on the submission's validity, 
+	 * returning an error upon submission of invalid information. If the user does
+	 * not choose to include a photo, the user's thumbnail is left unset (the
+	 * displays of user information handle cases of users without thumbnails,
+	 * using a substitute template image instead).  
+	 *
+	 * @since    1.0.0
+	 */
+	public function submit_new_member_form() {
+
+		// Check submission validity
+		$this->check_nonce();
+		$this->check_email();
+		$upload_present = $this->check_upload_present();
+		if ( $upload_present ) {
+			$this->check_upload_validity();
+		}
+
+		// Create a new post for the member
+		$inputs = $this->sanitize_input_fields();
+		$post_id = $this->create_new_post( $inputs );
+	  if ( $upload_present ) {	
+				// Upload the image to the media library and assign to the post
+				$attachment_id = media_handle_upload( 'photo', $post_id );
+				set_post_thumbnail( $post_id, $attachment_id );
+		}
+
+		// Send the user to the confirmation page and notify the admin (if desired) 
+		wp_redirect( home_url() . '/new-member-confirmation' );
+		if ( get_option( 'notification_email' ) == 'checked' ) {
+			$this->notify_admin_on_submission( $inputs );
+		}
+
+	}
+
+	/**
+	 * Check that the email provided is a valid user email address.
+	 *
+	 * User submitted emails are checked for validity. The validation is a two-
+	 * step process: first emails are checked by Wordpress to ensure a valid
+	 * email format, and then they are checked to ensure that they match the
+	 * admin-specified organization domain.
+	 *
+	 * @since    1.0.0
+	 */
+	private function check_email() {
+
+		// Check that the email is of the correct format
+		$email = $_POST['email'];
+		if ( ! is_email( $email ) ) {
+			wp_die(
+				'Invalid email provided. Please go back and use a different one.',
+				'Error',
+				array( 'response'=> 403 )
+			);
+		}
+
+		// Check that the email is from the correct organization domain (not spam)
+		$org = get_option( 'organization_name' );
+		$org_domain = get_option( 'organization_domain' );
+		$submitted_domain = substr( $email, -strlen( $org_domain ) );
+		if ( $submitted_domain != $org_domain ) {
+			wp_die(
+				'Invalid email provided. Please go back and make sure to use your ' . esc_html($org) . ' email address.',
+				'Error',
+				array( 'response'=> 403 )
+			);
+		}
+
+	}
+
+	/**
+	 * Check whether or not the user uploaded an image with their submission.
+	 *
+	 * @since    1.0.0
+	 */
+	private function check_upload_present() {
+		$photo = $_FILES['photo'];
+		if ( empty( $_FILES ) || ! isset( $photo ) || $photo['error'] == 4 ) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+
+	/**
+	 * Check that the image upload is valid, otherwise stop.
+	 *
+	 * @since    1.0.0
+	 */
+	private function check_upload_validity() {
+		if (!check_file_meets_specs()) {
+			wp_die(
+				'The image you uploaded does not meet the specifications. Please go back and upload a new image.',
+			 	'Error',
+			 	array( 'response'=> 403 )
+			);
+		}
+
+	}
+	
+	/**
+	 * Check that the file was uploaded and meets specifications
+	 *
+	 * @since    1.0.0
+	 */
+function check_file_meets_specs() {
+
+		global $max_headshot_size;
+
+		$allowed_image_types = array('image/jpeg', 'image/png');
+		$file_size = $_FILES['photo']['size'];
+		$file_type = $_FILES['photo']['type'];
+		if ( ! isset( $file_size ) || $file_size == 0 ) {
+				return false;
+		}
+		if ( $file_size > $max_headshot_size ) {
+		 		return false;	
+		}
+		if ( ! in_array( $file_type, $allowed_image_types ) ) {
+				return false;
+		}
+		return true;
+
+	}
+
+	/**
+	 * Sanitize all input fields from the user's POST request
+	 *
+	 * @since    1.0.0
+	 */
+	private function sanitize_input_fields() {
+
+		$sanitized_inputs = array(
+				'name' 			=> sanitize_text_field( $_POST['name'] ),
+				'email' 		=> sanitize_email( $_POST['email'] ),
+				'subject' 	=> sanitize_text_field( $_POST['subject'] ),
+				'grad_date' => sanitize_text_field( $_POST['grad_date'] ),
+				'interests' => sanitize_text_field( $_POST['interests'] ),
+				'bio'				=> sanitize_text_field( $_POST['bio'] )
+		);
+		return $sanitized_inputs;
+
+	}
+
+	/**
+	 * Create a new post based on the user's inputs.
+	 * 
+	 * @since    1.0.0
+	 */
+	private function create_new_post( $inputs ) {
+
+		// Assign data for the post
+		$post_arr = array(
+				'post_type'    => 'members',
+				'post_title'   => $inputs['name'],
+				'post_content' => $inputs['bio'],
+				'post_name'    => 'test-new-member'
+		);
+
+		// Insert a post for the new member with accompanying metadata
+		$post_id = wp_insert_post( $post_arr );
+		update_post_meta( $post_id, 'subject', $inputs['subject'] );
+		update_post_meta( $post_id, 'grad_date', $inputs['grad_date'] );
+		update_post_meta( $post_id, 'interests', $inputs['interests'] );
+		return $post_id;
+	}
+	
+	/**
+	 * Notify the site administrator when someone submits the form (if desired).
+	 * 
+	 * @since    1.0.0
+	 */
+	private function notify_admin_on_submission( $inputs ) {
+
+		$recipient = get_option( 'admin_email' );
+		$subject = 'SPG new member: ' . $inputs['name'];
+		$message = $inputs['name'] . ' has submitted a new member request.';
+		wp_mail( $recipient, $subject, $message );
+	}
+
 }
+

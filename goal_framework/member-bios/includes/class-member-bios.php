@@ -177,6 +177,9 @@ class Member_Bios {
 		// Hook up our custom post to theme setup
 		$this->loader->add_action( 'init', $plugin_public, 'register_member_post_type' );
 		$this->loader->add_action( 'init', $plugin_public, 'register_positions_taxonomy');
+		// Accept user input
+		$this->loader->add_action( 'admin_post_submit_member', $plugin_public, 'submit_new_member_form' );
+		$this->loader->add_action( 'admin_nopriv_post_submit_member', $plugin_public, 'submit_new_member_form' );
 
 	}
 
