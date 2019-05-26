@@ -30,7 +30,6 @@ $max_headshot_size = set_plugin_max_headshot_size();
 // Plugin specific files to include
 require($PLUGIN_DIR . '/includes/define-members-post-type.php');
 require($PLUGIN_DIR . '/includes/define-new-members-form.php');
-require($PLUGIN_DIR . '/includes/submit-new-members.php');
 
 // These files need to be included as dependencies when on the front end.
 require_once(ABSPATH . 'wp-admin/includes/image.php');
@@ -74,6 +73,3 @@ add_filter('template_include', 'include_submit_confirmation_template');
 // Format the "Members" page properly
 add_action('pre_get_posts', 'show_all_members');
 add_action('pre_get_posts', 'alpha_order_classes');
-// Accept user input
-add_action('admin_post_submit_member', 'submit_new_member_form');
-add_action('admin_post_nopriv_submit_member', 'submit_new_member_form');

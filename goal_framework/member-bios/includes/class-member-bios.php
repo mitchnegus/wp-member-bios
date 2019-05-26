@@ -154,6 +154,7 @@ class Member_Bios {
 
 		$plugin_admin = new Member_Bios_Admin( $this->get_member_bios(), $this->get_version() );
 
+		// Set admin area styles and JavaScript
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_settings_page' );
@@ -172,6 +173,7 @@ class Member_Bios {
 
 		$plugin_public = new Member_Bios_Public( $this->get_member_bios(), $this->get_version() );
 
+		// Set public-facing styles and JavaScript
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		// Hook up our custom post to theme setup
