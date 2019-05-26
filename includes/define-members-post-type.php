@@ -3,45 +3,6 @@
  * Function definitions for the "Members" custom post type
  */
 
-// Function for collecting custom data on the admin page (member's discipline)
-function get_subject()
-{
-		global $post;
-		$custom = get_post_custom($post->ID);
-		$subject = $custom['subject'][0];
-?>
-		<label for="subject">Subject area:</label>
-		<input id="subject" name="subject" value="<?php echo esc_html($subject); ?>" required/>
-<?php
-}
-
-// Function for collecting custom data on the admin page (graduation date)
-function get_grad_date()
-{
-		global $post;
-		$custom = get_post_custom($post->ID);
-		$grad_date = $custom['grad_date'][0];
-?>
-		<label for="grad_date">Expected Graduation Date:</label>
-		<input id="grad_date" name="grad_date" value="<?php echo esc_html($grad_date); ?>" required/>
-<?php
-}
-
-// Function for collecting custom data on the admin page (member's interests)
-function get_interests()
-{
-		global $post;
-		$custom = get_post_custom($post->ID);
-		$interests = $custom['interests'][0];
-?>
-		<label for="interests">Member interests:</label>
-		<br>
-		<textarea id="interests" name="interests" cols="50" rows="2"  required><?php
-		echo esc_textarea($interests);
-		?></textarea>
-<?php
-}
-
 // Save the custom information to the database
 function save_member_details()
 {
