@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Wordpress Member Bios
+ *
  * The plugin bootstrap file
  *
  * This file is read by WordPress to generate the plugin information in the plugin
@@ -8,9 +10,12 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
+ * @package           Member_Bios
  * @link              http://example.com
  * @since             1.0.0
- * @package           Member_Bios
+ * @author						Mitch Negus
+ * @copyright					2019 Mitch Negus
+ * @license						GPL-2.0+
  *
  * @wordpress-plugin
  * Plugin Name:       WordPress Member Bios
@@ -18,7 +23,7 @@
  * Description:       A plugin for managing a group's member pages, including automatic submission of an image and short bio.
  * Version:           1.0.0
  * Author:            Mitch Negus
- * Author URI:        http://mitchnegus.com
+ * Author URI:        https://www.mitchnegus.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       member-bios
