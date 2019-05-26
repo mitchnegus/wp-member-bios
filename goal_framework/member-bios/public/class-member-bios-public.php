@@ -73,7 +73,13 @@ class Member_Bios_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->member_bios, plugin_dir_url( __FILE__ ) . 'css/member-bios-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style(
+			$this->member_bios,
+			plugin_dir_url( __FILE__ ) . 'css/member-bios-public.css',
+			array(),
+			$this->version,
+			'all'
+	 	);
 
 	}
 
@@ -96,7 +102,13 @@ class Member_Bios_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->member_bios, plugin_dir_url( __FILE__ ) . 'js/member-bios-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script(
+			$this->member_bios,
+			plugin_dir_url( __FILE__ ) . 'js/member-bios-public.js',
+			array( 'jquery' ),
+			$this->version,
+			false
+	 	);
 
 	}
 

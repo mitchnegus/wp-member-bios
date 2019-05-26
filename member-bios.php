@@ -57,13 +57,6 @@ require_once(ABSPATH . 'wp-admin/includes/image.php');
 require_once(ABSPATH . 'wp-admin/includes/file.php');
 require_once(ABSPATH . 'wp-admin/includes/media.php');
  
-// Include CSS stylesheet
-function enqueue_resources()
-{
-   wp_register_style('member-bios', plugins_url('style.css', __FILE__));
-	 wp_enqueue_style('member-bios');
-}
-
 // Set the maximum image size for user uploaded headshots
 function set_plugin_max_headshot_size()
 {
@@ -86,8 +79,6 @@ set_post_thumbnail_size(200, 200);
 register_activation_hook(__FILE__, 'activate_member_bios');
 register_deactivation_hook(__FILE__, 'deactivate_member_bios');
 
-// Include the CSS stylesheet for the plugin
-add_action('init', 'enqueue_resources'); 
 // Hook up our custom post to theme setup
 add_action('init', 'register_member_post_type');
 add_action('init', 'register_positions_taxonomy');
