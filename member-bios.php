@@ -58,8 +58,7 @@ set_post_thumbnail_size(200, 200);
 register_activation_hook(__FILE__, 'activate_member_bios');
 register_deactivation_hook(__FILE__, 'deactivate_member_bios');
 
-// Add custom fields to the custom post; save them on post
-add_action('admin_init', 'add_admin_fields');
+// Save custom fields to the custom post
 add_action('save_post', 'save_member_details');
 // Update the columns on the browse members page
 add_action('manage_members_posts_custom_column', 'add_member_columns', 10, 2);

@@ -3,35 +3,6 @@
  * Function definitions for the "Members" custom post type
  */
 
-// Create fields on the admin page for the custom data
-function add_admin_fields()
-{
-		add_meta_box(
-				'subject-meta',
-				'Subject',
-				'get_subject',
-				'members',
-				'normal',
-				'low'
-		);
-		add_meta_box(
-				'grad_date-meta',
-				'Graduation',
-				'get_grad_date',
-				'members',
-				'normal',
-				'low'
-		);
-		add_meta_box(
-				'interests-meta',
-				'Interests',
-				'get_interests',
-				'members',
-				'normal',
-				'low'
-		);
-}
-
 // Function for collecting custom data on the admin page (member's discipline)
 function get_subject()
 {
