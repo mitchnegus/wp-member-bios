@@ -14,7 +14,7 @@
  * The admin-specific functionality of the plugin.
  *
  * Defines the plugin name, version, and hooks for managing the admin area
- * (inlcuding enqueuing the admin-specific stylesheet and JavaScript). An
+ * (including enqueuing the admin-specific stylesheet and JavaScript). An
  * instance of this class should be passed to the run() function defined
  * in Member_Bios_Loader as all of the hooks are actually defined in that
  * particular class. The Member_Bios_Loader will then create the
@@ -49,7 +49,7 @@ class Member_Bios_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $member_bios       The name of this plugin.
+	 * @param      string    $member_bios       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $member_bios, $version ) {
