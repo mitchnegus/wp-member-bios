@@ -65,6 +65,8 @@ class Member_Bios_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
+	 * (Executed by loader class)
+	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
@@ -81,6 +83,8 @@ class Member_Bios_Admin {
 
 	/**
 	 * Register the JavaScript for the admin area.
+	 *
+	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
 	 */
@@ -100,6 +104,8 @@ class Member_Bios_Admin {
 	/**
 	 *  Include setup menu page for the plugin in the admin area.
 	 *
+	 * (Executed by loader class)
+	 *
 	 * @since    1.0.0
 	 */
 	public function add_settings_page() {
@@ -118,6 +124,8 @@ class Member_Bios_Admin {
 	/**
 	 * Add settings (associated with sections) that are available to a an admin.
 	 *
+	 * (Executed by loader class)
+	 *
 	 * @since    1.0.0
 	 */
 	public function add_settings() {
@@ -125,6 +133,46 @@ class Member_Bios_Admin {
 		$this->register_settings();
 		$this->add_email_notification_settings();
 		$this->add_spam_filtering_settings();
+
+	}
+
+	/**
+	 * Add fields to the admin area corresponding to custom post metadata.
+	 *
+	 * Submitted new member information other than the new member's name, image
+	 * and bio (e.g. field of study, expected graduation date, and policy
+	 * interests) are stored as post metadata. Input boxes for that metadata in
+	 * the admin area are defined here.
+	 * (Executed by loader class)
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_admin_fields() {
+
+		add_meta_box(
+				'subject-meta',
+				'Subject',
+				'get_subject',
+				'members',
+				'normal',
+				'low'
+		);
+		add_meta_box(
+				'grad_date-meta',
+				'Graduation',
+				'get_grad_date',
+				'members',
+				'normal',
+				'low'
+		);
+		add_meta_box(
+				'interests-meta',
+				'Interests',
+				'get_interests',
+				'members',
+				'normal',
+				'low'
+		);
 
 	}
 
