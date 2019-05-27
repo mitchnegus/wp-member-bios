@@ -345,7 +345,7 @@ class Member_Bios_Admin {
 
 		$option_name = $args['label_for'];
 		$option_default = get_option( $option_name );
-		display_text_input( $option_name, $option_default, $required=false );
+		display_text_input( $option_name, $option_default, $required = false );
 
 	}
 
@@ -358,7 +358,7 @@ class Member_Bios_Admin {
 
 		$info = $this->get_metabox_info( $post, $metabox );
 		display_label( $info['name'], $info['title'] );
-		display_text_input( $info['name'], $info['value'], $required=true );
+		display_text_input( $info['name'], $info['value'], $required = true );
 
 	}
 	
@@ -371,7 +371,7 @@ class Member_Bios_Admin {
 		
 		$info = $this->get_metabox_info( $post, $metabox );
 		display_label( $info['name'], $info['title'] );
-		display_text_area( $info['name'], $info['value'], $required=true );
+		display_text_area( $info['name'], $info['value'], $required = true );
 
 	}
 

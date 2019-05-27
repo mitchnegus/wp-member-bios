@@ -75,7 +75,7 @@ function display_label( $for, $label) {
 	<?php
 }
 
-function display_text_input( $name, $value, $required=false ) {
+function display_text_input( $name, $value, $required = false ) {
 
 	if ( $required ) {
 		$required = 'required';
@@ -89,7 +89,7 @@ function display_text_input( $name, $value, $required=false ) {
 	<?php
 }
 
-function display_text_area( $name, $value, $required=false ) {
+function display_text_area( $name, $value, $required = false ) {
 
 	if ( $required ) {
 		$required = 'required';
