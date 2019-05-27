@@ -56,14 +56,20 @@ class Member_Bios_Admin {
 
 		$this->member_bios = $member_bios;
 		$this->version = $version;
+		$this->members_custom_post_type = 'members';
 		$this->settings_page_slug = 'member-bios-settings';
 		$this->option_group = 'member-bios-option-group';
-		$this->members_custom_post_type = 'members';
 		// Define settings to be added to the database
 		$this->plugin_settings = array(
-			'notification_email'  => 'wp_notification_email',
-			'organization_name'   => 'wp_organization_name',
-			'organization_domain' => 'wp_organization_domain'
+			'notification_email'  => 'wmb_notification_email',
+			'organization_name'   => 'wmb_organization_name',
+			'organization_domain' => 'wmb_organization_domain'
+		);
+		// Define member provided meta fields
+		$this->member_meta_keys = array(
+			'subject_field'    => 'subject',
+			'graduation_date' => 'grad_date',
+			'policy_interests'  => 'interests'
 		);
 		// All functions prefixed with 'display_' come from `partials`
 		require_once plugin_dir_path( __FILE__ ) . 'partials/member-bios-admin-display.php';
@@ -157,7 +163,7 @@ class Member_Bios_Admin {
 	public function add_admin_fields() {
 
 		$subject_args = array(
-			'label_for'   => 'subject',
+			'label_for'   => $this->member_meta_keys['subject_field'],
 			'label_title' => 'Subject area'
 		);
 		add_meta_box(
@@ -171,7 +177,7 @@ class Member_Bios_Admin {
 		);
 
 		$grad_date_args = array(
-			'label_for'   => 'grad_date',
+			'label_for'   => $this->member_meta_keys['graduation_date'],
 			'label_title' => 'Expected graduation date'
 		);
 		add_meta_box(
@@ -185,7 +191,7 @@ class Member_Bios_Admin {
 		);
 
 		$interests_args = array(
-			'label_for'   => 'interests',
+			'label_for'   => $this->member_meta_keys['policy_interests'],
 			'label_title' => 'Policy interests'
 		);
 		add_meta_box(
@@ -212,15 +218,12 @@ class Member_Bios_Admin {
 			// Only save meta data for members posts
 			if ( get_post_type( $post_id ) == $this->members_custom_post_type ) {
 
-					// Sanitize user input
-					$subject = sanitize_text_field($_POST['subject']);
-					$grad_date = sanitize_text_field($_POST['grad_date']);
-					$interests = sanitize_text_field($_POST['interests']);
+				foreach ( $this->member_meta_keys as $meta_key ) {
+					// Sanitize user input and update the post metadata
+					$meta_value = sanitize_text_field($_POST[ $meta_key ]);
+					update_post_meta( $post_id, $meta_key, $meta_value );
+				}
 
-					// Update the metadata for the post
-					update_post_meta( $post_id, 'subject', $subject);
-					update_post_meta( $post_id, 'grad_date', $grad_date);
-					update_post_meta( $post_id, 'interests', $interests);
 			}
 	}
 
@@ -249,6 +252,7 @@ class Member_Bios_Admin {
 		foreach ( $this->plugin_settings as $setting ) {
 			register_setting( $this->option_group, $setting );
 		}	
+
 	}
 
 	/**
