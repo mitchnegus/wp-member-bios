@@ -58,9 +58,6 @@ set_post_thumbnail_size(200, 200);
 register_activation_hook(__FILE__, 'activate_member_bios');
 register_deactivation_hook(__FILE__, 'deactivate_member_bios');
 
-// Update the columns on the browse members page
-add_action('manage_members_posts_custom_column', 'add_member_columns', 10, 2);
-add_filter('manage_members_posts_columns', 'set_member_columns');
 // Use a custom template for the member pages
 add_filter('single_template', 'use_custom_member_single_template');
 add_filter('archive_template', 'use_custom_member_archive_template');

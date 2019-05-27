@@ -3,31 +3,6 @@
  * Function definitions for the "Members" custom post type
  */
 
-// Add columns to the "Members" admin page
-function add_member_columns($column, $post_id)
-{
-		$custom = get_post_custom();
-		switch ($column) {
-				case 'subject':
-					echo $custom['subject'][0];
-					break;
-				case 'grad_date':
-					echo $custom['grad_date'][0];
-					break;
-		}
-}
-
-function set_member_columns($columns)
-{
-		$columns = array(
-				'cb' 				=> '<input type="checkbox" />',
-				'title' 		=> __('Member'),
-				'subject' 	=> __('Subject'),
-				'grad_date' => __('Graduation Date')
-		);
-		return $columns;
-}	
-
 function use_custom_member_single_template($single_template)
 {
 		global $post, $PLUGIN_DIR;
