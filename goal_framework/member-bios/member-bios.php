@@ -45,6 +45,10 @@ define( 'MEMBER_BIOS_VERSION', '1.0.0' );
 require_once ABSPATH . 'wp-admin/includes/image.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/media.php';
+
+global $PLUGIN_DIR, $PLUGIN_URL;
+$PLUGIN_DIR = plugin_dir_path(__FILE__);
+$PLUGIN_URL = plugin_dir_url(__FILE__);
  
 /**
  * The code that runs during plugin activation.
