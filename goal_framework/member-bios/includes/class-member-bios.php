@@ -163,6 +163,9 @@ class Member_Bios {
 		// Provide admin area controls for member custom posts
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'add_admin_fields');
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_member_details');
+		// Update the columns on the browse members page
+		$this->loader->add_action('manage_members_posts_custom_column', $plugin_admin, 'fill_member_columns', 10, 2);
+		$this->loader->add_filter('manage_members_posts_columns', $plugin_admin, 'set_member_columns');
 
 	}
 

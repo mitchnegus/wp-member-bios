@@ -66,10 +66,10 @@ class Member_Bios_Admin {
 			'organization_domain' => 'wmb_organization_domain'
 		);
 		// Define member provided meta fields
-		$this->member_meta_keys = array(
-			'subject_field'    => 'subject',
-			'graduation_date' => 'grad_date',
-			'policy_interests'  => 'interests'
+		$this->member_meta_info = array(
+			'subject'   => 'Field of Study',
+			'grad_date' => 'Graduation Date',
+			'interests' => 'Policy Interests'
 		);
 		// All functions prefixed with 'display_' come from `partials`
 		require_once plugin_dir_path( __FILE__ ) . 'partials/member-bios-admin-display.php';
@@ -162,47 +162,21 @@ class Member_Bios_Admin {
 	 */
 	public function add_admin_fields() {
 
-		$subject_args = array(
-			'label_for'   => $this->member_meta_keys['subject_field'],
-			'label_title' => 'Subject area'
-		);
-		add_meta_box(
-				'subject-meta',
-				'Subject',
+		foreach ( $this->member_meta_info as $meta_key => $meta_title ) {
+			$meta_args = array(
+				'label_for'   => $meta_key,
+				'label_title' => $meta_title
+			);
+			add_meta_box(
+				$meta_key . '-meta',
+				$meta_title,
 				[$this, 'present_metabox_text_input'],
 				$this->members_custom_post_type,
 				'normal',
 				'low',
-				$subject_args
-		);
-
-		$grad_date_args = array(
-			'label_for'   => $this->member_meta_keys['graduation_date'],
-			'label_title' => 'Expected graduation date'
-		);
-		add_meta_box(
-				'grad_date-meta',
-				'Graduation',
-				[$this, 'present_metabox_text_input'],
-				$this->members_custom_post_type,
-				'normal',
-				'low',
-				$grad_date_args
-		);
-
-		$interests_args = array(
-			'label_for'   => $this->member_meta_keys['policy_interests'],
-			'label_title' => 'Policy interests'
-		);
-		add_meta_box(
-				'interests-meta',
-				'Interests',
-				[$this, 'present_metabox_text_area'],
-				$this->members_custom_post_type,
-				'normal',
-				'low',
-				$interests_args
-		);
+				$meta_args
+			);
+		}
 
 	}
 
@@ -218,13 +192,61 @@ class Member_Bios_Admin {
 			// Only save meta data for members posts
 			if ( get_post_type( $post_id ) == $this->members_custom_post_type ) {
 
-				foreach ( $this->member_meta_keys as $meta_key ) {
+				foreach ( $this->member_meta_info as $meta_key => $meta_title ) {
 					// Sanitize user input and update the post metadata
 					$meta_value = sanitize_text_field($_POST[ $meta_key ]);
 					update_post_meta( $post_id, $meta_key, $meta_value );
 				}
 
 			}
+	}
+
+	/**
+	 * Fill columns in the admin area with custom post information.
+	 *
+	 * In the admin area, an administrator can see a list of all members
+	 * currently listed on the site (as well as drafts for approval). 
+	 * This function populates columns in that list with relevant information
+	 * about each member.
+	 * (Executed by loader class)
+	 *
+	 * @since    1.0.0
+	 */
+	public function fill_member_columns() {
+
+		$column1 = 'subject';
+		$column2 = 'grad_date';
+		$custom = get_post_custom();
+		switch ( $column ) {
+			case $column1:
+				echo $custom[ $column1 ][0];
+				break;
+			case $column2:
+				echo $custom[ $column2 ][0];
+				break;
+		}
+
+	}
+
+	/**
+	 * Show columns on the list of all members in the admin area.
+	 *
+	 * (Executed by loader class)
+	 *
+	 * @since    1.0.0
+	 */
+	public function set_member_columns() {
+
+		$extra_column1 = 'subject';
+		$extra_column2 = 'grad_date';
+		$columns = array(
+				'cb' 				    => '<input type="checkbox" />',
+				'title' 		    => __( 'Member' ),
+				$extra_column1 	=> __( $this->member_meta_info[ $extra_column1 ] ),
+				$extra_column2 	=> __( $this->member_meta_info[ $extra_column2 ] ),
+		);
+		return $columns;
+
 	}
 
 	/**
