@@ -192,6 +192,9 @@ class Member_Bios {
 		// USe a custom template for the new member and submission success pages
 		$this->loader->add_filter( 'template_include', $plugin_public, 'include_new_member_template' );
 		$this->loader->add_filter( 'template_include', $plugin_public, 'include_submit_confirmation_template' );
+		// Use custom templates for the member pages
+		$this->loader->add_filter( 'single_template', $plugin_public, 'use_custom_member_single_template' );
+		$this->loader->add_filter( 'archive_template', $plugin_public, 'use_custom_member_archive_template' );
 
 	}
 

@@ -252,6 +252,42 @@ class Member_Bios_Public {
 	}
 
 	/**
+	 * Set the custom post single template for a member's individual page.
+	 * 
+	 * (Executed by loader class)
+	 *
+	 * @since    1.0.0
+	 */
+	public function use_custom_member_single_template( $single_template ) {
+
+		global $post, $PLUGIN_DIR;
+
+		if ( $post->post_type == 'members' ) {
+			$single_template = $PLUGIN_DIR . 'goal_framework/member-bios/public/templates/single-members.php';
+	 	}
+		return $single_template;
+
+	}
+
+	/**
+	 * Set the custom post archive template for the 'Members' page.
+	 * 
+	 * (Executed by loader class)
+	 *
+	 * @since    1.0.0
+	 */
+	public function use_custom_member_archive_template( $archive_template ) {
+
+		global $post, $PLUGIN_DIR;
+
+		if ( $post->post_type == 'members' ) {
+			$archive_template = $PLUGIN_DIR . 'goal_framework/member-bios/public/templates/archive-members.php';
+	 	}
+		return $archive_template;
+
+	}
+
+	/**
 	 * Check that the email provided is a valid user email address.
 	 *
 	 * User submitted emails are checked for validity. The validation is a two-
