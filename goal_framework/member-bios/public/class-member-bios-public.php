@@ -10,6 +10,15 @@
  * @subpackage Member_Bios/public
  */
 
+global $PLUGIN_DIR;
+global $new_member_form_template, $new_member_confirmation_template;
+global $new_member_form_title, $new_member_confirmation_title;
+
+$new_member_form_template = $PLUGIN_DIR . 'templates/new-member-form.php';
+$new_member_confirmation_template = $PLUGIN_DIR . 'templates/new-member-confirmation.php';
+$new_member_form_title = 'New Member';
+$new_member_confirmation_title = 'Submission accepted';
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -61,7 +70,9 @@ class Member_Bios_Public {
 
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
-	 *
+	 * 
+	 * (Executed by loader class)
+	 * 
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
@@ -78,6 +89,8 @@ class Member_Bios_Public {
 
 	/**
 	 * Register the JavaScript for the public-facing side of the site.
+	 *
+	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
 	 */
@@ -100,6 +113,7 @@ class Member_Bios_Public {
 	 * (name, expected graduation date, subject, interests, bio, etc.). This 
 	 * post is also accessed for display on the general members page, where 
 	 * all members of the organization are listed.
+	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
 	 */
@@ -132,6 +146,7 @@ class Member_Bios_Public {
 	 * Each group member can hold many different positions in the group.
 	 * This taxonomy allows positions like general member, executive, co-founder
 	 * or alumni to be included for any given member.
+	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
 	 */
@@ -163,6 +178,7 @@ class Member_Bios_Public {
 	 * not choose to include a photo, the user's thumbnail is left unset (the
 	 * displays of user information handle cases of users without thumbnails,
 	 * using a substitute template image instead).  
+	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
 	 */
@@ -190,6 +206,48 @@ class Member_Bios_Public {
 		if ( get_option( 'notification_email' ) == 'checked' ) {
 			$this->notify_admin_on_submission( $inputs );
 		}
+
+	}
+
+	/**
+	 * Include a template for the new member page from the plugin.
+	 *
+	 * Loads the template for the new member form page out of the available 
+	 * templates. The template has text input boxes for entering the new
+	 * member's name, bio, field of study, expected graduation date, and policy
+	 * interests.
+	 * (Executed by loader class)
+	 *
+	 * @since    1.0.0
+	 */
+	public function include_new_member_template( $template ) {
+
+		global $new_member_form_template, $new_member_form_title;
+
+		if ( is_page( $new_member_form_title ) ) {
+			return $new_member_form_template;
+		}
+		return $template;
+
+	}
+
+	/**
+	 * Include a template for the submission confirmation page.
+	 * 
+	 * After a user successfully submits a new member request form, this template
+	 * will be used to display a confirmation page.
+	 * (Executed by loader class)
+	 *
+	 * @since    1.0.0
+	 */
+	public function include_submit_confirmation_template( $template ) {
+
+		global $new_member_confirmation_template, $new_member_confirmation_title;
+
+		if ( is_page( $new_member_confirmation_title ) ) {
+			return $new_member_confirmation_template;
+		}
+		return $template;
 
 	}
 
