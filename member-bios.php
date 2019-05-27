@@ -29,7 +29,6 @@ $max_headshot_size = set_plugin_max_headshot_size();
 
 // Plugin specific files to include
 require($PLUGIN_DIR . '/includes/define-members-post-type.php');
-require($PLUGIN_DIR . '/includes/define-new-members-form.php');
 
 // These files need to be included as dependencies when on the front end.
 require_once(ABSPATH . 'wp-admin/includes/image.php');
@@ -61,9 +60,6 @@ register_deactivation_hook(__FILE__, 'deactivate_member_bios');
 // Use a custom template for the member pages
 add_filter('single_template', 'use_custom_member_single_template');
 add_filter('archive_template', 'use_custom_member_archive_template');
-// Use a custom template for the new member and submission sucess pages
-add_filter('template_include', 'include_new_member_template');
-add_filter('template_include', 'include_submit_confirmation_template');
 // Format the "Members" page properly
 add_action('pre_get_posts', 'show_all_members');
 add_action('pre_get_posts', 'alpha_order_classes');
