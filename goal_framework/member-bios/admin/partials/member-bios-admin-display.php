@@ -66,6 +66,15 @@ function display_spam_filter_section( $args ) {
 	<?php
 }
 
+function display_label( $for, $label) {
+	?>
+
+	<label for="<?php echo esc_attr( $for ); ?>"><?php echo esc_html( $label ); ?></label>
+	<br>
+
+	<?php
+}
+
 function display_text_input( $name, $value, $required=false ) {
 
 	if (required) {
@@ -76,6 +85,22 @@ function display_text_input( $name, $value, $required=false ) {
 	?>
 
 	<input id="<?php echo esc_attr( $name ); ?>" name="<?php echo esc_attr( $name ); ?>" type="text" value="<?php echo esc_attr( $value ) ?>" <?php echo $required; ?>/>
+
+	<?php
+}
+
+function display_text_area( $name, $value, $required=false ) {
+
+	if (required) {
+		$required = 'required';
+	} else {
+		$required = '';
+	}
+	?>
+
+	<textarea id="<?php echo esc_attr( $name ); ?>" name="<?php echo esc_attr( $name ); ?>" cols="50" rows="2"  <?php echo $required; ?>/>
+		<?php echo esc_textarea( $value ); ?>
+	</textarea>
 
 	<?php
 }

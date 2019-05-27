@@ -149,29 +149,46 @@ class Member_Bios_Admin {
 	 */
 	public function add_admin_fields() {
 
+		$subject_args = array(
+			'label_for'   => 'subject',
+			'label_title' => 'Subject area'
+		);
 		add_meta_box(
 				'subject-meta',
 				'Subject',
-				[$this, 'get_subject'],
+				[$this, 'present_metabox_text_input'],
 				'members',
 				'normal',
-				'low'
+				'low',
+				$subject_args
+		);
+
+		$grad_date_args = array(
+			'label_for'   => 'grad_date',
+			'label_title' => 'Expected graduation date'
 		);
 		add_meta_box(
 				'grad_date-meta',
 				'Graduation',
-				[$this, 'get_grad_date'],
+				[$this, 'present_metabox_text_input'],
 				'members',
 				'normal',
-				'low'
+				'low',
+				$grad_date_args
+		);
+
+		$interests_args = array(
+			'label_for'   => 'interests',
+			'label_title' => 'Policy interests'
 		);
 		add_meta_box(
 				'interests-meta',
 				'Interests',
-				[$this, 'get_interests'],
+				[$this, 'present_metabox_text_area'],
 				'members',
 				'normal',
-				'low'
+				'low',
+				$interests_args
 		);
 
 	}
@@ -225,10 +242,10 @@ class Member_Bios_Admin {
 		add_settings_field(
 				$notification_email_id,
 				$notification_email_label,
-				[$this, 'collect_checkbox_preference'],
+				[$this, 'present_checkbox_setting'],
 				$this->settings_page_slug,
 				$section_id,	
-				array('label_for' => $notification_email_id)
+				array( 'label_for' => $notification_email_id )
 		);
 		
 	}
@@ -254,30 +271,30 @@ class Member_Bios_Admin {
 		add_settings_field(
 				$organization_name_id,
 				$organization_name_label,
-				[$this, 'collect_text_input'],
+				[$this, 'present_text_input_setting'],
 				$this->settings_page_slug,
 				$section_id,
-				array('label_for' => $organization_name_id)
+				array( 'label_for' => $organization_name_id )
 		);
 		$organization_domain_id = 'organization_domain';
 		$organization_domain_label = 'Organization Email Domain (e.g. berkeley.edu)';
 		add_settings_field(
 				$organization_domain_id,
 				$organization_domain_label,
-				[$this, 'collect_text_input'],
+				[$this, 'present_text_input_setting'],
 				$this->settings_page_slug,
 				$section_id,
-				array('label_for' => $organization_domain_id)
+				array( 'label_for' => $organization_domain_id )
 		);
 
 	}
 
 	/**
-	 * Collect the administrator's email notification preference.
+	 * Present a checkbox to collect an administrator preference.
 	 *
 	 * @since 1.0.0
 	 */
-	public function collect_checkbox_preference( $args ) {
+	public function present_checkbox_setting( $args ) {
 
 		$option_name = $args['label_for'];
 		$option_default = get_option( $option_name );
@@ -286,11 +303,11 @@ class Member_Bios_Admin {
 	}
 
 	/**
-	 * Collect the text input from a formatted input box.
+	 * Present a text input for a setting in the admin area.
 	 *
 	 * @since 1.0.0
 	 */
-	public function collect_text_input( $args ) {
+	public function present_text_input_setting( $args ) {
 
 		$option_name = $args['label_for'];
 		$option_default = get_option( $option_name );
@@ -298,46 +315,50 @@ class Member_Bios_Admin {
 
 	}
 
-	// Function for collecting custom data on the admin page (member's discipline)
-	public function get_subject() {
+	/**
+	 * Present a text input in an admin area metabox for managing member info.
+	 *
+	 * @since 1.0.0
+	 */
+	public function present_metabox_text_input( $post, $metabox ) {
 
-		global $post;
-
-		$custom = get_post_custom($post->ID);
-		$subject = $custom['subject'][0];
-		?>
-		<label for="subject">Subject area:</label>
-		<?php
-		display_text_input( 'subject', $subject, $required=true );
-
-	}
-
-	// Function for collecting custom data on the admin page (graduation date)
-	public function get_grad_date()
-	{
-			global $post;
-
-			$custom = get_post_custom($post->ID);
-			$grad_date = $custom['grad_date'][0];
-			?>
-			<label for="grad_date">Expected Graduation Date:</label>
-			<?php
-			display_text_input( 'grad_date', $grad_date, $required=true );
+		$info = $this->get_metabox_info( $post, $metabox );
+		display_label( $info['name'], $info['title'] );
+		display_text_input( $info['name'], $info['value'], $required=true );
 
 	}
 	
-	// Function for collecting custom data on the admin page (member's interests)
-	public function get_interests()
-	{
-			global $post;
-			$custom = get_post_custom($post->ID);
-			$interests = $custom['interests'][0];
-			?>
-			<label for="interests">Member interests:</label>
-			<br>
-			<textarea id="interests" name="interests" cols="50" rows="2"  required><?php
-			echo esc_textarea($interests);
-			?></textarea>
-			<?php
+	/**
+	 * Present a text area in an admin area metabox for managing member info.
+	 *
+	 * @since 1.0.0
+	 */
+	public function present_metabox_text_area( $post, $metabox ) {
+		
+		$info = $this->get_metabox_info( $post, $metabox );
+		display_label( $info['name'], $info['title'] );
+		display_text_area( $info['name'], $info['value'], $required=true );
+
 	}
+
+	/**
+	 * Get the metabox name and title, along with the corresponding post value.
+	 *
+	 * @since 1.0.0
+	 */
+	private function get_metabox_info( $post, $metabox ) {
+
+		$name = $metabox['args']['label_for'];
+		$title = $metabox['args']['label_title'];
+		$custom = get_post_custom( $post->ID );
+		$value = $custom[ $name ][0];
+		$info = array(
+			'name'  => $name,
+			'title' => $title,
+			'value' => $value
+		);
+		return $info;
+
+	}
+
 }
