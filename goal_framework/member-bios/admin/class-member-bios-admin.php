@@ -162,21 +162,15 @@ class Member_Bios_Admin {
 	 */
 	public function add_admin_fields() {
 
-		foreach ( $this->member_meta_info as $meta_key => $meta_title ) {
-			$meta_args = array(
-				'label_for'   => $meta_key,
-				'label_title' => $meta_title
-			);
-			add_meta_box(
-				$meta_key . '-meta',
-				$meta_title,
-				[$this, 'present_metabox_text_input'],
-				$this->members_custom_post_type,
-				'normal',
-				'low',
-				$meta_args
-			);
-		}
+		add_meta_box(
+			'member_info-meta',
+			'Member Info',
+			[$this, 'present_member_metabox_text_inputs'],
+			$this->members_custom_post_type,
+			'normal',
+			'low'
+		);
+		
 
 	}
 
@@ -376,14 +370,14 @@ class Member_Bios_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function present_metabox_text_input( $post, $metabox ) {
+	public function present_member_metabox_text_inputs( $post, $metabox ) {
 
-		$name = $metabox['args']['label_for'];
-		$title = $metabox['args']['label_title'];
-		$custom = get_post_custom( $post->ID );
-		$value = $custom[ $name ][0];
-		display_label( $name, $title );
-		display_text_input( $name, $value, $required = true );
+		foreach ( $this->member_meta_info as $meta_key => $meta_title ) {
+			$custom = get_post_custom( $post->ID );
+			$meta_value = $custom[ $meta_key ][0];
+			display_label( $meta_key, $meta_title );
+			display_text_input( $meta_key, $meta_value, $required = true );
+		}
 
 	}
 

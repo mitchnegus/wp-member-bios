@@ -85,6 +85,7 @@ function display_text_input( $name, $value, $required = false ) {
 	?>
 
 	<input id="<?php echo esc_attr( $name ); ?>" name="<?php echo esc_attr( $name ); ?>" type="text" value="<?php echo esc_attr( $value ) ?>" <?php echo $required; ?>/>
+	<br>
 
 	<?php
 }
