@@ -59,10 +59,11 @@ class Member_Bios_Admin {
 		$this->settings_page_slug = 'member-bios-settings';
 		$this->option_group = 'member-bios-option-group';
 		$this->members_custom_post_type = 'members';
+		// Define settings to be added to the database
 		$this->plugin_settings = array(
-			'notification_email',
-			'organization_name',
-			'organization_domain'
+			'notification_email'  => 'wp_notification_email',
+			'organization_name'   => 'wp_organization_name',
+			'organization_domain' => 'wp_organization_domain'
 		);
 		// All functions prefixed with 'display_' come from `partials`
 		require_once plugin_dir_path( __FILE__ ) . 'partials/member-bios-admin-display.php';
@@ -266,7 +267,7 @@ class Member_Bios_Admin {
 				$this->settings_page_slug
 		);
 
-		$notification_email_id = 'notification_email';
+		$notification_email_id = $this->plugin_settings['notification_email'];
 		$notification_email_label = 'Notification Email';
 		add_settings_field(
 				$notification_email_id,
@@ -295,7 +296,7 @@ class Member_Bios_Admin {
 				$this->settings_page_slug
 		);
 
-		$organization_name_id = 'organization_name';
+		$organization_name_id = $this->plugin_settings['organization_name'];
 		$organization_name_label = 'Organization Name';
 		add_settings_field(
 				$organization_name_id,
@@ -305,7 +306,7 @@ class Member_Bios_Admin {
 				$section_id,
 				array( 'label_for' => $organization_name_id )
 		);
-		$organization_domain_id = 'organization_domain';
+		$organization_domain_id = $this->plugin_settings['organization_domain'];
 		$organization_domain_label = 'Organization Email Domain (e.g. berkeley.edu)';
 		add_settings_field(
 				$organization_domain_id,
