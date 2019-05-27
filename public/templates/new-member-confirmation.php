@@ -11,16 +11,17 @@
  * @link https://codex.wordpress.org/Template_Hierarchy
  */
 
-get_header(); ?>
+get_header(); 
+?>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
-		
+<div id="primary" class="content-area">
+	<main id="main" class="site-main">
+
 		<h1>Thank you!</h1>
 		<p>Look for your profile to appear on the site soon.</p>
 		
-		</main><!-- #main -->
-	</div><!-- #primary -->
+	</main><!-- #main -->
+</div><!-- #primary -->
 
 <?php
 get_sidebar();

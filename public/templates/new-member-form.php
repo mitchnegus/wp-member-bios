@@ -16,10 +16,11 @@ global $max_headshot_size;
 $given_org = get_option( 'wmb_organization_name' );
 $organization = ($given_org == '' ? 'Organization' : $given_org ); 
 
-get_header(); ?>
+get_header();
+?>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
+<div id="primary" class="content-area">
+	<main id="main" class="site-main">
 		
 		<h1><?php the_title(); ?></h1>
 		<img src="<?php echo WMB_URL; ?>/img/headshot_template.png" style="display: block; width: 25%; margin: 0 auto;" alt="headshot template" />
@@ -30,9 +31,9 @@ get_header(); ?>
 			<li>a photo (square images work best)</li>
 		</ul>
 
-		<form id="new-member-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" enctype="multipart/form-data" method="post">
+		<form id="new-member-form" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" enctype="multipart/form-data" method="post">
 			<input type="hidden" name="action" value="submit_member" />
-			<?php wp_nonce_field('add_new_member_nonce', 'new_member_form_nonce'); ?>
+			<?php wp_nonce_field( 'add_new_member_nonce', 'new_member_form_nonce' ); ?>
 			<div style="display: flex; width: 70%;">
 				<div class="new-member-form-element" style="flex-grow: 3;">
 					<label for="name" class="new-member-form-label">
@@ -78,7 +79,7 @@ get_header(); ?>
 			</div>
 			<div class="new-member-form-element">
 				<label for="photo" class="new-member-form-label">
-				Photo (<?php echo floor($max_headshot_size/1e6); ?>MB maximum file size)
+				Photo (<?php echo floor( get_option( 'wmb_max_headshot_size' ) ); ?>MB maximum file size)
 				</label>
 				<br>
 				<input type="file" id="photo" name="photo" value="" />
@@ -88,8 +89,8 @@ get_header(); ?>
 			</div>
 		</form>
 		
-		</main><!-- #main -->
-	</div><!-- #primary -->
+	</main><!-- #main -->
+</div><!-- #primary -->
 
 <?php
 get_sidebar();
