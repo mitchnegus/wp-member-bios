@@ -324,6 +324,25 @@ class Member_Bios_Public {
 	}
 
 	/**
+	 * Check that the nonce provided is valid.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function check_nonce() {
+
+		$nonce = $_POST['new_member_form_nonce'];
+		$nonce_action = 'add_new_member_nonce';
+		if ( ! isset( $nonce ) || ! wp_verify_nonce( $nonce, $nonce_action ) ) {
+			wp_die( 'Invalid nonce specified',
+			 	'Error',
+			 	array( 'response' => 403 )
+			);
+		}
+
+	}
+
+	/**
 	 * Check that the email provided is a valid user email address.
 	 *
 	 * User submitted emails are checked for validity. The validation is a two-
@@ -342,7 +361,7 @@ class Member_Bios_Public {
 			wp_die(
 				'Invalid email provided. Please go back and use a different one.',
 				'Error',
-				array( 'response'=> 403 )
+				array( 'response' => 403 )
 			);
 		}
 
@@ -354,7 +373,7 @@ class Member_Bios_Public {
 			wp_die(
 				'Invalid email provided. Please go back and make sure to use your ' . esc_html($org) . ' email address.',
 				'Error',
-				array( 'response'=> 403 )
+				array( 'response' => 403 )
 			);
 		}
 
@@ -388,7 +407,7 @@ class Member_Bios_Public {
 			wp_die(
 				'The image you uploaded does not meet the specifications. Please go back and upload a new image.',
 			 	'Error',
-			 	array( 'response'=> 403 )
+			 	array( 'response' => 403 )
 			);
 		}
 
@@ -451,11 +470,14 @@ class Member_Bios_Public {
 	private function create_new_post( $inputs ) {
 
 		// Assign data for the post
+		$name = $inputs['name'];
+		$member_slug = $this->create_member_post_slug( $name );
+		echo $member_slug;
 		$post_arr = array(
 				'post_type'    => 'members',
-				'post_title'   => $inputs['name'],
+				'post_title'   => $name,
 				'post_content' => $inputs['bio'],
-				'post_name'    => 'test-new-member'
+				'post_name'    => $member_slug
 		);
 
 		// Insert a post for the new member with accompanying metadata
@@ -464,8 +486,29 @@ class Member_Bios_Public {
 		update_post_meta( $post_id, 'grad_date', $inputs['grad_date'] );
 		update_post_meta( $post_id, 'interests', $inputs['interests'] );
 		return $post_id;
+
 	}
 	
+	/**
+	 * Create a slug based on the member's name.
+	 * 
+	 * @since    1.0.0
+	 * @access   private
+	 * @param    string     $member_name          The name of the member to be used when creating a slug.
+	 * @return   string     $member_slug          The slug to be used for the member's post.
+	 */
+	private function create_member_post_slug( $member_name ) {
+
+		$name_array = explode( ' ', $member_name );
+		$last_name = end( $name_array );
+		$first_name = implode( array_slice( $name_array, 0, -1 ) );
+		$rearranged_name = $last_name . '-' . $first_name;
+		$member_slug = sanitize_title( $rearranged_name );
+		return $member_slug;
+
+	}
+	
+
 	/**
 	 * Notify the site administrator when someone submits the form (if desired).
 	 * 
