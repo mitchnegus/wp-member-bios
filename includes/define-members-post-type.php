@@ -3,23 +3,6 @@
  * Function definitions for the "Members" custom post type
  */
 
-// Save the custom information to the database
-function save_member_details()
-{
-		global $post;
-		// Only save meta data for members posts
-		if ($post->post_type == 'members') {
-				// Sanitize user input
-				$subject = sanitize_text_field($_POST['subject']);
-				$grad_date = sanitize_text_field($_POST['grad_date']);
-				$interests = sanitize_text_field($_POST['interests']);
-				// Update the metadata for the post
-				update_post_meta($post->ID, 'subject', $subject);
-				update_post_meta($post->ID, 'grad_date', $grad_date);
-				update_post_meta($post->ID, 'interests', $interests);
-		}
-}
-
 // Add columns to the "Members" admin page
 function add_member_columns($column, $post_id)
 {
