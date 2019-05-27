@@ -227,6 +227,7 @@ class Member_Bios {
 	 * overridden on the settings page. The value returned is in megabytes (MB).
 	 *
 	 * @since    1.0.0
+	 * @access   private
 	 */
 	private function set_plugin_max_headshot_size() {
 

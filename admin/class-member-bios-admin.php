@@ -182,6 +182,7 @@ class Member_Bios_Admin {
 	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
+	 * @param    int        $post_id              The ID of the custom member post for the given member.
 	 */
 	public function save_member_details( $post_id ) {
 
@@ -230,6 +231,7 @@ class Member_Bios_Admin {
 	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
+	 * @return   array                            The columns to be displayed in the 'Members' section of the admin area.
 	 */
 	public function set_member_columns() {
 
@@ -264,6 +266,7 @@ class Member_Bios_Admin {
 	 * Regsister new settings for the plugin's settings page
 	 *
 	 * @since    1.0.0
+	 * @access   private
 	 */
 	private function register_settings() {
 
@@ -277,6 +280,7 @@ class Member_Bios_Admin {
 	 * Add a section with fields for managing the maximum headshot size.
 	 *
 	 * @since    1.0.0
+	 * @access   private
 	 */
 	private function add_headshot_settings() {
 
@@ -306,6 +310,7 @@ class Member_Bios_Admin {
 	 * Add a section with fields for email notification settings
 	 *
 	 * @since    1.0.0
+	 * @access   private
 	 */
 	private function add_email_notification_settings() {
 
@@ -335,6 +340,7 @@ class Member_Bios_Admin {
 	 * Add a section with fields for spam filtering settings
 	 *
 	 * @since    1.0.0
+	 * @access   private
 	 */
 	private function add_spam_filtering_settings() {
 
@@ -374,6 +380,7 @@ class Member_Bios_Admin {
 	 * Present a checkbox to collect an administrator preference.
 	 *
 	 * @since 1.0.0
+	 * @param    array      $args                 Information to include in the checkbox's HTML.
 	 */
 	public function present_checkbox_option( $args ) {
 
@@ -387,6 +394,7 @@ class Member_Bios_Admin {
 	 * Present a text input for a setting in the admin area.
 	 *
 	 * @since 1.0.0
+	 * @param    array      $args                 Information to include in the text input's HTML.
 	 */
 	public function present_text_input_option( $args ) {
 
@@ -400,8 +408,9 @@ class Member_Bios_Admin {
 	 * Present a text input in an admin area metabox for managing member info.
 	 *
 	 * @since 1.0.0
+	 * @param    WP_POST    $post                 The post associated with the current member.
 	 */
-	public function present_member_metabox_text_inputs( $post, $metabox ) {
+	public function present_member_metabox_text_inputs( $post ) {
 
 		foreach ( $this->member_meta_info as $meta_key => $meta_title ) {
 			$custom = get_post_custom( $post->ID );

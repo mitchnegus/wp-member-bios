@@ -210,6 +210,8 @@ class Member_Bios_Public {
 	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
+	 * @param    string     $template             The path to the current template that is being used by Wordpress.
+	 * @return   string                           The path to the new member form template to use instead.
 	 */
 	public function include_new_member_template( $template ) {
 
@@ -230,6 +232,8 @@ class Member_Bios_Public {
 	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
+	 * @param    string     $template             The path to the current template that is being used by Wordpress.
+	 * @return   string                           The path to the submission confirmation template to use instead.
 	 */
 	public function include_submit_confirmation_template( $template ) {
 
@@ -248,6 +252,8 @@ class Member_Bios_Public {
 	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
+	 * @param    string     $single_template      The path to the current single post template that is being used by Wordpress.
+	 * @return   string                           The path to the replacement single post template to be used instead.
 	 */
 	public function use_custom_member_single_template( $single_template ) {
 
@@ -266,6 +272,8 @@ class Member_Bios_Public {
 	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
+	 * @param    string     $archive_template     The path to the current archive post template that is being used by Wordpress.
+	 * @return   string                           The path to the replacement archive post template to be used instead.
 	 */
 	public function use_custom_member_archive_template( $archive_template ) {
 
@@ -284,6 +292,7 @@ class Member_Bios_Public {
 	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
+	 * @param    WP_QUERY   $query                The query passed to the 'pre_get_posts' action hook.
 	 */
 	public function show_all_members( $query ) {
 
@@ -301,6 +310,7 @@ class Member_Bios_Public {
 	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
+	 * @param    WP_QUERY   $query                The query passed to the 'pre_get_posts' action hook.
 	 */
 	public function alpha_order_members( $query ) {
 
@@ -322,6 +332,7 @@ class Member_Bios_Public {
 	 * admin-specified organization domain.
 	 *
 	 * @since    1.0.0
+	 * @access   private
 	 */
 	private function check_email() {
 
@@ -353,6 +364,8 @@ class Member_Bios_Public {
 	 * Check whether or not the user uploaded an image with their submission.
 	 *
 	 * @since    1.0.0
+	 * @access   private
+	 * @return   bool                             A boolean indicating if if a upload is present or not.
 	 */
 	private function check_upload_present() {
 		$photo = $_FILES['photo'];
@@ -368,9 +381,10 @@ class Member_Bios_Public {
 	 * Check that the image upload is valid, otherwise stop.
 	 *
 	 * @since    1.0.0
+	 * @access   private
 	 */
 	private function check_upload_validity() {
-		if (!check_file_meets_specs()) {
+		if ( ! $this->check_file_meets_specs() ) {
 			wp_die(
 				'The image you uploaded does not meet the specifications. Please go back and upload a new image.',
 			 	'Error',
@@ -384,8 +398,10 @@ class Member_Bios_Public {
 	 * Check that the file was uploaded and meets specifications
 	 *
 	 * @since    1.0.0
+	 * @access   private
+	 * @return   bool                             A boolean indicating whether the uploaded file meets formatting requirements.
 	 */
-function check_file_meets_specs() {
+	private function check_file_meets_specs() {
 
 		$allowed_image_types = array('image/jpeg', 'image/png');
 		$file_size = $_FILES['photo']['size'];
@@ -407,6 +423,8 @@ function check_file_meets_specs() {
 	 * Sanitize all input fields from the user's POST request
 	 *
 	 * @since    1.0.0
+	 * @access   private
+	 * @return   array                            Sanitized strings for each component of the new member's submission.
 	 */
 	private function sanitize_input_fields() {
 
@@ -426,6 +444,9 @@ function check_file_meets_specs() {
 	 * Create a new post based on the user's inputs.
 	 * 
 	 * @since    1.0.0
+	 * @access   private
+	 * @param    array      $inputs               The inputs to be assigned to the member's profile.
+	 * @return   int                              The post ID of the newly created custom member post.
 	 */
 	private function create_new_post( $inputs ) {
 
@@ -449,6 +470,8 @@ function check_file_meets_specs() {
 	 * Notify the site administrator when someone submits the form (if desired).
 	 * 
 	 * @since    1.0.0
+	 * @access   private
+	 * @param    array      $inputs               The inputs to be assigned to the member's profile.
 	 */
 	private function notify_admin_on_submission( $inputs ) {
 
