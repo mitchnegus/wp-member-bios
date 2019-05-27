@@ -6,7 +6,7 @@
  * This file is used to markup the admin-facing aspects of the plugin. This
  * file should primarily consist of HTML with a little bit of PHP.
  *
- * @link       http://example.com
+ * @link
  * @since      1.0.0
  *
  * @package    Member_Bios

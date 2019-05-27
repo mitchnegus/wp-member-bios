@@ -3,7 +3,7 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       http://example.com
+ * @link
  * @since      1.0.0
  *
  * @package    Member_Bios
