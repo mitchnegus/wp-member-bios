@@ -13,6 +13,9 @@
 
 global $PLUGIN_URL, $max_headshot_size;
 
+$given_org = get_option( 'wmb_organization_name' );
+$organization = ($given_org == '' ? 'Organization' : $given_org ); 
+
 get_header(); ?>
 
 	<div id="primary" class="content-area">
@@ -40,7 +43,7 @@ get_header(); ?>
 				</div>
 				<div class="new-member-form-element" style="flex-grow: 2;" >
 					<label for="email" class="new-member-form-label">
-						<?php echo esc_html(get_option('organization_name')); ?> email
+						<?php echo esc_html( $organization ); ?> email
 						<span class="new-member-form-label-required">(required)</span>
 					</label>
 					<input type="text" id="email" name="email" class="full-width" required/>
