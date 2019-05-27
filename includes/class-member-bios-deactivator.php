@@ -10,11 +10,6 @@
  * @subpackage Member_Bios/includes
  */
 
-global $new_member_form_title, $new_member_confirmation_title;
-
-$new_member_form_title = 'New Member';
-$new_member_confirmation_title = 'Submission accepted';
-
 /**
  * Fired during plugin deactivation.
  *

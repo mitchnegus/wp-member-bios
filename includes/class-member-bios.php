@@ -67,6 +67,7 @@ class Member_Bios {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
+
 		if ( defined( 'MEMBER_BIOS_VERSION' ) ) {
 			$this->version = MEMBER_BIOS_VERSION;
 		} else {

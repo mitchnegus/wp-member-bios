@@ -53,6 +53,16 @@ if ( ! defined( 'WMB_PATH' ) ) {
 if ( ! defined( 'WMB_URL' ) ) {
 	define( 'WMB_URL', plugin_dir_url( __FILE__ ) );
 }
+
+//Define some global variables used by various classes
+global $new_member_form_template, $new_member_confirmation_template;
+global $new_member_form_title, $new_member_confirmation_title;
+
+$new_member_form_template = WMB_PATH . 'public/templates/new-member-form.php';
+$new_member_confirmation_template = WMB_PATH . 'public/templates/new-member-confirmation.php';
+$new_member_form_title = 'New Member';
+$new_member_confirmation_title = 'Submission accepted';
+
  
 /**
  * The code that runs during plugin activation.
