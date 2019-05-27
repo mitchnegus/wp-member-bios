@@ -14,8 +14,8 @@ global $PLUGIN_DIR;
 global $new_member_form_template, $new_member_confirmation_template;
 global $new_member_form_title, $new_member_confirmation_title;
 
-$new_member_form_template = $PLUGIN_DIR . 'templates/new-member-form.php';
-$new_member_confirmation_template = $PLUGIN_DIR . 'templates/new-member-confirmation.php';
+$new_member_form_template = $PLUGIN_DIR . 'goal_framework/member-bios/public/templates/new-member-form.php';
+$new_member_confirmation_template = $PLUGIN_DIR . 'goal_framework/member-bios/public/templates/new-member-confirmation.php';
 $new_member_form_title = 'New Member';
 $new_member_confirmation_title = 'Submission accepted';
 

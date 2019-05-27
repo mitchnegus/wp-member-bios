@@ -8,7 +8,7 @@ function use_custom_member_single_template($single_template)
 		global $post, $PLUGIN_DIR;
 		/* Check for single template by post type */
 		if ($post->post_type == 'members') {
-			$single_template = $PLUGIN_DIR . 'templates/single-members.php';
+			$single_template = $PLUGIN_DIR . 'goal_framework/member-bios/public/templates/single-members.php';
 	 	}
 		return $single_template;
 }
@@ -18,7 +18,7 @@ function use_custom_member_archive_template($archive_template)
 		global $post, $PLUGIN_DIR;
 		/* Check for single template by post type */
 		if (is_post_type_archive('members')) {
-			  $archive_template = $PLUGIN_DIR . 'templates/archive-members.php';
+			  $archive_template = $PLUGIN_DIR . 'goal_framework/member-bios/public/templates/archive-members.php';
 		}
 		return $archive_template;
 }
