@@ -10,7 +10,6 @@
  * @subpackage Member_Bios/includes
  */
 
-global $PLUGIN_DIR;
 global $new_member_form_title, $new_member_confirmation_title;
 
 $new_member_form_title = 'New Member';

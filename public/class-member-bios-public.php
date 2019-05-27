@@ -10,12 +10,11 @@
  * @subpackage Member_Bios/public
  */
 
-global $PLUGIN_DIR;
 global $new_member_form_template, $new_member_confirmation_template;
 global $new_member_form_title, $new_member_confirmation_title;
 
-$new_member_form_template = $PLUGIN_DIR . 'public/templates/new-member-form.php';
-$new_member_confirmation_template = $PLUGIN_DIR . 'public/templates/new-member-confirmation.php';
+$new_member_form_template = WMB_PATH . 'public/templates/new-member-form.php';
+$new_member_confirmation_template = WMB_PATH . 'public/templates/new-member-confirmation.php';
 $new_member_form_title = 'New Member';
 $new_member_confirmation_title = 'Submission accepted';
 
@@ -260,10 +259,10 @@ class Member_Bios_Public {
 	 */
 	public function use_custom_member_single_template( $single_template ) {
 
-		global $post, $PLUGIN_DIR;
+		global $post;
 
 		if ( $post->post_type == 'members' ) {
-			$single_template = $PLUGIN_DIR . 'public/templates/single-members.php';
+			$single_template = WMB_PATH . 'public/templates/single-members.php';
 	 	}
 		return $single_template;
 
@@ -278,10 +277,10 @@ class Member_Bios_Public {
 	 */
 	public function use_custom_member_archive_template( $archive_template ) {
 
-		global $post, $PLUGIN_DIR;
+		global $post;
 
 		if ( $post->post_type == 'members' ) {
-			$archive_template = $PLUGIN_DIR . 'public/templates/archive-members.php';
+			$archive_template = WMB_PATH . 'public/templates/archive-members.php';
 	 	}
 		return $archive_template;
 

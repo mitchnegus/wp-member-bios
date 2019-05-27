@@ -10,7 +10,7 @@
  * @link https://codex.wordpress.org/Template_Hierarchy
  */
 
-global $PLUGIN_URL, $_wp_additional_image_sizes;
+global $_wp_additional_image_sizes;
 
 get_header(); ?>
 
@@ -29,7 +29,7 @@ get_header(); ?>
 								the_post_thumbnail();
 						} else {
 								?>
-								<img src="<?php echo $PLUGIN_URL . 'img/headshot_template.png';  ?>" style="width: 200px; height: 200px;" />
+								<img src="<?php echo WMB_URL . 'img/headshot_template.png';  ?>" style="width: 200px; height: 200px;" />
 								<?php
 						}?>
 				</div>

@@ -46,16 +46,20 @@ require_once ABSPATH . 'wp-admin/includes/image.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/media.php';
 
-global $PLUGIN_DIR, $PLUGIN_URL;
-$PLUGIN_DIR = plugin_dir_path(__FILE__);
-$PLUGIN_URL = plugin_dir_url(__FILE__);
+// Define some constants for use in the plugin
+if ( ! defined( 'WMB_PATH' ) ) {
+	define( 'WMB_PATH', plugin_dir_path( __FILE__ ) );
+}
+if ( ! defined( 'WMB_URL' ) ) {
+	define( 'WMB_URL', plugin_dir_url( __FILE__ ) );
+}
  
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-member-bios-activator.php
  */
 function activate_member_bios() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-member-bios-activator.php';
+	require_once WMB_PATH . 'includes/class-member-bios-activator.php';
 	Member_Bios_Activator::activate();
 }
 
@@ -64,7 +68,7 @@ function activate_member_bios() {
  * This action is documented in includes/class-member-bios-deactivator.php
  */
 function deactivate_member_bios() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-member-bios-deactivator.php';
+	require_once WMB_PATH . 'includes/class-member-bios-deactivator.php';
 	Member_Bios_Deactivator::deactivate();
 }
 
@@ -75,7 +79,7 @@ register_deactivation_hook( __FILE__, 'deactivate_member_bios' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-member-bios.php';
+require WMB_PATH . 'includes/class-member-bios.php';
 
 /**
  * Begins execution of the plugin.

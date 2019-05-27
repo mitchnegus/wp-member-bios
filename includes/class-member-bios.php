@@ -189,7 +189,7 @@ class Member_Bios {
 		// Accept user input
 		$this->loader->add_action( 'admin_post_submit_member', $plugin_public, 'submit_new_member_form' );
 		$this->loader->add_action( 'admin_nopriv_post_submit_member', $plugin_public, 'submit_new_member_form' );
-		// USe a custom template for the new member and submission success pages
+		// Use a custom template for the new member and submission success pages
 		$this->loader->add_filter( 'template_include', $plugin_public, 'include_new_member_template' );
 		$this->loader->add_filter( 'template_include', $plugin_public, 'include_submit_confirmation_template' );
 		// Use custom templates for the member pages

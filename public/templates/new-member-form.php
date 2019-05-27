@@ -11,7 +11,7 @@
  * @link https://codex.wordpress.org/Template_Hierarchy
  */
 
-global $PLUGIN_URL, $max_headshot_size;
+global $max_headshot_size;
 
 $given_org = get_option( 'wmb_organization_name' );
 $organization = ($given_org == '' ? 'Organization' : $given_org ); 
@@ -22,7 +22,7 @@ get_header(); ?>
 		<main id="main" class="site-main">
 		
 		<h1><?php the_title(); ?></h1>
-		<img src="<?php echo $PLUGIN_URL; ?>/img/headshot_template.png" style="display: block; width: 25%; margin: 0 auto;" alt="headshot template" />
+		<img src="<?php echo WMB_URL; ?>/img/headshot_template.png" style="display: block; width: 25%; margin: 0 auto;" alt="headshot template" />
 		<br>
 		<p>If you’re an SPG member but not already on the site, please fill out the following form. If you’d like, you may also include:</p>
 		<ul>
