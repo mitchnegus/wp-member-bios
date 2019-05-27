@@ -160,6 +160,7 @@ class Member_Bios {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_settings_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'add_settings' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'add_admin_fields');
+		$this->loader->add_action( 'save_post', $plugin_admin, 'save_member_details');
 
 	}
 

@@ -58,6 +58,12 @@ class Member_Bios_Admin {
 		$this->version = $version;
 		$this->settings_page_slug = 'member-bios-settings';
 		$this->option_group = 'member-bios-option-group';
+		$this->members_custom_post_type = 'members';
+		$this->plugin_settings = array(
+			'notification_email',
+			'organization_name',
+			'organization_domain'
+		);
 		// All functions prefixed with 'display_' come from `partials`
 		require_once plugin_dir_path( __FILE__ ) . 'partials/member-bios-admin-display.php';
 	}
@@ -157,7 +163,7 @@ class Member_Bios_Admin {
 				'subject-meta',
 				'Subject',
 				[$this, 'present_metabox_text_input'],
-				'members',
+				$this->members_custom_post_type,
 				'normal',
 				'low',
 				$subject_args
@@ -171,7 +177,7 @@ class Member_Bios_Admin {
 				'grad_date-meta',
 				'Graduation',
 				[$this, 'present_metabox_text_input'],
-				'members',
+				$this->members_custom_post_type,
 				'normal',
 				'low',
 				$grad_date_args
@@ -185,12 +191,36 @@ class Member_Bios_Admin {
 				'interests-meta',
 				'Interests',
 				[$this, 'present_metabox_text_area'],
-				'members',
+				$this->members_custom_post_type,
 				'normal',
 				'low',
 				$interests_args
 		);
 
+	}
+
+	/**
+	 * Save member details to the database after an admin decides to update.
+	 *
+	 * (Executed by loader class)
+	 *
+	 * @since    1.0.0
+	 */
+	public function save_member_details( $post_id ) {
+
+			// Only save meta data for members posts
+			if ( get_post_type( $post_id ) == $this->members_custom_post_type ) {
+
+					// Sanitize user input
+					$subject = sanitize_text_field($_POST['subject']);
+					$grad_date = sanitize_text_field($_POST['grad_date']);
+					$interests = sanitize_text_field($_POST['interests']);
+
+					// Update the metadata for the post
+					update_post_meta( $post_id, 'subject', $subject);
+					update_post_meta( $post_id, 'grad_date', $grad_date);
+					update_post_meta( $post_id, 'interests', $interests);
+			}
 	}
 
 	/**
@@ -215,10 +245,9 @@ class Member_Bios_Admin {
 	 */
 	private function register_settings() {
 
-		register_setting( $this->option_group, 'organization_name' );
-		register_setting( $this->option_group, 'organization_domain' );
-		register_setting( $this->option_group, 'notification_email' );
-		
+		foreach ( $this->plugin_settings as $setting ) {
+			register_setting( $this->option_group, $setting );
+		}	
 	}
 
 	/**
