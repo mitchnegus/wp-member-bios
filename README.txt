@@ -4,7 +4,7 @@ Donate link:
 Tags: member, profile, bio, team
 Requires at least: 3.0.1
 Tested up to: 3.4
-Stable tag: 4.3
+Stable tag: 
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ A plugin for managing a group's member pages, including automatic submission of 
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+(This hasn't been populated with information for the Member Bios plugin yet.) This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
 
 For backwards compatibility, if this section is missing, the full length of the short description will be used, and
 Markdown parsed.
