@@ -88,17 +88,3 @@ function display_text_input( $name, $value, $required = false ) {
 
 	<?php
 }
-
-function display_text_area( $name, $value, $required = false ) {
-
-	if ( $required ) {
-		$required = 'required';
-	} else {
-		$required = '';
-	}
-	?>
-
-	<textarea id="<?php echo esc_attr( $name ); ?>" name="<?php echo esc_attr( $name ); ?>" cols="50" rows="2"  <?php echo $required; ?>/><?php echo esc_textarea( $value ); ?></textarea>
-
-	<?php
-}

@@ -367,7 +367,7 @@ class Member_Bios_Admin {
 
 		$option_name = $args['label_for'];
 		$option_default = get_option( $option_name );
-		display_text_input( $option_name, $option_default, $required = false );
+		display_text_input( $option_name, $option_default );
 
 	}
 
@@ -378,42 +378,12 @@ class Member_Bios_Admin {
 	 */
 	public function present_metabox_text_input( $post, $metabox ) {
 
-		$info = $this->get_metabox_info( $post, $metabox );
-		display_label( $info['name'], $info['title'] );
-		display_text_input( $info['name'], $info['value'], $required = true );
-
-	}
-	
-	/**
-	 * Present a text area in an admin area metabox for managing member info.
-	 *
-	 * @since 1.0.0
-	 */
-	public function present_metabox_text_area( $post, $metabox ) {
-		
-		$info = $this->get_metabox_info( $post, $metabox );
-		display_label( $info['name'], $info['title'] );
-		display_text_area( $info['name'], $info['value'], $required = true );
-
-	}
-
-	/**
-	 * Get the metabox name and title, along with the corresponding post value.
-	 *
-	 * @since 1.0.0
-	 */
-	private function get_metabox_info( $post, $metabox ) {
-
 		$name = $metabox['args']['label_for'];
 		$title = $metabox['args']['label_title'];
 		$custom = get_post_custom( $post->ID );
 		$value = $custom[ $name ][0];
-		$info = array(
-			'name'  => $name,
-			'title' => $title,
-			'value' => $value
-		);
-		return $info;
+		display_label( $name, $title );
+		display_text_input( $name, $value, $required = true );
 
 	}
 
