@@ -31,7 +31,7 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
@@ -40,6 +40,12 @@ if ( ! defined( 'WPINC' ) ) {
  * Start(ed) at version 1.0.0 and use SemVer - https://semver.org
  */
 define( 'MEMBER_BIOS_VERSION', '1.0.0' );
+ 
+// These files need to be included as dependencies when on the front end.
+require_once ABSPATH . 'wp-admin/includes/image.php';
+require_once ABSPATH . 'wp-admin/includes/file.php';
+require_once ABSPATH . 'wp-admin/includes/media.php';
+ 
 
 /**
  * The code that runs during plugin activation.

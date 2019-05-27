@@ -38,6 +38,16 @@ function display_settings( $option_group, $page_slug ) {
 	<?php
 }
 
+function display_headshot_section( $args ) {
+	?>
+
+	<p id="<?php echo esc_attr( $args['id'] ); ?>">
+		Adjust the maximum size allowed for uploaded headshots. If the value given is larger than the maximum value allowed by your Wordpress installation or your provider, that value will be used instead.
+	</p>
+
+	<?php
+}
+
 function display_email_notification_section( $args ) {
 	?>
 

@@ -60,7 +60,8 @@ class Member_Bios_Admin {
 		$this->settings_page_slug = 'member-bios-settings';
 		$this->option_group = 'member-bios-option-group';
 		// Define settings to be added to the database
-		$this->plugin_settings = array(
+		$this->plugin_options = array(
+			'max_headshot_size'   => 'wmb_max_headshot_size',
 			'notification_email'  => 'wmb_notification_email',
 			'organization_name'   => 'wmb_organization_name',
 			'organization_domain' => 'wmb_organization_domain'
@@ -144,6 +145,7 @@ class Member_Bios_Admin {
 	public function add_settings() {
 
 		$this->register_settings();
+		$this->add_headshot_settings();
 		$this->add_email_notification_settings();
 		$this->add_spam_filtering_settings();
 
@@ -265,10 +267,39 @@ class Member_Bios_Admin {
 	 */
 	private function register_settings() {
 
-		foreach ( $this->plugin_settings as $setting ) {
-			register_setting( $this->option_group, $setting );
+		foreach ( $this->plugin_options as $option ) {
+			register_setting( $this->option_group, $option );
 		}	
 
+	}
+
+	/**
+	 * Add a section with fields for managing the maximum headshot size.
+	 *
+	 * @since    1.0.0
+	 */
+	private function add_headshot_settings() {
+
+		$section_id = 'member-headshots';
+		$section_label = 'Member Headshots';
+		add_settings_section(
+				$section_id,
+				$section_label,
+				'display_headshot_section',
+				$this->settings_page_slug
+		);
+
+		$max_headshot_size_id = $this->plugin_options['max_headshot_size'];
+		$max_headshot_size_label = 'Maximum headshot size (MB)';
+		add_settings_field(
+				$max_headshot_size_id,
+				$max_headshot_size_label,
+				[$this, 'present_text_input_option'],
+				$this->settings_page_slug,
+				$section_id,	
+				array( 'label_for' => $max_headshot_size_id )
+		);
+		
 	}
 
 	/**
@@ -287,12 +318,12 @@ class Member_Bios_Admin {
 				$this->settings_page_slug
 		);
 
-		$notification_email_id = $this->plugin_settings['notification_email'];
+		$notification_email_id = $this->plugin_options['notification_email'];
 		$notification_email_label = 'Notification Email';
 		add_settings_field(
 				$notification_email_id,
 				$notification_email_label,
-				[$this, 'present_checkbox_setting'],
+				[$this, 'present_checkbox_option'],
 				$this->settings_page_slug,
 				$section_id,	
 				array( 'label_for' => $notification_email_id )
@@ -316,22 +347,22 @@ class Member_Bios_Admin {
 				$this->settings_page_slug
 		);
 
-		$organization_name_id = $this->plugin_settings['organization_name'];
+		$organization_name_id = $this->plugin_options['organization_name'];
 		$organization_name_label = 'Organization Name';
 		add_settings_field(
 				$organization_name_id,
 				$organization_name_label,
-				[$this, 'present_text_input_setting'],
+				[$this, 'present_text_input_option'],
 				$this->settings_page_slug,
 				$section_id,
 				array( 'label_for' => $organization_name_id )
 		);
-		$organization_domain_id = $this->plugin_settings['organization_domain'];
+		$organization_domain_id = $this->plugin_options['organization_domain'];
 		$organization_domain_label = 'Organization Email Domain (e.g. berkeley.edu)';
 		add_settings_field(
 				$organization_domain_id,
 				$organization_domain_label,
-				[$this, 'present_text_input_setting'],
+				[$this, 'present_text_input_option'],
 				$this->settings_page_slug,
 				$section_id,
 				array( 'label_for' => $organization_domain_id )
@@ -344,7 +375,7 @@ class Member_Bios_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function present_checkbox_setting( $args ) {
+	public function present_checkbox_option( $args ) {
 
 		$option_name = $args['label_for'];
 		$option_default = get_option( $option_name );
@@ -357,7 +388,7 @@ class Member_Bios_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function present_text_input_setting( $args ) {
+	public function present_text_input_option( $args ) {
 
 		$option_name = $args['label_for'];
 		$option_default = get_option( $option_name );

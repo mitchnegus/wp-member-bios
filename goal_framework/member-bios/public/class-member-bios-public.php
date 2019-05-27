@@ -325,15 +325,13 @@ class Member_Bios_Public {
 	 */
 function check_file_meets_specs() {
 
-		global $max_headshot_size;
-
 		$allowed_image_types = array('image/jpeg', 'image/png');
 		$file_size = $_FILES['photo']['size'];
 		$file_type = $_FILES['photo']['type'];
 		if ( ! isset( $file_size ) || $file_size == 0 ) {
 				return false;
 		}
-		if ( $file_size > $max_headshot_size ) {
+		if ( $file_size > get_option( 'wmb_max_headshot_size' )*1e6 ) {
 		 		return false;	
 		}
 		if ( ! in_array( $file_type, $allowed_image_types ) ) {

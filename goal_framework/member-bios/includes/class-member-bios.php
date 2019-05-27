@@ -201,7 +201,51 @@ class Member_Bios {
 	 * @since    1.0.0
 	 */
 	public function run() {
+
+		// Add theme support for thumbnails if not already included
+		add_theme_support( 'post-thumbnails' );
+		set_post_thumbnail_size( 200, 200 );
+		$this->set_plugin_max_headshot_size();
+		// Run the loader (with hooks for actions and filters)
 		$this->loader->run();
+
+	}
+
+	/**
+	 * Set the maximum headshot size that is allowed to be uploaded (in MB).
+	 *
+	 * Defines the maximum allowable headshot file size that can be uploaded
+	 * by a new member. If the default Wordpress value is greater than 2 MB
+	 * then the maximum size will be limited to 2 MB. This value can be
+	 * overridden on the settings page. The value returned is in megabytes (MB).
+	 *
+	 * @since    1.0.0
+	 */
+	private function set_plugin_max_headshot_size() {
+
+		$option = 'wmb_max_headshot_size';
+		// Set the maximum image size for user uploaded headshots
+		$current_max_headshot_megabytes = get_option( $option );	
+		$current_max_headshot_size = $current_max_headshot_megabytes*1e6;
+		$max_wordpress_upload_size = wp_max_upload_size();
+		$fallback_max_size = 2e6;
+
+		if ( $current_max_headshot_megabytes == '' ) {
+			// Current size not set; use the smaller of the fallback or Wordpress max
+			if ( $max_wordpress_upload_size > $fallback_max_size ) {
+	  		$plugin_max_headshot_size = $fallback_max_size;   // (Approx. 3 MB)
+	    } else {
+	       $plugin_max_headshot_size = $max_wordpress_upload_size;
+	    }
+		} elseif ( $current_max_headshot_size > $max_wordpress_upload_size ) {
+			// Current size is set large; use the Wordpress max
+			$plugin_max_headshot_size = $max_wordpress_upload_size;
+		} else {
+			$plugin_max_headshot_size = $current_max_headshot_size;
+		}
+		$plugin_max_headshot_megabytes = $plugin_max_headshot_size/1e6;
+		update_option( $option, $plugin_max_headshot_megabytes );
+
 	}
 
 	/**
