@@ -1,14 +1,14 @@
-=== Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: http://example.com/
-Tags: comments, spam
+=== Member Bios ===
+Contributors: mitchnegus
+Donate link: 
+Tags: member, profile, bio, team
 Requires at least: 3.0.1
 Tested up to: 3.4
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+A plugin for managing a group's member pages, including automatic submission of an image and short bio. 
 
 == Description ==
 
@@ -82,11 +82,10 @@ Upgrade notices describe the reason a user should upgrade.  No more than 300 cha
 = 0.5 =
 This version fixes a security related bug.  Upgrade immediately.
 
-== Arbitrary section ==
+== Credits ==
 
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
+This project is based on the [WordPress Plugin Boilerplate](https://github.com/DevinVinson/WordPress-Plugin-Boilerplate) template. 
+Many thanks to those developers for helping me get started.
 
 == A brief Markdown Example ==
 
