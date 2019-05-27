@@ -195,6 +195,9 @@ class Member_Bios {
 		// Use custom templates for the member pages
 		$this->loader->add_filter( 'single_template', $plugin_public, 'use_custom_member_single_template' );
 		$this->loader->add_filter( 'archive_template', $plugin_public, 'use_custom_member_archive_template' );
+		// Format the 'Members' page properly
+		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'show_all_members' );
+		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'alpha_order_members' );
 
 	}
 

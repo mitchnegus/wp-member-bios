@@ -288,6 +288,41 @@ class Member_Bios_Public {
 	}
 
 	/**
+	 * Show all members on the archive page (instead of only the first subset).
+	 * 
+	 * (Executed by loader class)
+	 *
+	 * @since    1.0.0
+	 */
+	public function show_all_members( $query ) {
+
+	  if ( ! is_admin() && $query->is_main_query() ) {
+				if ( is_post_type_archive( 'members' ) ) {
+						$query->set( 'posts_per_page', -1 );
+				}
+		}
+
+	}
+
+	/**
+	 * Alphabetize members on the archive page.
+	 * 
+	 * (Executed by loader class)
+	 *
+	 * @since    1.0.0
+	 */
+	public function alpha_order_members( $query ) {
+
+		if ( $query->is_main_query() ) {
+			if ( is_post_type_archive('members') ) {
+				$query->set( 'orderby', 'name' );
+				$query->set( 'order', 'ASC' );
+			}
+		}
+
+	}
+
+	/**
 	 * Check that the email provided is a valid user email address.
 	 *
 	 * User submitted emails are checked for validity. The validation is a two-
