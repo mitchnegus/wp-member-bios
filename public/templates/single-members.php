@@ -28,6 +28,7 @@ get_header();
 				$second_subheader = $custom['second_subheader'][0];
 				$delimiter = get_option( 'wmb_subheader_delimiter' ) . ' ';
 				$info = $first_subheader . $delimiter . $second_subheader;
+				$tags_title = get_option( 'wmb_tags' );
 				$tags = $custom['tags'][0];
 	
 				// Display the thumbnail
@@ -59,7 +60,7 @@ get_header();
 				endwhile;
 				?>
 
-				<p><b>Interests:</b> <?php echo esc_html( $tags ); ?></p>
+				<p><b><?php echo esc_html( $tags_title ); ?>:</b> <?php echo esc_html( $tags ); ?></p>
 			</div>
 		</div>
 	
