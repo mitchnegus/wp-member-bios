@@ -368,16 +368,18 @@ class Member_Bios_Public {
 			);
 		}
 
-		// Check that the email is from the correct organization domain (not spam)
-		$org = get_option( 'organization_name' );
-		$org_domain = get_option( 'organization_domain' );
-		$submitted_domain = substr( $email, -strlen( $org_domain ) );
-		if ( $submitted_domain != $org_domain ) {
-			wp_die(
-				'Invalid email provided. Please go back and make sure to use your ' . esc_html($org) . ' email address.',
-				'Error',
-				array( 'response' => 403 )
-			);
+		// If desired, check that the email is from the correct organization domain (not spam)
+		if ( get_option( 'wmb_spam_filtering' ) == 'checked' ) {
+			$org = get_option( 'organization_name' );
+			$org_domain = get_option( 'organization_domain' );
+			$submitted_domain = substr( $email, -strlen( $org_domain ) );
+			if ( $submitted_domain != $org_domain ) {
+				wp_die(
+					'Invalid email provided. Please go back and make sure to use your ' . esc_html($org) . ' email address.',
+					'Error',
+					array( 'response' => 403 )
+				);
+			}
 		}
 
 	}

@@ -43,13 +43,23 @@ get_header();
 					</label>
 					<input type="text" id="name" name="name" class="full-width" required/>
 				</div>
-				<div class="new-member-form-element" style="flex-grow: 2;" >
-					<label for="email" class="new-member-form-label">
-						<?php echo esc_html( $organization ); ?> email
-						<span class="new-member-form-label-required">(required)</span>
-					</label>
-					<input type="text" id="email" name="email" class="full-width" required/>
-				</div>
+
+				<?php
+				if ( get_option( 'wmb_spam_filtering' ) == 'checked' ) { 	
+					?>
+
+					<div class="new-member-form-element" style="flex-grow: 2;" >
+						<label for="email" class="new-member-form-label">
+							<?php echo esc_html( $organization ); ?> email
+							<span class="new-member-form-label-required">(required)</span>
+						</label>
+						<input type="text" id="email" name="email" class="full-width" required/>
+					</div>
+
+					<?php
+				}
+				?>
+
 			</div>
 			<div class="new-member-form-element" style="width: 70%;">
 				<label for="first_subheader" class="new-member-form-label">

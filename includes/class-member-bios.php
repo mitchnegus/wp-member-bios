@@ -85,6 +85,7 @@ class Member_Bios {
 			'tags'                => 'wmb_tags',
 		 	'max_headshot_size'   => 'wmb_max_headshot_size',
 			'notification_email'  => 'wmb_notification_email',
+			'spam_filtering'      => 'wmb_spam_filtering',
 			'organization_name'   => 'wmb_organization_name',
 			'organization_domain' => 'wmb_organization_domain'
 		);

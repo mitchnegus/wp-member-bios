@@ -387,7 +387,7 @@ class Member_Bios_Admin {
 	private function add_email_notification_settings() {
 
 		$section_id = 'email-notifications';
-		$section_label = 'Email Notifications';
+		$section_label = 'Email notifications';
 		add_settings_section(
 				$section_id,
 				$section_label,
@@ -396,7 +396,7 @@ class Member_Bios_Admin {
 		);
 
 		$notification_email_id = $this->plugin_options['notification_email'];
-		$notification_email_label = 'Notification Email';
+		$notification_email_label = 'Enable email notifications';
 		add_settings_field(
 				$notification_email_id,
 				$notification_email_label,
@@ -425,8 +425,18 @@ class Member_Bios_Admin {
 				$this->settings_page_slug
 		);
 
+		$spam_filtering_id = $this->plugin_options['spam_filtering'];
+		$spam_filtering_label = 'Enable spam filtering';
+		add_settings_field(
+				$spam_filtering_id,
+				$spam_filtering_label,
+				[$this, 'present_checkbox_option'],
+				$this->settings_page_slug,
+				$section_id,	
+				array( 'label_for' => $spam_filtering_id )
+		);
 		$organization_name_id = $this->plugin_options['organization_name'];
-		$organization_name_label = 'Organization Name';
+		$organization_name_label = 'Organization name';
 		add_settings_field(
 				$organization_name_id,
 				$organization_name_label,
@@ -436,7 +446,7 @@ class Member_Bios_Admin {
 				array( 'label_for' => $organization_name_id )
 		);
 		$organization_domain_id = $this->plugin_options['organization_domain'];
-		$organization_domain_label = 'Organization Email Domain (e.g. berkeley.edu)';
+		$organization_domain_label = 'Organization email domain (e.g. berkeley.edu)';
 		add_settings_field(
 				$organization_domain_id,
 				$organization_domain_label,
