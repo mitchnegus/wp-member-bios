@@ -51,10 +51,10 @@ get_header();
 
 							<div class="mtile-overlay">
 								<div class="mtile-text mtile-text1">
-									<?php echo esc_html($name); ?>
+									<?php echo esc_html( $name ); ?>
 								</div>
 								<div class="mtile-text mtile-text2">
-									<?php echo esc_html($position); ?>
+									<?php echo esc_html( $position ); ?>
 								</div>
 							</div>
 						</div>

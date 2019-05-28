@@ -50,12 +50,16 @@ class Member_Bios_Public {
 	 *
 	 * @since    1.0.0
 	 * @param      string    $member_bios       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string    $version           The version of this plugin.
+	 * @param      array     $options           An array of the options set and added to the database by the plugin.
+	 * @param      array     $member_meta       An array of the meta fields for the custom member post type.
 	 */
-	public function __construct( $member_bios, $version ) {
+	public function __construct( $member_bios, $version, $options, $member_meta ) {
 
 		$this->member_bios = $member_bios;
 		$this->version = $version;
+		$this->plugin_options = $options;
+		$this->member_meta = $member_meta;
 
 	}
 
@@ -101,7 +105,7 @@ class Member_Bios_Public {
 	 * Register the custom post type for a member.
 	 *
 	 * Each group member has an individual post that stores their information
-	 * (name, expected graduation date, subject, interests, bio, etc.). This 
+	 * (name, first and second subheaders, tags, bio, etc.). This 
 	 * post is also accessed for display on the general members page, where 
 	 * all members of the organization are listed.
 	 * (Executed by loader class)
@@ -205,8 +209,7 @@ class Member_Bios_Public {
 	 *
 	 * Loads the template for the new member form page out of the available 
 	 * templates. The template has text input boxes for entering the new
-	 * member's name, bio, field of study, expected graduation date, and policy
-	 * interests.
+	 * member's name, bio, subheaders, and tags (interests, skills, etc.).
 	 * (Executed by loader class)
 	 *
 	 * @since    1.0.0
@@ -423,12 +426,14 @@ class Member_Bios_Public {
 	private function check_file_meets_specs() {
 
 		$allowed_image_types = array('image/jpeg', 'image/png');
+		$headshot_option = $this->plugin_options['max_headshot_size'];
+		$max_headshot_size = get_option( $headshot_option )*1e6;
 		$file_size = $_FILES['photo']['size'];
 		$file_type = $_FILES['photo']['type'];
 		if ( ! isset( $file_size ) || $file_size == 0 ) {
 				return false;
 		}
-		if ( $file_size > get_option( 'wmb_max_headshot_size' )*1e6 ) {
+		if ( $file_size > $max_headshot_size ) {
 		 		return false;	
 		}
 		if ( ! in_array( $file_type, $allowed_image_types ) ) {
@@ -450,11 +455,11 @@ class Member_Bios_Public {
 		$sanitized_inputs = array(
 				'name' 			=> sanitize_text_field( $_POST['name'] ),
 				'email' 		=> sanitize_email( $_POST['email'] ),
-				'subject' 	=> sanitize_text_field( $_POST['subject'] ),
-				'grad_date' => sanitize_text_field( $_POST['grad_date'] ),
-				'interests' => sanitize_text_field( $_POST['interests'] ),
 				'bio'				=> sanitize_text_field( $_POST['bio'] )
 		);
+		foreach ( $this->member_meta as $meta_key ) {
+			$sanitized_inputs[ $meta_key ] = sanitize_text_field( $_POST[ $meta_key ] );
+		}
 		return $sanitized_inputs;
 
 	}
@@ -482,9 +487,9 @@ class Member_Bios_Public {
 
 		// Insert a post for the new member with accompanying metadata
 		$post_id = wp_insert_post( $post_arr );
-		update_post_meta( $post_id, 'subject', $inputs['subject'] );
-		update_post_meta( $post_id, 'grad_date', $inputs['grad_date'] );
-		update_post_meta( $post_id, 'interests', $inputs['interests'] );
+		foreach ( $this->member_meta as $meta_key ) {
+			update_post_meta( $post_id, $meta_key, $inputs[ $meta_key ] );
+		}
 		return $post_id;
 
 	}
@@ -519,7 +524,7 @@ class Member_Bios_Public {
 	private function notify_admin_on_submission( $inputs ) {
 
 		$recipient = get_option( 'admin_email' );
-		$subject = 'SPG new member: ' . $inputs['name'];
+		$subject = 'New member: ' . $inputs['name'];
 		$message = $inputs['name'] . ' has submitted a new member request.';
 		wp_mail( $recipient, $subject, $message );
 	}

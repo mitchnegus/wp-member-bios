@@ -13,12 +13,12 @@
 
 /* admin member edit pages 
 ------------------------------*/
-input#subject, input#grad_date {
+input#first_subheader, input#second_subheader {
 	width: 30%;
 	min-width: 250px;
 	margin-bottom: 10px;
 }
 
-input#interests {
+input#tags {
 	width: 100%;
 }

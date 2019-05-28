@@ -4,9 +4,10 @@
  * The template file for a new member page.
  *
  * This template file type is used for displaying a new member page. The page
- * requests information from a potential member pertaining to their academic
- * information (field, graduation date) and their interests, as well as provides
- * the opportunity for the member to provide a short bio and a profile photo.
+ * requests information from a potential member. This information could pertain
+ * to their academic information (field, graduation date) and/or their
+ * interests. It also provides the opportunity for the member to provide a
+ * short bio and a profile photo.
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  */
@@ -25,7 +26,7 @@ get_header();
 		<h1><?php the_title(); ?></h1>
 		<img src="<?php echo WMB_URL; ?>/img/headshot_template.png" style="display: block; width: 25%; margin: 0 auto;" alt="headshot template" />
 		<br>
-		<p>If you’re an SPG member but not already on the site, please fill out the following form. If you’d like, you may also include:</p>
+		<p>If you’re a member but not already on the site, please fill out the following form. If you’d like, you may also include:</p>
 		<ul>
 			<li>a short paragraph (2 sentences max) describing yourself</li>
 			<li>a photo (square images work best)</li>
@@ -51,25 +52,25 @@ get_header();
 				</div>
 			</div>
 			<div class="new-member-form-element" style="width: 70%;">
-				<label for="subject" class="new-member-form-label">
-					Field of study
+				<label for="first_subheader" class="new-member-form-label">
+					<?php echo get_option( 'wmb_first_subheader' ); ?>
 					<span class="new-member-form-label-required">(required)</span>
 				</label>
-				<input type="text" id="subject" name="subject" class="full-width" required/>
+				<input type="text" id="first_subheader" name="first_subheader" class="full-width" required/>
 			</div>
 			<div class="new-member-form-element" style="width: 70%;">
-				<label for="grad_date" class="new-member-form-label">
-					Expected graduation date (e.g. Spring 2020)
+				<label for="second_subheader" class="new-member-form-label">
+					<?php echo get_option( 'wmb_second_subheader' ); ?>
 					<span class="new-member-form-label-required">(required)</span>
 				</label>
-				<input type="text" id="grad_date" name="grad_date" class="full-width" required/>
+				<input type="text" id="second_subheader" name="second_subheader" class="full-width" required/>
 			</div>
 			<div class="new-member-form-element" class="full-width">
-				<label for="interests" class="new-member-form-label">
-					Policy interests
+				<label for="tags" class="new-member-form-label">
+					<?php echo get_option( 'wmb_tags' ); ?>
 					<span class="new-member-form-label-required">(required)</span>
 				</label>
-				<input type="text" id="interests" name="interests" class="full-width" required/>
+				<input type="text" id="tags" name="tags" class="full-width" required/>
 			</div>
 			<div class="new-member-form-element" class="full-width">
 				<label for="bio" class="new-member-form-label">

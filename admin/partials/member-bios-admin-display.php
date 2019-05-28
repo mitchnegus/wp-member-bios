@@ -38,6 +38,26 @@ function display_settings( $option_group, $page_slug ) {
 	<?php
 }
 
+function display_subheader_section( $args ) {
+	?>
+
+	<p id="<?php echo esc_attr( $args['id'] ); ?>">
+		Set the prompt for a user regarding which subheader(s) they should provide. These subheaders appear immediately below the member's name on their profile page. Two subheaders may be specified, and the delimiter between the two can also be selected here. 
+	</p>
+
+	<?php
+}
+
+function display_tags_section( $args ) {
+	?>
+
+	<p id="<?php echo esc_attr( $args['id'] ); ?>">
+		Set the prompt for a user regarding the type of tags they should provide. This could be "Policy interests", "Skills", "Talents" or something similar.
+	</p>
+
+	<?php
+}
+
 function display_headshot_section( $args ) {
 	?>
 
@@ -52,16 +72,8 @@ function display_email_notification_section( $args ) {
 	?>
 
 	<p id="<?php echo esc_attr( $args['id'] ); ?>">
-		Indicate whether the admin should receive an email whenever a new member form is submitted.
+		Indicate whether the site admin should receive an email whenever a new member form is submitted.
 	</p>
-
-	<?php
-}
-
-function display_checkbox( $name, $default ) {
-	?>
-
-	<input id="<?php echo esc_attr( $name ); ?>" name="<?php echo esc_attr( $name ); ?>" type="checkbox" value="checked" <?php echo esc_attr( $default ) ?>/>
 
 	<?php
 }
@@ -75,6 +87,15 @@ function display_spam_filter_section( $args ) {
 
 	<?php
 }
+
+function display_checkbox( $name, $default ) {
+	?>
+
+	<input id="<?php echo esc_attr( $name ); ?>" name="<?php echo esc_attr( $name ); ?>" type="checkbox" value="checked" <?php echo esc_attr( $default ) ?>/>
+
+	<?php
+}
+
 
 function display_label( $for, $label) {
 	?>

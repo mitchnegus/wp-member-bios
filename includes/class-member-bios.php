@@ -68,13 +68,34 @@ class Member_Bios {
 	 */
 	public function __construct() {
 
+		// Set plugin overhead details
 		if ( defined( 'MEMBER_BIOS_VERSION' ) ) {
 			$this->version = MEMBER_BIOS_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
 		$this->member_bios = 'member-bios';
+		// Create an array of options that are added to the database by the plugin
+		// 		-> Keys are the in-code reference names
+		// 		-> Values are the option names in the database
+		$this->plugin_options = array(
+			'first_subheader'     => 'wmb_first_subheader',
+			'second_subheader'    => 'wmb_second_subheader',
+			'subheader_delimiter' => 'wmb_subheader_delimiter',
+			'tags'                => 'wmb_tags',
+		 	'max_headshot_size'   => 'wmb_max_headshot_size',
+			'notification_email'  => 'wmb_notification_email',
+			'organization_name'   => 'wmb_organization_name',
+			'organization_domain' => 'wmb_organization_domain'
+		);
+		// Create an array of meta keys that are assigned to a custom member posts
+		$this->member_meta = array(
+			'first_subheader',
+			'second_subheader',
+			'tags'
+		);
 
+		// Load plugin dependencies and set actions and filters for hooks
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -153,7 +174,12 @@ class Member_Bios {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Member_Bios_Admin( $this->get_member_bios(), $this->get_version() );
+		$plugin_admin = new Member_Bios_Admin( 
+			$this->get_member_bios(),
+			$this->get_version(),
+			$this->get_plugin_options(),
+			$this->get_member_meta()
+	 	);
 
 		// Set admin area styles and JavaScript
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
@@ -179,7 +205,12 @@ class Member_Bios {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Member_Bios_Public( $this->get_member_bios(), $this->get_version() );
+		$plugin_public = new Member_Bios_Public( 
+			$this->get_member_bios(),
+			$this->get_version(),
+			$this->get_plugin_options(),
+			$this->get_member_meta()
+	 	);
 
 		// Set public-facing styles and JavaScript
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
@@ -213,6 +244,7 @@ class Member_Bios {
 		add_theme_support( 'post-thumbnails' );
 		set_post_thumbnail_size( 200, 200 );
 		$this->set_plugin_max_headshot_size();
+		$this->set_default_prompts();
 		// Run the loader (with hooks for actions and filters)
 		$this->loader->run();
 
@@ -257,6 +289,33 @@ class Member_Bios {
 	}
 
 	/**
+	 * Set the maximum headshot size that is allowed to be uploaded (in MB).
+	 *
+	 * Defines the maximum allowable headshot file size that can be uploaded
+	 * by a new member. If the default Wordpress value is greater than 2 MB
+	 * then the maximum size will be limited to 2 MB. This value can be
+	 * overridden on the settings page. The value returned is in megabytes (MB).
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function set_default_prompts() {
+
+		$option_defaults = array(
+			'wmb_first_subheader'  => 'Department',
+			'wmb_second_subheader' => 'Institution',
+			'wmb_tags'             => 'Skills'
+		);
+		foreach ( $option_defaults as $option => $default ) {
+			$current_option_value = get_option( $option );
+			if ( $current_option_value == '' ) {
+				update_option( $option, $default );
+			}
+		}
+
+	}
+
+	/**
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
@@ -285,6 +344,26 @@ class Member_Bios {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Retrieve the options that are added to the database by the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    string    An array of options that are set by the plugin.
+	 */
+	public function get_plugin_options() {
+		return $this->plugin_options;
+	}
+
+	/**
+	 * Retrieve the custom member post meta keys.
+	 *
+	 * @since     1.0.0
+	 * @return    string    An array of custom post meta keys used by the plugin.
+	 */
+	public function get_member_meta() {
+		return $this->member_meta;
 	}
 
 }

@@ -24,7 +24,11 @@ get_header();
 				$post = get_post();
 				$positions = get_the_terms($post->ID, 'positions');
 				$custom = get_post_custom();
-				$info = $custom['subject'][0] . ', ' . $custom['grad_date'][0];
+				$first_subheader = $custom['first_subheader'][0];
+				$second_subheader = $custom['second_subheader'][0];
+				$delimiter = get_option( 'wmb_subheader_delimiter' ) . ' ';
+				$info = $first_subheader . $delimiter . $second_subheader;
+				$tags = $custom['tags'][0];
 	
 				// Display the thumbnail
 				if (has_post_thumbnail()) {
@@ -55,7 +59,7 @@ get_header();
 				endwhile;
 				?>
 
-				<p><b>Interests:</b> <?php echo esc_html( $custom['interests'][0] ); ?></p>
+				<p><b>Interests:</b> <?php echo esc_html( $tags ); ?></p>
 			</div>
 		</div>
 	

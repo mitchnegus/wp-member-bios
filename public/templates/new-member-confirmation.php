@@ -1,12 +1,11 @@
 <?php
 /**
  * Template Name: 
- * The template file for a new member page.
+ * The template file for a new member submission confirmation page.
  *
- * This template file type is used for displaying a new member page. The page
- * requests information from a potential member pertaining to their academic
- * information (field, graduation date) and their interests, as well as provides
- * the opportunity for the member to provide a short bio and a profile photo.
+ * This template file type is used for displaying a confirmation page. This
+ * page will be displayed after a user successfully submits a valid new member
+ * form.
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  */

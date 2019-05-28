@@ -50,28 +50,19 @@ class Member_Bios_Admin {
 	 *
 	 * @since    1.0.0
 	 * @param      string    $member_bios       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string    $version           The version of this plugin.
+	 * @param      array     $options           An array of the options set and added to the database by the plugin.
+	 * @param      array     $member_meta       An array of the meta fields (and corresponding titles) for the custom member post type.
 	 */
-	public function __construct( $member_bios, $version ) {
+	public function __construct( $member_bios, $version, $options, $member_meta ) {
 
 		$this->member_bios = $member_bios;
 		$this->version = $version;
 		$this->members_custom_post_type = 'members';
 		$this->settings_page_slug = 'member-bios-settings';
 		$this->option_group = 'member-bios-option-group';
-		// Define settings to be added to the database
-		$this->plugin_options = array(
-			'max_headshot_size'   => 'wmb_max_headshot_size',
-			'notification_email'  => 'wmb_notification_email',
-			'organization_name'   => 'wmb_organization_name',
-			'organization_domain' => 'wmb_organization_domain'
-		);
-		// Define member provided meta fields
-		$this->member_meta_info = array(
-			'subject'   => 'Field of Study',
-			'grad_date' => 'Graduation Date',
-			'interests' => 'Policy Interests'
-		);
+		$this->plugin_options = $options;
+		$this->member_meta = $member_meta;
 		// All functions prefixed with 'display_' come from `partials`
 		require_once plugin_dir_path( __FILE__ ) . 'partials/member-bios-admin-display.php';
 	}
@@ -145,6 +136,8 @@ class Member_Bios_Admin {
 	public function add_settings() {
 
 		$this->register_settings();
+		$this->add_subheader_settings();
+		$this->add_tags_settings();
 		$this->add_headshot_settings();
 		$this->add_email_notification_settings();
 		$this->add_spam_filtering_settings();
@@ -189,7 +182,7 @@ class Member_Bios_Admin {
 			// Only save meta data for members posts
 			if ( get_post_type( $post_id ) == $this->members_custom_post_type ) {
 
-				foreach ( $this->member_meta_info as $meta_key => $meta_title ) {
+				foreach ( $this->member_meta as $meta_key ) {
 					// Sanitize user input and update the post metadata
 					$meta_value = sanitize_text_field($_POST[ $meta_key ]);
 					update_post_meta( $post_id, $meta_key, $meta_value );
@@ -211,8 +204,8 @@ class Member_Bios_Admin {
 	 */
 	public function fill_member_columns() {
 
-		$column1 = 'subject';
-		$column2 = 'grad_date';
+		$column1 = 'first_subheader';
+		$column2 = 'second_subheader';
 		$custom = get_post_custom();
 		switch ( $column ) {
 			case $column1:
@@ -235,13 +228,13 @@ class Member_Bios_Admin {
 	 */
 	public function set_member_columns() {
 
-		$extra_column1 = 'subject';
-		$extra_column2 = 'grad_date';
+		$extra_column1 = 'first_subheader';
+		$extra_column2 = 'second_subheader';
 		$columns = array(
 				'cb' 				    => '<input type="checkbox" />',
 				'title' 		    => __( 'Member' ),
-				$extra_column1 	=> __( $this->member_meta_info[ $extra_column1 ] ),
-				$extra_column2 	=> __( $this->member_meta_info[ $extra_column2 ] ),
+				$extra_column1 	=> __( $this->member_meta[ $extra_column1 ] ),
+				$extra_column2 	=> __( $this->member_meta[ $extra_column2 ] ),
 		);
 		return $columns;
 
@@ -273,6 +266,85 @@ class Member_Bios_Admin {
 		foreach ( $this->plugin_options as $option ) {
 			register_setting( $this->option_group, $option );
 		}	
+	}
+
+	/**
+	 * Add a section to control subheaders of the custom member post.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function add_subheader_settings() {
+
+		$section_id = 'subheaders';
+		$section_label = 'Member Subheaders';
+		add_settings_section(
+				$section_id,
+				$section_label,
+				'display_subheader_section',
+				$this->settings_page_slug
+		);
+
+		$first_subheader_id = $this->plugin_options['first_subheader'];
+		$first_subheader_label = 'First subheader';
+		add_settings_field(
+				$first_subheader_id,
+				$first_subheader_label,
+				[$this, 'present_text_input_option'],
+				$this->settings_page_slug,
+				$section_id,	
+				array( 'label_for' => $first_subheader_id )
+		);
+		$second_subheader_id = $this->plugin_options['second_subheader'];
+		$second_subheader_label = 'Second subheader';
+		add_settings_field(
+				$second_subheader_id,
+				$second_subheader_label,
+				[$this, 'present_text_input_option'],
+				$this->settings_page_slug,
+				$section_id,	
+				array( 'label_for' => $second_subheader_id )
+		);
+		$subheader_delimiter_id = $this->plugin_options['subheader_delimiter'];
+		$subheader_delimiter_label = 'Delimiter separating subheaders';
+		add_settings_field(
+				$subheader_delimiter_id,
+				$subheader_delimiter_label,
+				[$this, 'present_text_input_option'],
+				$this->settings_page_slug,
+				$section_id,	
+				array( 'label_for' => $subheader_delimiter_id )
+		);
+
+	}
+
+	/**
+	 * Add a section to control tags of the custom member post.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function add_tags_settings() {
+
+		$section_id = 'tags';
+		$section_label = 'Member Tags';
+		add_settings_section(
+				$section_id,
+				$section_label,
+				'display_tags_section',
+				$this->settings_page_slug
+		);
+
+		$tags_id = $this->plugin_options['tags'];
+		$tags_label = 'Tags';
+		add_settings_field(
+				$tags_id,
+				$tags_label,
+				[$this, 'present_text_input_option'],
+				$this->settings_page_slug,
+				$section_id,	
+				array( 'label_for' => $tags_id )
+		);
 
 	}
 
@@ -412,8 +484,9 @@ class Member_Bios_Admin {
 	 */
 	public function present_member_metabox_text_inputs( $post ) {
 
-		foreach ( $this->member_meta_info as $meta_key => $meta_title ) {
+		foreach ( $this->member_meta as $meta_key ) {
 			$custom = get_post_custom( $post->ID );
+			$meta_title = get_option( $this->plugin_options[ $meta_key ] );
 			$meta_value = $custom[ $meta_key ][0];
 			display_label( $meta_key, $meta_title );
 			display_text_input( $meta_key, $meta_value, $required = true );
