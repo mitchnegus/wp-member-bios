@@ -39,7 +39,7 @@ These customizations can be adjusted from the plugin's settings menu (found in t
 On the submission page, potential members will see only fields for subheaders and tags that have descriptions set. Similarly, a member's profile page will only show categories of member info that have set descriptions.
 The settings page also includes options for setting the maximum file size of uploaded headshot photos, whether or not the site admin is notified when someone submits a new member form, and whether or not to use your group/organization/institution email address to help filter out spam form submissions.
 
-To see the plugin in action, check out the [Science Policy Group at Berkeley](www.sciencepolicy.berkeley.edu/members) website!
+To see the plugin in action, check out the [Science Policy Group at Berkeley](sciencepolicy.berkeley.edu/members) website!
 
 == Installation ==
 
