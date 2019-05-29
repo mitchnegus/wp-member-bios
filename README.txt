@@ -30,14 +30,16 @@ A member profile consists of several pieces. The only mandatory component is a n
 * A primary subheader, displayed immediately below the member's name (e.g. the member's field of study, department, division, position, specialty, etc.)
 * A secondary subheader, displayed immediately after the primary subheader (e.g. graduation or draft year, office building, website, etc.)
 * A member bio
-* A member photo
+* A member photo (a generic headshot silhouette will be used for members without a thumbnail photo)
 * A set of tags for the member (e.g. talents, skills, interests, etc.)
+* A position for the member (e.g. member, executive, co-founder, etc.)
 
 For subheader and tag information, the site administrator can choose and customize the descriptions which are used on the new member form and in member profiles. 
 These customizations can be adjusted from the plugin's settings menu (found in the sidebar, under "Settings").
 On the submission page, potential members will see only fields for subheaders and tags that have descriptions set. Similarly, a member's profile page will only show categories of member info that have set descriptions.
 The settings page also includes options for setting the maximum file size of uploaded headshot photos, whether or not the site admin is notified when someone submits a new member form, and whether or not to use your group/organization/institution email address to help filter out spam form submissions.
 
+To see the plugin in action, check out `www.sciencepolicy.berkeley.edu/members`!
 
 == Installation ==
 
@@ -72,6 +74,12 @@ Though not ideal, these slugs (and hence the ordering) can be changed by editing
 
 = 1.0 =
 (Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.)
+
+
+== In the works... ==
+
+* Better profile page formatting
+* Taxonomy based sorting on the 'Members' page
 
 
 == Credits ==
