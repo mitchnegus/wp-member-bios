@@ -24,12 +24,29 @@ get_header();
 				$post = get_post();
 				$positions = get_the_terms($post->ID, 'positions');
 				$custom = get_post_custom();
-				$first_subheader = $custom['first_subheader'][0];
-				$second_subheader = $custom['second_subheader'][0];
-				$delimiter = get_option( 'wmb_subheader_delimiter' ) . ' ';
-				$info = $first_subheader . $delimiter . $second_subheader;
+				$member_subheader = '';
+				// Only set the subheader if the admin has included the first subheader
+				if ( get_option( 'wmb_first_subheader' ) ) {
+					$member_first_subheader = $custom['first_subheader'][0];
+					$member_subheader .= $member_first_subheader;
+					// Only set the second subheader if the second subheader is set
+					if ( get_option( 'wmb_second_subheader' ) ) {
+						$member_second_subheader = $custom['second_subheader'][0];
+						$delimiter = get_option( 'wmb_subheader_delimiter' ) . ' ';
+						// Set the delimiter to an empty string if it is unset
+						if ( ! $delimiter ) {
+							$delimiter = '';
+						}
+						$member_subheader .= $delimiter . $member_second_subheader;
+					}
+				}
 				$tags_title = get_option( 'wmb_tags' );
-				$tags = $custom['tags'][0];
+				if ( $tags_title ) {
+					$tags_title .= ':';
+					$member_tags = $custom['tags'][0];
+				} else {
+					$member_tags = '';
+				}
 	
 				// Display the thumbnail
 				if (has_post_thumbnail()) {
@@ -50,7 +67,7 @@ get_header();
 					<h2 id="member-position"><?php echo esc_html( $positions[0]->name ); ?></h2>
 				</div>
 				<h3>
-					<?php echo esc_html( $info ); ?>
+					<?php echo esc_html( $member_subheader ); ?>
 				</h3>
 
 				<?php
@@ -60,7 +77,7 @@ get_header();
 				endwhile;
 				?>
 
-				<p><b><?php echo esc_html( $tags_title ); ?>:</b> <?php echo esc_html( $tags ); ?></p>
+				<p><b><?php echo esc_html( $tags_title ); ?></b> <?php echo esc_html( $member_tags ); ?></p>
 			</div>
 		</div>
 	

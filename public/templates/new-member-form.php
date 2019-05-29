@@ -16,6 +16,9 @@ global $max_headshot_size;
 
 $given_org = get_option( 'wmb_organization_name' );
 $organization = ($given_org == '' ? 'Organization' : $given_org ); 
+$first_subheader = get_option( 'wmb_first_subheader' );
+$second_subheader = get_option( 'wmb_second_subheader' );
+$tags_title = get_option( 'wmb_tags' );
 
 get_header();
 ?>
@@ -61,27 +64,51 @@ get_header();
 				?>
 
 			</div>
-			<div class="new-member-form-element" style="width: 70%;">
-				<label for="first_subheader" class="new-member-form-label">
-					<?php echo get_option( 'wmb_first_subheader' ); ?>
-					<span class="new-member-form-label-required">(required)</span>
-				</label>
-				<input type="text" id="first_subheader" name="first_subheader" class="full-width" required/>
-			</div>
-			<div class="new-member-form-element" style="width: 70%;">
-				<label for="second_subheader" class="new-member-form-label">
-					<?php echo get_option( 'wmb_second_subheader' ); ?>
-					<span class="new-member-form-label-required">(required)</span>
-				</label>
-				<input type="text" id="second_subheader" name="second_subheader" class="full-width" required/>
-			</div>
-			<div class="new-member-form-element" class="full-width">
-				<label for="tags" class="new-member-form-label">
-					<?php echo get_option( 'wmb_tags' ); ?>
-					<span class="new-member-form-label-required">(required)</span>
-				</label>
-				<input type="text" id="tags" name="tags" class="full-width" required/>
-			</div>
+
+			<?php
+			if ( $first_subheader ) {
+				?>
+
+				<div class="new-member-form-element" style="width: 70%;">
+					<label for="first_subheader" class="new-member-form-label">
+						<?php echo esc_html( $first_subheader ); ?>
+						<span class="new-member-form-label-required">(required)</span>
+					</label>
+					<input type="text" id="first_subheader" name="first_subheader" class="full-width" required/>
+				</div>
+
+				<?php
+			}
+			
+			if ( $second_subheader ) {
+				?>
+	
+				<div class="new-member-form-element" style="width: 70%;">
+					<label for="second_subheader" class="new-member-form-label">
+						<?php echo esc_html( $second_subheader ); ?>
+						<span class="new-member-form-label-required">(required)</span>
+					</label>
+					<input type="text" id="second_subheader" name="second_subheader" class="full-width" required/>
+				</div>
+
+				<?php
+			}
+			
+			if ( $tags_title ) {
+				?>
+
+				<div class="new-member-form-element" class="full-width">
+					<label for="tags" class="new-member-form-label">
+						<?php echo get_option( 'wmb_tags' ); ?>
+						<span class="new-member-form-label-required">(required)</span>
+					</label>
+					<input type="text" id="tags" name="tags" class="full-width" required/>
+				</div>
+
+				<?php
+			}
+			?>
+
 			<div class="new-member-form-element" class="full-width">
 				<label for="bio" class="new-member-form-label">
 					Bio

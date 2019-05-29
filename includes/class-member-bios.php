@@ -245,7 +245,6 @@ class Member_Bios {
 		add_theme_support( 'post-thumbnails' );
 		set_post_thumbnail_size( 200, 200 );
 		$this->set_plugin_max_headshot_size();
-		$this->set_default_prompts();
 		// Run the loader (with hooks for actions and filters)
 		$this->loader->run();
 
@@ -286,33 +285,6 @@ class Member_Bios {
 		}
 		$plugin_max_headshot_megabytes = $plugin_max_headshot_size/1e6;
 		update_option( $option, $plugin_max_headshot_megabytes );
-
-	}
-
-	/**
-	 * Set the maximum headshot size that is allowed to be uploaded (in MB).
-	 *
-	 * Defines the maximum allowable headshot file size that can be uploaded
-	 * by a new member. If the default Wordpress value is greater than 2 MB
-	 * then the maximum size will be limited to 2 MB. This value can be
-	 * overridden on the settings page. The value returned is in megabytes (MB).
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function set_default_prompts() {
-
-		$option_defaults = array(
-			'wmb_first_subheader'  => 'Department',
-			'wmb_second_subheader' => 'Institution',
-			'wmb_tags'             => 'Skills'
-		);
-		foreach ( $option_defaults as $option => $default ) {
-			$current_option_value = get_option( $option );
-			if ( $current_option_value == '' ) {
-				update_option( $option, $default );
-			}
-		}
 
 	}
 
