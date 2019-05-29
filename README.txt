@@ -16,7 +16,7 @@ A plugin for managing a group's member pages, including automatic submission of 
 This is a plugin for managing member pages on a group or team webpage.
 It allows users to submit biographical information through a form provided by the plugin, and then uses this information to automatically generate a profile for that member.
 These member profiles are then displayed on the site in two locations.
-First, the plugin adds a 'Members' page immediately off your site's root page (e.g. at <www.mysite/members>) where all of the members are displayed.
+First, the plugin adds a 'Members' page immediately off your site's root page (e.g. at `www.mysite/members`) where all of the members are displayed.
 Clicking on a member on this page will take you to the member's individual profile, which inlcudes all of the biographical information that the member provided through the form.
 The main 'Members' page includes a link to the form, so that members can easily add themselves.
 
