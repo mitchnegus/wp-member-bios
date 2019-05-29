@@ -52,7 +52,8 @@ Instead, you must clone or download the repository manually. Those steps are
 
 = How do I change the order of members on the main 'Members' page? =
 
-The main 'Members' page is organized alphabetically by the member's last name (via the individual member's profile page slug, which is generated algorithmically during profile creation).
+The order of members is alphabetical by the slug of the member's individual profile page. 
+The default slug is generated when a new member form is submitted by rearranging the new member's name so that the last name is first. 
 Though not ideal, these slugs (and hence the ordering) can be changed by editing the page permalinks the same as any other WordPress page.
 
 
