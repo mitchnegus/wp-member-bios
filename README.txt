@@ -2,8 +2,8 @@
 Contributors: mitchnegus
 Donate link: 
 Tags: member, profile, bio, team
-Requires at least: 3.0.1
-Tested up to: 3.4
+Requires at least: 5.2
+Tested up to: 5.2
 Stable tag: 
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
