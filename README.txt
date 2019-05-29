@@ -10,42 +10,43 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 A plugin for managing a group's member pages, including automatic submission of an image and short bio. 
 
+
 == Description ==
 
-(This hasn't been populated with information for the Member Bios plugin yet.) This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+This is a plugin for managing member pages on a group or team webpage.
+It allows users to submit biographical information through a form provided by the plugin, and then uses this information to automatically generate a profile for that member.
+These member profiles are then displayed on the site in two locations.
+First, the plugin adds a 'Members' page immediately off your site's root page (e.g. at `www.mysite/members') where all of the members are displayed.
+Clicking on a member on this page will take you to the member's individual profile, which inlcudes all of the biographical information that the member provided through the form.
+The main 'Members' page includes a link to the form, so that members can easily add themselves.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+On the backend, the plugin also provides a site administrator with a variety of customization options.
+First and foremost, it adds a 'Members' section (see the "Members" link in the admin area sidebar) where member posts can be edited and customized. 
+After a member submits their information through the form, their profile appears in this section as a draft. 
+Site administrator approval is then required before the profile is published.
+Members can also be added (or removed) manually through this interface, which attempts to be fairly self-explanatory.
 
-A few notes about the sections above:
+A member profile consists of several pieces. The only mandatory component is a name, but an administrator can choose to add any of the following:
+* A primary subheader, displayed immediately below the member's name (e.g. the member's field of study, department, division, position, specialty, etc.)
+* A secondary subheader, displayed immediately after the primary subheader (e.g. graduation or draft year, office building, website, etc.)
+* A member bio
+* A member photo
+* A set of tags for the member (e.g. talents, skills, interests, etc.)
 
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+For subheader and tag information, the site administrator can choose and customize the descriptions which are used on the new member form and in member profiles. 
+These customizations can be adjusted from the plugin's settings menu (found in the sidebar, under "Settings").
+On the submission page, potential members will see only fields for subheaders and tags that have descriptions set. Similarly, a member's profile page will only show categories of member info that have set descriptions.
+That settings page also includes options for setting the maximum file size of uploaded headshot photos, whether or not the site admin is notified when someone submits a new member form, and whether or not to use your group/organization/institution email address to help filter out spam submissions.
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
-
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+At the moment, this plugin is not available through WordPress.org.
+Instead, you must clone or download the repository manually. Those steps are
 
-e.g.
+1. Clone/upload this repository (with file `member-bios.php` to the `/wp-content/plugins/` directory.
+1. Activate the plugin through the 'Plugins' menu in WordPress.
 
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
 
 == Frequently Asked Questions ==
 
@@ -57,57 +58,25 @@ An answer to that question.
 
 Answer to foo bar dilemma.
 
+
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. (None yet)
 
 == Changelog ==
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
 
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
+= 1.0 =
+* The first release!
+
 
 == Upgrade Notice ==
 
 = 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
+(Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.)
 
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
 
 == Credits ==
 
 This project is based on the [WordPress Plugin Boilerplate](https://github.com/DevinVinson/WordPress-Plugin-Boilerplate) template. 
 Many thanks to those developers for helping me get started.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
