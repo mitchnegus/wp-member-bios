@@ -17,8 +17,8 @@ This is a plugin for managing member pages on a group or team webpage.
 It allows users to submit biographical information through a form provided by the plugin, and then uses this information to automatically generate a profile for that member.
 These member profiles are then displayed on the site in two locations.
 First, the plugin adds a 'Members' page immediately off your site's root page (e.g. at `www.mysite/members`) where all of the members are displayed.
-Clicking a member on this page will take you to the member's individual profile, which inlcudes all of the biographical information that the member provided through the form.
-The main 'Members' page includes a link to the form, so that members can easily add themselves.
+Clicking a member on this page will then take you to the member's individual profile, which includes all of the biographical information that the member provided through the form.
+The main 'Member's page includes a link to the form, so that members can easily add themselves.
 
 On the backend, the plugin also provides a site administrator with a variety of customization options.
 First and foremost, it adds a 'Members' section (see the "Members" link in the admin area sidebar) where member posts can be edited and customized. 
@@ -50,13 +50,10 @@ Instead, you must clone or download the repository manually. Those steps are
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= How do I change the order of members on the main 'Members' page? =
 
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
+The main 'Members' page is organized alphabetically by the member's last name (via the individual member's profile page slug, which is generated algorithmically during profile creation).
+Though not ideal, these slugs (and hence the ordering) can be changed by editing the page permalinks the same as any other WordPress page.
 
 
 == Screenshots ==
