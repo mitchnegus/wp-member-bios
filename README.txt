@@ -36,7 +36,7 @@ A member profile consists of several pieces. The only mandatory component is a n
 For subheader and tag information, the site administrator can choose and customize the descriptions which are used on the new member form and in member profiles. 
 These customizations can be adjusted from the plugin's settings menu (found in the sidebar, under "Settings").
 On the submission page, potential members will see only fields for subheaders and tags that have descriptions set. Similarly, a member's profile page will only show categories of member info that have set descriptions.
-That settings page also includes options for setting the maximum file size of uploaded headshot photos, whether or not the site admin is notified when someone submits a new member form, and whether or not to use your group/organization/institution email address to help filter out spam submissions.
+The settings page also includes options for setting the maximum file size of uploaded headshot photos, whether or not the site admin is notified when someone submits a new member form, and whether or not to use your group/organization/institution email address to help filter out spam form submissions.
 
 
 == Installation ==
