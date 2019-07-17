@@ -260,9 +260,7 @@ class Member_Bios_Public {
 	 */
 	public function use_custom_post_single_template( $single_template ) {
 
-		global $post;
-
-		if ( $post->post_type == 'members' ) {
+		if ( is_singular( 'members' ) ) {
 			$single_template = WMB_PATH . 'public/templates/single-members.php';
 	 	}
 		return $single_template;
@@ -280,12 +278,28 @@ class Member_Bios_Public {
 	 */
 	public function use_custom_post_archive_template( $archive_template ) {
 
-		global $post;
-
-		if ( $post->post_type == 'members' ) {
+		if ( is_post_type_archive( 'members' ) ) {
 			$archive_template = WMB_PATH . 'public/templates/archive-members.php';
 	 	}
 		return $archive_template;
+
+	}
+
+	/**
+	 * Set the custom taxonomy archive template for the 'Positions' taxonomy.
+	 * 
+	 * (Executed by loader class)
+	 *
+	 * @since    1.0.0
+	 * @param    string     $taxonomy_template    The path to the current taxonomy template that is being used by Wordpress.
+	 * @return   string                           The path to the replacement archive post template to be used instead.
+	 */
+	public function use_custom_taxonomy_archive_template( $taxonomy_template ) {
+
+		if ( is_tax( 'positions' ) ) {
+			$taxonomy_template = WMB_PATH . 'public/templates/taxonomy-positions.php';
+	 	}
+		return $taxonomy_template;
 
 	}
 
@@ -300,7 +314,7 @@ class Member_Bios_Public {
 	public function show_all_members( $query ) {
 
 	  if ( ! is_admin() && $query->is_main_query() ) {
-				if ( is_post_type_archive( 'members' ) ) {
+				if ( is_post_type_archive( 'members' ) || is_tax( 'positions' ) ) {
 						$query->set( 'posts_per_page', -1 );
 				}
 		}
@@ -318,7 +332,7 @@ class Member_Bios_Public {
 	public function alpha_order_members( $query ) {
 
 		if ( $query->is_main_query() ) {
-			if ( is_post_type_archive( 'members' ) ) {
+			if ( is_post_type_archive( 'members' ) || is_tax( 'positions' ) ) {
 				$query->set( 'orderby', 'name' );
 				$query->set( 'order', 'ASC' );
 			}
