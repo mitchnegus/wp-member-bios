@@ -63,7 +63,7 @@ get_header();
 			</div>
 			<div id="member-info">
 				<div id="member-header">
-					<?php the_title('<h1>', '</h1>'); ?>
+					<?php the_title( '<h1>', '</h1>' ); ?>
 					<h2 id="member-position"><?php echo esc_html( $positions[0]->name ); ?></h2>
 				</div>
 				<h3>

@@ -192,8 +192,8 @@ class Member_Bios {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'add_admin_fields');
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_member_details');
 		// Update the columns on the browse members page
-		$this->loader->add_action('manage_members_posts_custom_column', $plugin_admin, 'fill_member_columns', 10, 2);
-		$this->loader->add_filter('manage_members_posts_columns', $plugin_admin, 'set_member_columns');
+		$this->loader->add_action( 'manage_members_posts_custom_column', $plugin_admin, 'fill_member_columns', 10, 2 );
+		$this->loader->add_filter( 'manage_members_posts_columns', $plugin_admin, 'set_member_columns' );
 
 	}
 
@@ -226,8 +226,8 @@ class Member_Bios {
 		$this->loader->add_filter( 'template_include', $plugin_public, 'include_new_member_template' );
 		$this->loader->add_filter( 'template_include', $plugin_public, 'include_submit_confirmation_template' );
 		// Use custom templates for the member pages
-		$this->loader->add_filter( 'single_template', $plugin_public, 'use_custom_member_single_template' );
-		$this->loader->add_filter( 'archive_template', $plugin_public, 'use_custom_member_archive_template' );
+		$this->loader->add_filter( 'single_template', $plugin_public, 'use_custom_post_single_template' );
+		$this->loader->add_filter( 'archive_template', $plugin_public, 'use_custom_post_archive_template' );
 		// Format the 'Members' page properly
 		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'show_all_members' );
 		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'alpha_order_members' );

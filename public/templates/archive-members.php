@@ -34,11 +34,11 @@ get_header();
 					$position = $positions[0]->name
 					?>
 
-					<a href="<?php echo esc_url(get_page_link()) ?>">
+					<a href="<?php echo esc_url( get_page_link() ) ?>">
 						<div class="mtile-container">
 
 							<?php
-		 					if (has_post_thumbnail()) {
+		 					if ( has_post_thumbnail() ) {
 								the_post_thumbnail();
 							} else {
 								?>

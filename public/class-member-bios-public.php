@@ -115,22 +115,22 @@ class Member_Bios_Public {
 	public function register_member_post_type() {
 
 		$labels = array(
-			'name' 					=> __('Members'),
-			'singular_name' => __('Member'),
-			'add_new_item' 	=> __('Add New Member'),
-			'edit_item' 		=> __('Edit Member')
+			'name' 					=> __( 'Members' ),
+			'singular_name' => __( 'Member' ),
+			'add_new_item' 	=> __( 'Add New Member' ),
+			'edit_item' 		=> __( 'Edit Member' )
 		);
 
 		$args = array(
 			'labels' 			=> $labels,
 			'public'			=> true,
 			'has_archive' => true,
-			'rewrite' 		=> array('slug' => 'members'),
-			'supports' 		=> array('title', 'editor', 'thumbnail'),
+			'rewrite' 		=> array( 'slug' => 'members' ),
+			'supports' 		=> array( 'title', 'editor', 'thumbnail' ),
 			'menu_icon' 	=> 'dashicons-groups'
 		);
 
-		register_post_type('members', $args);
+		register_post_type( 'members', $args );
 		flush_rewrite_rules();
 
 	}
@@ -148,17 +148,17 @@ class Member_Bios_Public {
 	public function register_positions_taxonomy() {
 
   	$labels = array(
-				'name' 					=> __('Positions'),
-				'singular_name' => __('Position'),
-				'add_new_item' 	=> __('Add New Position')
+				'name' 					=> __( 'Positions' ),
+				'singular_name' => __( 'Position' ),
+				'add_new_item' 	=> __( 'Add New Position' )
 		);
 
 		$args = array(
 				'labels' 	=> $labels,
-				'rewrite'	=> array('slug' => 'positions')
+				'rewrite'	=> array( 'slug' => 'positions' )
 		);
 
-		register_taxonomy('positions', array('members'), $args);
+		register_taxonomy( 'positions', array( 'members' ), $args );
 
 	}
 
@@ -258,7 +258,7 @@ class Member_Bios_Public {
 	 * @param    string     $single_template      The path to the current single post template that is being used by Wordpress.
 	 * @return   string                           The path to the replacement single post template to be used instead.
 	 */
-	public function use_custom_member_single_template( $single_template ) {
+	public function use_custom_post_single_template( $single_template ) {
 
 		global $post;
 
@@ -278,7 +278,7 @@ class Member_Bios_Public {
 	 * @param    string     $archive_template     The path to the current archive post template that is being used by Wordpress.
 	 * @return   string                           The path to the replacement archive post template to be used instead.
 	 */
-	public function use_custom_member_archive_template( $archive_template ) {
+	public function use_custom_post_archive_template( $archive_template ) {
 
 		global $post;
 
@@ -318,7 +318,7 @@ class Member_Bios_Public {
 	public function alpha_order_members( $query ) {
 
 		if ( $query->is_main_query() ) {
-			if ( is_post_type_archive('members') ) {
+			if ( is_post_type_archive( 'members' ) ) {
 				$query->set( 'orderby', 'name' );
 				$query->set( 'order', 'ASC' );
 			}
@@ -427,7 +427,7 @@ class Member_Bios_Public {
 	 */
 	private function check_file_meets_specs() {
 
-		$allowed_image_types = array('image/jpeg', 'image/png');
+		$allowed_image_types = array( 'image/jpeg', 'image/png' );
 		$headshot_option = $this->plugin_options['max_headshot_size'];
 		$max_headshot_size = get_option( $headshot_option )*1e6;
 		$file_size = $_FILES['photo']['size'];
