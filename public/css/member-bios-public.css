@@ -87,11 +87,26 @@ div.mtile-text2 {
   top: 65%;
 }
 
+/* alumni button 
+------------------------------*/
+div.alumni-button {
+	display: flex;
+  background-color: #f0f0f0;
+	border-radius: 10px;
+	margin: 20px auto;
+	width: 20%;
+	height: 50px;
+	font-weight: bold;
+}
+
+p.alumni-button-text {
+	margin: auto;
+}
+
 /* contact block
 ------------------------------*/
 div.contact-block {
-  background-color: #f0f0f0;
-	margin-top: 30px;
+	margin-top: 20px;
   padding: 20px 40px;
 }
 

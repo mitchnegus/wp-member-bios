@@ -20,7 +20,16 @@ get_header();
 
 				<header class="entry-header">
 					<h1 class="entry-title">
-						<?php	echo esc_html( single_term_title() ); ?> 
+
+						<?php
+						/* Set title based on page type */
+						if ( is_tax( 'positions', 'member' ) ) {
+							echo esc_html( 'Members' );
+						} elseif ( is_tax( 'positions', 'alumni' ) ) {
+							echo esc_html( 'Alumni' );
+						}
+						?> 
+
 					</h1>
 				</header><!-- .page-header -->
 	
@@ -68,12 +77,26 @@ get_header();
 
 		</div>
 
-		<div class="contact-block">
-			Don't see yourself? New to the group? 
-			<a href="<?php echo home_url() . '/new-member' ?>">
-				Click here and send us your info to include on the site!
+		<?php
+		if ( is_tax( 'positions', 'member' ) ) {
+			?>
+
+			<a href="<?php echo home_url() . '/positions/alumni' ?>">
+				<div class="alumni-button">
+					<p class="alumni-button-text">SPG Alumni</p>
+				</div>
 			</a>
-		</div>
+
+			<div class="contact-block">
+				Don't see yourself? New to the group? 
+				<a href="<?php echo home_url() . '/new-member' ?>">
+					Click here and send us your info to include on the site!
+				</a>
+			</div>
+			
+			<?php
+	}
+	?>
 
 	</main><!-- #main -->
 </div><!-- #primary -->
