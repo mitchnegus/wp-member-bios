@@ -38,21 +38,31 @@ function display_settings( $option_group, $page_slug ) {
 	<?php
 }
 
-function display_subheader_section( $args ) {
+function display_group_info_section( $args ) {
 	?>
 
 	<p id="<?php echo esc_attr( $args['id'] ); ?>">
-		Set the prompt for a user regarding which subheader(s) they should provide. These subheaders appear immediately below the member's name on their profile page. Two subheaders may be specified, and the delimiter between the two can also be selected here. 
+		Set information pertaining to the group as a whole.
 	</p>
 
 	<?php
 }
 
-function display_tags_section( $args ) {
+function display_member_archives_section( $args ) {
 	?>
 
 	<p id="<?php echo esc_attr( $args['id'] ); ?>">
-		Set the prompt for a user regarding the type of tags they should provide. This could be "Policy interests", "Skills", "Talents" or something similar.
+	Set options regarding the display of the full members list. The ranking position is the position (e.g. "Executive") that will be displayed ahead of all other position types on the archive page.
+	</p>
+
+	<?php
+}
+
+function display_member_profile_section( $args ) {
+	?>
+
+	<p id="<?php echo esc_attr( $args['id'] ); ?>">
+		Set prompts (on the new member form) for a user regarding which subheader(s) and tags they should provide. Subheaders appear immediately below the member's name on their profile page. Two subheaders may be specified, and the delimiter between the two can also be selected. The tags appear after the member's profile, and could be "Interests", "Skills", "Talents" or something similar.
 	</p>
 
 	<?php

@@ -45,7 +45,7 @@ div.mtile-container {
   height: 150pt;
   width: 150pt;
   float: left;
-  margin: 3px;
+  margin: 0 3px 3px 0;
   background-color: #E2E2E2
 }
 
@@ -58,7 +58,7 @@ div.mtile-overlay {
   overflow: hidden;
   width: 100%;
   opacity: 0;
-  height: 25%;
+  height: 20%;
   transition: .2s ease;
 }
 
@@ -72,31 +72,42 @@ div.mtile-text {
   overflow: hidden;
   white-space: nowrap;
   color: white;
+	top: 45%;
   left: 50%;
+	font-size: 12px;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
 }
 
 div.mtile-text1 {
   font-size: 12px;
-  top: 35%;
+  top: 30%;
 }
 
 div.mtile-text2 {
   font-size: 10px;
-  top: 65%;
+  top: 70%;
 }
 
 /* alumni button 
 ------------------------------*/
+a.alumni-link:hover {
+	text-decoration: none;
+}
+
 div.alumni-button {
 	display: flex;
-  background-color: #f0f0f0;
+  background-color: #F0F0F0;
 	border-radius: 10px;
 	margin: 20px auto;
-	width: 20%;
+	width: 40%;
+	min-width: 200px;
 	height: 50px;
 	font-weight: bold;
+}
+
+div.alumni-button:hover {
+	background-color: #EAEAEA;
 }
 
 p.alumni-button-text {

@@ -118,11 +118,11 @@ class Member_Bios_Admin {
 		$page_title = 'Member Bios Settings';
 		$menu_title = 'Member Bios';
 		add_options_page(
-				$page_title,
-				$menu_title,
-				'manage_options',
-				$this->settings_page_slug,
-				[$this, 'add_settings_options']
+			$page_title,
+			$menu_title,
+			'manage_options',
+			$this->settings_page_slug,
+			[$this, 'add_settings_options']
 		);
 	}
 
@@ -136,8 +136,9 @@ class Member_Bios_Admin {
 	public function add_settings() {
 
 		$this->register_settings();
-		$this->add_subheader_settings();
-		$this->add_tags_settings();
+		$this->add_group_settings();
+		$this->add_member_archive_settings();
+		$this->add_member_profile_settings();
 		$this->add_headshot_settings();
 		$this->add_email_notification_settings();
 		$this->add_spam_filtering_settings();
@@ -185,7 +186,10 @@ class Member_Bios_Admin {
 				foreach ( $this->member_meta as $meta_key ) {
 					// Sanitize user input and update the post metadata
 					$meta_value = sanitize_text_field($_POST[ $meta_key ]);
-					update_post_meta( $post_id, $meta_key, $meta_value );
+					// Make sure that a "Quick Edit" is not saving empty info
+					if ( ! empty( $meta_value ) ) {
+						update_post_meta( $post_id, $meta_key, $meta_value );
+					}
 				}
 
 			}
@@ -231,10 +235,10 @@ class Member_Bios_Admin {
 		$extra_column1 = 'first_subheader';
 		$extra_column2 = 'second_subheader';
 		$columns = array(
-				'cb' 				    => '<input type="checkbox" />',
-				'title' 		    => __( 'Member' ),
-				$extra_column1 	=> __( $this->member_meta[ $extra_column1 ] ),
-				$extra_column2 	=> __( $this->member_meta[ $extra_column2 ] ),
+			'cb' 				    => '<input type="checkbox" />',
+			'title' 		    => __( 'Member' ),
+			$extra_column1 	=> __( $this->member_meta[ $extra_column1 ] ),
+			$extra_column2 	=> __( $this->member_meta[ $extra_column2 ] ),
 		);
 		return $columns;
 
@@ -264,8 +268,79 @@ class Member_Bios_Admin {
 	private function register_settings() {
 
 		foreach ( $this->plugin_options as $option ) {
-			register_setting( $this->option_group, $option );
+				register_setting( $this->option_group, $option );
 		}	
+	}
+
+	/**
+	 * Add a section with fields for managing the maximum headshot size.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function add_group_settings() {
+
+		$section_id = 'group-info';
+		$section_label = 'Group Information';
+		add_settings_section(
+			$section_id,
+			$section_label,
+			'display_group_info_section',
+			$this->settings_page_slug
+		);
+
+		$group_name_id = $this->plugin_options['group_name'];
+		$group_name_label = 'Group Name';
+		add_settings_field(
+			$group_name_id,
+			$group_name_label,
+			[$this, 'present_text_input_option'],
+			$this->settings_page_slug,
+			$section_id,	
+			array( 'label_for' => $group_name_id )
+		);
+		
+	}
+	
+	/**
+	 * Add a section with fields for managing the maximum headshot size.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function add_member_archive_settings() {
+
+		$section_id = 'member-archive';
+		$section_label = 'Member Archives';
+		add_settings_section(
+			$section_id,
+			$section_label,
+			'display_member_archives_section',
+			$this->settings_page_slug
+		);
+
+		$ranking_position_id = $this->plugin_options['ranking_position'];
+		$ranking_position_label = 'Ranking position';
+		add_settings_field(
+			$ranking_position_id,
+			$ranking_position_label,
+			[$this, 'present_text_input_option'],
+			$this->settings_page_slug,
+			$section_id,	
+			array( 'label_for' => $ranking_position_id )
+		);
+		
+		$include_alumni_id = $this->plugin_options['include_alumni'];
+		$include_alumni_label = 'Include page for alumni archive';
+		add_settings_field(
+			$include_alumni_id,
+			$include_alumni_label,
+			[$this, 'present_checkbox_option'],
+			$this->settings_page_slug,
+			$section_id,	
+			array( 'label_for' => $include_alumni_id )
+		);
+		
 	}
 
 	/**
@@ -274,76 +349,56 @@ class Member_Bios_Admin {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function add_subheader_settings() {
+	private function add_member_profile_settings() {
 
-		$section_id = 'subheaders';
-		$section_label = 'Member Subheaders';
+		$section_id = 'member_profiles';
+		$section_label = 'Member Profiles';
 		add_settings_section(
-				$section_id,
-				$section_label,
-				'display_subheader_section',
-				$this->settings_page_slug
+			$section_id,
+			$section_label,
+			'display_member_profile_section',
+			$this->settings_page_slug
 		);
 
 		$first_subheader_id = $this->plugin_options['first_subheader'];
-		$first_subheader_label = 'First subheader';
+		$first_subheader_label = 'First subheader prompt';
 		add_settings_field(
-				$first_subheader_id,
-				$first_subheader_label,
-				[$this, 'present_text_input_option'],
-				$this->settings_page_slug,
-				$section_id,	
-				array( 'label_for' => $first_subheader_id )
+			$first_subheader_id,
+			$first_subheader_label,
+			[$this, 'present_text_input_option'],
+			$this->settings_page_slug,
+			$section_id,	
+			array( 'label_for' => $first_subheader_id )
 		);
 		$second_subheader_id = $this->plugin_options['second_subheader'];
-		$second_subheader_label = 'Second subheader';
+		$second_subheader_label = 'Second subheader prompt';
 		add_settings_field(
-				$second_subheader_id,
-				$second_subheader_label,
-				[$this, 'present_text_input_option'],
-				$this->settings_page_slug,
-				$section_id,	
-				array( 'label_for' => $second_subheader_id )
+			$second_subheader_id,
+			$second_subheader_label,
+			[$this, 'present_text_input_option'],
+			$this->settings_page_slug,
+			$section_id,	
+			array( 'label_for' => $second_subheader_id )
 		);
 		$subheader_delimiter_id = $this->plugin_options['subheader_delimiter'];
 		$subheader_delimiter_label = 'Delimiter separating subheaders';
 		add_settings_field(
-				$subheader_delimiter_id,
-				$subheader_delimiter_label,
-				[$this, 'present_text_input_option'],
-				$this->settings_page_slug,
-				$section_id,	
-				array( 'label_for' => $subheader_delimiter_id )
+			$subheader_delimiter_id,
+			$subheader_delimiter_label,
+			[$this, 'present_text_input_option'],
+			$this->settings_page_slug,
+			$section_id,	
+			array( 'label_for' => $subheader_delimiter_id )
 		);
-
-	}
-
-	/**
-	 * Add a section to control tags of the custom member post.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function add_tags_settings() {
-
-		$section_id = 'tags';
-		$section_label = 'Member Tags';
-		add_settings_section(
-				$section_id,
-				$section_label,
-				'display_tags_section',
-				$this->settings_page_slug
-		);
-
 		$tags_id = $this->plugin_options['tags'];
-		$tags_label = 'Tags';
+		$tags_label = 'Tag prompt';
 		add_settings_field(
-				$tags_id,
-				$tags_label,
-				[$this, 'present_text_input_option'],
-				$this->settings_page_slug,
-				$section_id,	
-				array( 'label_for' => $tags_id )
+			$tags_id,
+			$tags_label,
+			[$this, 'present_text_input_option'],
+			$this->settings_page_slug,
+			$section_id,	
+			array( 'label_for' => $tags_id )
 		);
 
 	}
@@ -359,21 +414,21 @@ class Member_Bios_Admin {
 		$section_id = 'member-headshots';
 		$section_label = 'Member Headshots';
 		add_settings_section(
-				$section_id,
-				$section_label,
-				'display_headshot_section',
-				$this->settings_page_slug
+			$section_id,
+			$section_label,
+			'display_headshot_section',
+			$this->settings_page_slug
 		);
 
 		$max_headshot_size_id = $this->plugin_options['max_headshot_size'];
 		$max_headshot_size_label = 'Maximum headshot size (MB)';
 		add_settings_field(
-				$max_headshot_size_id,
-				$max_headshot_size_label,
-				[$this, 'present_text_input_option'],
-				$this->settings_page_slug,
-				$section_id,	
-				array( 'label_for' => $max_headshot_size_id )
+			$max_headshot_size_id,
+			$max_headshot_size_label,
+			[$this, 'present_text_input_option'],
+			$this->settings_page_slug,
+			$section_id,	
+			array( 'label_for' => $max_headshot_size_id )
 		);
 		
 	}
@@ -389,21 +444,21 @@ class Member_Bios_Admin {
 		$section_id = 'email-notifications';
 		$section_label = 'Email notifications';
 		add_settings_section(
-				$section_id,
-				$section_label,
-				'display_email_notification_section',
-				$this->settings_page_slug
+			$section_id,
+			$section_label,
+			'display_email_notification_section',
+			$this->settings_page_slug
 		);
 
 		$notification_email_id = $this->plugin_options['notification_email'];
 		$notification_email_label = 'Enable email notifications';
 		add_settings_field(
-				$notification_email_id,
-				$notification_email_label,
-				[$this, 'present_checkbox_option'],
-				$this->settings_page_slug,
-				$section_id,	
-				array( 'label_for' => $notification_email_id )
+			$notification_email_id,
+			$notification_email_label,
+			[$this, 'present_checkbox_option'],
+			$this->settings_page_slug,
+			$section_id,	
+			array( 'label_for' => $notification_email_id )
 		);
 		
 	}
@@ -419,41 +474,41 @@ class Member_Bios_Admin {
 		$section_id = 'spam-filter';
 		$section_label = 'Email-based Spam Filtering';
 		add_settings_section(
-				$section_id,
-				$section_label,
-				'display_spam_filter_section',
-				$this->settings_page_slug
+			$section_id,
+			$section_label,
+			'display_spam_filter_section',
+			$this->settings_page_slug
 		);
 
 		$spam_filtering_id = $this->plugin_options['spam_filtering'];
 		$spam_filtering_label = 'Enable spam filtering';
 		add_settings_field(
-				$spam_filtering_id,
-				$spam_filtering_label,
-				[$this, 'present_checkbox_option'],
-				$this->settings_page_slug,
-				$section_id,	
-				array( 'label_for' => $spam_filtering_id )
+			$spam_filtering_id,
+			$spam_filtering_label,
+			[$this, 'present_checkbox_option'],
+			$this->settings_page_slug,
+			$section_id,	
+			array( 'label_for' => $spam_filtering_id )
 		);
 		$organization_name_id = $this->plugin_options['organization_name'];
 		$organization_name_label = 'Organization name';
 		add_settings_field(
-				$organization_name_id,
-				$organization_name_label,
-				[$this, 'present_text_input_option'],
-				$this->settings_page_slug,
-				$section_id,
-				array( 'label_for' => $organization_name_id )
+			$organization_name_id,
+			$organization_name_label,
+			[$this, 'present_text_input_option'],
+			$this->settings_page_slug,
+			$section_id,
+			array( 'label_for' => $organization_name_id )
 		);
 		$organization_domain_id = $this->plugin_options['organization_domain'];
 		$organization_domain_label = 'Organization email domain (e.g. berkeley.edu)';
 		add_settings_field(
-				$organization_domain_id,
-				$organization_domain_label,
-				[$this, 'present_text_input_option'],
-				$this->settings_page_slug,
-				$section_id,
-				array( 'label_for' => $organization_domain_id )
+			$organization_domain_id,
+			$organization_domain_label,
+			[$this, 'present_text_input_option'],
+			$this->settings_page_slug,
+			$section_id,
+			array( 'label_for' => $organization_domain_id )
 		);
 
 	}

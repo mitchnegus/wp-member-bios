@@ -49,10 +49,10 @@ class Member_Bios_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $member_bios       The name of the plugin.
-	 * @param      string    $version           The version of this plugin.
-	 * @param      array     $options           An array of the options set and added to the database by the plugin.
-	 * @param      array     $member_meta       An array of the meta fields for the custom member post type.
+	 * @param    string    $member_bios       The name of the plugin.
+	 * @param    string    $version           The version of this plugin.
+	 * @param    array     $options           An array of the options set and added to the database by the plugin.
+	 * @param    array     $member_meta       An array of the meta fields for the custom member post type.
 	 */
 	public function __construct( $member_bios, $version, $options, $member_meta ) {
 
@@ -118,7 +118,9 @@ class Member_Bios_Public {
 			'name' 					=> __( 'Members' ),
 			'singular_name' => __( 'Member' ),
 			'add_new_item' 	=> __( 'Add New Member' ),
-			'edit_item' 		=> __( 'Edit Member' )
+			'edit_item' 		=> __( 'Edit Member' ),
+			'view_item'     => __( 'View Member' ),
+			'search_items'  => __( 'Search Members' )
 		);
 
 		$args = array(
@@ -150,15 +152,37 @@ class Member_Bios_Public {
   	$labels = array(
 				'name' 					=> __( 'Positions' ),
 				'singular_name' => __( 'Position' ),
-				'add_new_item' 	=> __( 'Add New Position' )
+				'add_new_item' 	=> __( 'Add New Position' ),
+				'edit_item'     => __( 'Edit Position' ),
+				'view_item'     => __( 'View Position' ),
+				'search_items'  => __( 'Search Positions' ),
+				'back_to_items' => __( 'Back to Positions' )
 		);
 
 		$args = array(
-				'labels' 	=> $labels,
-				'rewrite'	=> array( 'slug' => 'positions' )
+				'labels' 	     => $labels,
+				'rewrite'	     => array( 'slug' => 'positions' ),
+				'hierarchical' => true
 		);
 
-		register_taxonomy( 'positions', array( 'members' ), $args );
+		register_taxonomy( 'positions', array( 'members'), $args );
+		// Define the basic 'Members' position
+		wp_insert_term(
+			'Member',
+		 	'positions',
+			array(
+				'description' => 'A member of the group.',
+				'slug'        => 'member',
+			)
+		);
+		wp_insert_term(
+			'Alum',
+		 	'positions',
+			array(
+				'description' => 'A group alum.',
+				'slug'        => 'alum',
+			)
+		);
 
 	}
 
@@ -198,7 +222,7 @@ class Member_Bios_Public {
 
 		// Send the user to the confirmation page and notify the admin (if desired) 
 		wp_redirect( home_url() . '/new-member-confirmation' );
-		if ( get_option( 'notification_email' ) == 'checked' ) {
+		if ( get_option( 'wmb_notification_email' ) == 'checked' ) {
 			$this->notify_admin_on_submission( $inputs );
 		}
 
@@ -258,7 +282,7 @@ class Member_Bios_Public {
 	 * @param    string     $single_template      The path to the current single post template that is being used by Wordpress.
 	 * @return   string                           The path to the replacement single post template to be used instead.
 	 */
-	public function use_custom_post_single_template( $single_template ) {
+	public function use_member_single_template( $single_template ) {
 
 		if ( is_singular( 'members' ) ) {
 			$single_template = WMB_PATH . 'public/templates/single-members.php';
@@ -276,7 +300,7 @@ class Member_Bios_Public {
 	 * @param    string     $archive_template     The path to the current archive post template that is being used by Wordpress.
 	 * @return   string                           The path to the replacement archive post template to be used instead.
 	 */
-	public function use_custom_post_archive_template( $archive_template ) {
+	public function use_member_archive_template( $archive_template ) {
 
 		if ( is_post_type_archive( 'members' ) ) {
 			$archive_template = WMB_PATH . 'public/templates/archive-members.php';
@@ -286,7 +310,7 @@ class Member_Bios_Public {
 	}
 
 	/**
-	 * Set the custom taxonomy archive template for the 'Positions' taxonomy.
+	 * Set the custom taxonomy archive template for the 'Member' position.
 	 * 
 	 * (Executed by loader class)
 	 *
@@ -294,10 +318,28 @@ class Member_Bios_Public {
 	 * @param    string     $taxonomy_template    The path to the current taxonomy template that is being used by Wordpress.
 	 * @return   string                           The path to the replacement archive post template to be used instead.
 	 */
-	public function use_custom_taxonomy_archive_template( $taxonomy_template ) {
+	public function use_member_taxonomy_template( $taxonomy_template ) {
 
-		if ( is_tax( 'positions' ) ) {
-			$taxonomy_template = WMB_PATH . 'public/templates/taxonomy-positions.php';
+		if ( is_tax( 'positions', 'member' ) ) {
+			$taxonomy_template = WMB_PATH . 'public/templates/taxonomy-positions-member.php';
+	 	}
+		return $taxonomy_template;
+
+	}
+
+	/**
+	 * Set the custom taxonomy archive template for the 'Alumni' position.
+	 * 
+	 * (Executed by loader class)
+	 *
+	 * @since    1.0.0
+	 * @param    string     $taxonomy_template    The path to the current taxonomy template that is being used by Wordpress.
+	 * @return   string                           The path to the replacement archive post template to be used instead.
+	 */
+	public function use_alum_taxonomy_template( $taxonomy_template ) {
+
+		if ( is_tax( 'positions', 'alum' ) ) {
+			$taxonomy_template = WMB_PATH . 'public/templates/taxonomy-positions-alum.php';
 	 	}
 		return $taxonomy_template;
 

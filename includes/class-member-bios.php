@@ -79,6 +79,9 @@ class Member_Bios {
 		// 		-> Keys are the in-code reference names
 		// 		-> Values are the option names in the database
 		$this->plugin_options = array(
+			'group_name'          => 'wmb_group_name',
+			'ranking_position'    => 'wmb_ranking_position',
+			'include_alumni'      => 'wmb_include_alumni',
 			'first_subheader'     => 'wmb_first_subheader',
 			'second_subheader'    => 'wmb_second_subheader',
 			'subheader_delimiter' => 'wmb_subheader_delimiter',
@@ -226,9 +229,10 @@ class Member_Bios {
 		$this->loader->add_filter( 'template_include', $plugin_public, 'include_new_member_template' );
 		$this->loader->add_filter( 'template_include', $plugin_public, 'include_submit_confirmation_template' );
 		// Use custom templates for the member pages
-		$this->loader->add_filter( 'single_template', $plugin_public, 'use_custom_post_single_template' );
-		$this->loader->add_filter( 'archive_template', $plugin_public, 'use_custom_post_archive_template' );
-		$this->loader->add_filter( 'taxonomy_template', $plugin_public, 'use_custom_taxonomy_archive_template' );
+		$this->loader->add_filter( 'single_template', $plugin_public, 'use_member_single_template' );
+		$this->loader->add_filter( 'archive_template', $plugin_public, 'use_member_archive_template' );
+		$this->loader->add_filter( 'taxonomy_template', $plugin_public, 'use_member_taxonomy_template' );
+		$this->loader->add_filter( 'taxonomy_template', $plugin_public, 'use_alum_taxonomy_template' );
 		// Format the 'Members' page properly
 		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'show_all_members' );
 		$this->loader->add_action( 'pre_get_posts', $plugin_public, 'alpha_order_members' );
