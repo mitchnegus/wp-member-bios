@@ -42,11 +42,18 @@ h2#member-position {
 ------------------------------*/
 div.mtile-container {
   position: relative;
+	overflow: hidden;
   height: 150pt;
   width: 150pt;
   float: left;
   margin: 0 3px 3px 0;
   background-color: #E2E2E2
+}
+@media screen and (max-width: 767px) {
+	div.mtile-container {
+		height: 100pt;
+		width: 100pt;
+	}
 }
 
 div.mtile-overlay {
@@ -78,15 +85,30 @@ div.mtile-text {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
 }
+@media screen and (max-width: 767px) {
+	div.mtile-text {
+		font-size: 10px;
+	}
+}
 
 div.mtile-text1 {
   font-size: 12px;
   top: 30%;
 }
+@media screen and (max-width: 767px) {
+	div.mtile-text1 {
+		font-size: 10px;
+	}
+}
 
 div.mtile-text2 {
   font-size: 10px;
   top: 70%;
+}
+@media screen and (max-width: 767px) {
+	div.mtile-text2 {
+		font-size: 8px;
+	}
 }
 
 /* alumni button 
@@ -117,8 +139,9 @@ p.alumni-button-text {
 /* contact block
 ------------------------------*/
 div.contact-block {
-	margin-top: 20px;
+	margin: 20px auto;
   padding: 20px 40px;
+	text-align: center;
 }
 
 /* new member page
