@@ -94,9 +94,9 @@ class Member_Bios {
 		);
 		// Create an array of meta keys that are assigned to a custom member posts
 		$this->member_meta = array(
-			'first_subheader',
-			'second_subheader',
-			'tags'
+			array( 'meta_key' => 'first_subheader', 'required' => true ),
+			array( 'meta_key' => 'second_subheader', 'required' => true ),
+			array( 'meta_key' => 'tags', 'required' => false )
 		);
 
 		// Load plugin dependencies and set actions and filters for hooks

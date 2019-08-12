@@ -49,7 +49,7 @@ get_header();
 				}
 	
 				// Display the thumbnail
-				if (has_post_thumbnail()) {
+				if ( has_post_thumbnail() ) {
 					the_post_thumbnail();
 				} else {
 					?>
@@ -71,13 +71,22 @@ get_header();
 				</h3>
 
 				<?php
-				while (have_posts()) :
+				while ( have_posts() ) :
 				 	the_post();
 					the_content();
 				endwhile;
+
+				if ( ! empty( $member_tags ) ) {
+					?>
+
+					<p><b><?php echo esc_html( $tags_title ); ?></b>
+					<?php echo esc_html( $member_tags ); ?>
+					</p>
+		
+					<?php
+				}
 				?>
 
-				<p><b><?php echo esc_html( $tags_title ); ?></b> <?php echo esc_html( $member_tags ); ?></p>
 			</div>
 		</div>
 	

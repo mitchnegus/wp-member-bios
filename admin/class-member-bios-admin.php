@@ -183,8 +183,9 @@ class Member_Bios_Admin {
 			// Only save meta data for members posts
 			if ( get_post_type( $post_id ) == $this->members_custom_post_type ) {
 
-				foreach ( $this->member_meta as $meta_key ) {
+				foreach ( $this->member_meta as $meta ) {
 					// Sanitize user input and update the post metadata
+					$meta_key = $meta['meta_key'];
 					$meta_value = sanitize_text_field($_POST[ $meta_key ]);
 					// Make sure that a "Quick Edit" is not saving empty info
 					if ( ! empty( $meta_value ) ) {
@@ -232,13 +233,13 @@ class Member_Bios_Admin {
 	 */
 	public function set_member_columns() {
 
-		$extra_column1 = 'first_subheader';
-		$extra_column2 = 'second_subheader';
+		$first_subheader = get_option( $this->plugin_options['first_subheader'] );
+		$second_subheader = get_option( $this->plugin_options['second_subheader'] );
 		$columns = array(
-			'cb' 				    => '<input type="checkbox" />',
-			'title' 		    => __( 'Member' ),
-			$extra_column1 	=> __( $this->member_meta[ $extra_column1 ] ),
-			$extra_column2 	=> __( $this->member_meta[ $extra_column2 ] ),
+			'cb' 				       => '<input type="checkbox" />',
+			'title' 		       => __( 'Member' ),
+			'first_subheader'  => __( $first_subheader ),
+			'second_subheader' => __( $second_subheader )
 		);
 		return $columns;
 
@@ -549,12 +550,14 @@ class Member_Bios_Admin {
 	 */
 	public function present_member_metabox_text_inputs( $post ) {
 
-		foreach ( $this->member_meta as $meta_key ) {
+		foreach ( $this->member_meta as $meta ) {
+			$meta_key = $meta['meta_key'];
+			$required = $meta['required'];
 			$custom = get_post_custom( $post->ID );
 			$meta_title = get_option( $this->plugin_options[ $meta_key ] );
 			$meta_value = $custom[ $meta_key ][0];
 			display_label( $meta_key, $meta_title );
-			display_text_input( $meta_key, $meta_value, $required = true );
+			display_text_input( $meta_key, $meta_value, $required );
 		}
 
 	}

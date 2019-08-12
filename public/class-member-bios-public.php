@@ -515,9 +515,11 @@ class Member_Bios_Public {
 				'email' 		=> sanitize_email( $_POST['email'] ),
 				'bio'				=> sanitize_text_field( $_POST['bio'] )
 		);
-		foreach ( $this->member_meta as $meta_key ) {
-			$sanitized_inputs[ $meta_key ] = sanitize_text_field( $_POST[ $meta_key ] );
-		}
+		foreach ( $this->member_meta as $meta ) {
+			$meta_key = $meta['meta_key'];
+			$meta_info = $_POST[ $meta_key ];
+			$sanitized_inputs[ $meta_key ] = sanitize_text_field( $meta_info );
+		};
 		return $sanitized_inputs;
 
 	}
@@ -545,7 +547,8 @@ class Member_Bios_Public {
 
 		// Insert a post for the new member with accompanying metadata
 		$post_id = wp_insert_post( $post_arr );
-		foreach ( $this->member_meta as $meta_key ) {
+		foreach ( $this->member_meta as $meta ) {
+			$meta_key = $meta['meta_key'];
 			update_post_meta( $post_id, $meta_key, $inputs[ $meta_key ] );
 		}
 		return $post_id;
