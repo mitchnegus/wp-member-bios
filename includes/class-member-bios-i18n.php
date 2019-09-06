@@ -12,6 +12,7 @@
  * @package    Member_Bios
  * @subpackage Member_Bios/includes
  */
+namespace Member_Bios;
 
 /**
  * Define the internationalization functionality.

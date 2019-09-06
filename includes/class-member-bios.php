@@ -12,6 +12,7 @@
  * @package    Member-Bios
  * @subpackage Member-Bios/includes
  */
+namespace Member_Bios;
 
 /**
  * The core plugin class.

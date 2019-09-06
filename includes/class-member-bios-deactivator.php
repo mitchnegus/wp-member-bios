@@ -9,6 +9,7 @@
  * @package    Member_Bios
  * @subpackage Member_Bios/includes
  */
+namespace Member_Bios;
 
 /**
  * Fired during plugin deactivation.

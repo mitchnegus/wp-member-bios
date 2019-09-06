@@ -11,6 +11,7 @@
  * @package    Member_Bios
  * @subpackage Member_Bios/public/partials
  */
+namespace Member_Bios;
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->

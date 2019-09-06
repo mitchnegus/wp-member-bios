@@ -12,6 +12,7 @@
  * @package    Member_Bios
  * @subpackage Member_Bios/admin/partials
  */
+namespace Member_Bios;
 
 /**
  * Display settings on the admin menu page.

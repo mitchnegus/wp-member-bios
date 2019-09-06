@@ -9,6 +9,7 @@
  * @package    Member_Bios
  * @subpackage Member_Bios/public
  */
+namespace Member_Bios;
 
 /**
  * The public-facing functionality of the plugin.

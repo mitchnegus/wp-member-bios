@@ -9,6 +9,7 @@
  * @package    Member-Bios
  * @subpackage Member-Bios/includes
  */
+namespace Member_Bios;
 
 /**
  * Register all actions and filters for the plugin.

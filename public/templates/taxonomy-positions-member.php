@@ -4,6 +4,7 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  */
+namespace Member_Bios;
 
 get_header(); 
 $group_name = get_option( 'wmb_group_name' );

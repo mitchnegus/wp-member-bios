@@ -29,6 +29,7 @@
  * Text Domain:       member-bios
  * Domain Path:       /languages
  */
+namespace Member_Bios;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {

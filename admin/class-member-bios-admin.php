@@ -9,6 +9,7 @@
  * @package    Member_Bios
  * @subpackage Member_Bios/admin
  */
+namespace Member_Bios;
 
 /**
  * The admin-specific functionality of the plugin.
