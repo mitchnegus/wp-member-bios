@@ -208,7 +208,7 @@ class Member_Bios_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function fill_member_columns() {
+	public function fill_member_columns( $column ) {
 
 		$column1 = 'first_subheader';
 		$column2 = 'second_subheader';
