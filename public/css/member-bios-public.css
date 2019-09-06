@@ -17,10 +17,20 @@ div#profile-block {
 	display: flex;
 	align-items: center;
 }
+@media screen and (max-width: 767px) {
+	div#profile-block {
+		flex-direction: column;
+	}
+}
 
 div#member-image {
 	flex: 0 0 200px;
   margin-right: 30px;
+}
+@media screen and (max-width: 767px) {
+	div#member-image {
+		margin-right: 0;
+	}
 }
 
 div#member-info {
@@ -32,10 +42,30 @@ div#member-header {
 	align-items: center;
 	justify-content: space-between;
 }
+@media screen and (max-width: 767px) {
+	div#member-header {
+		flex-direction: column;
+	}
+}
 
+h1#member-name {
+	font-weight: normal;
+}
+@media screen and (max-width: 767px) {
+	h1#member-name {
+		margin-bottom: 5px;
+	}
+}
 h2#member-position {
 	margin-right: 15%;
 	color: #888888;
+}
+@media screen and (max-width: 767px) {
+	h2#member-position {
+		margin-right: 0;
+		margin-bottom: 30px;
+		font-size: 16pt;
+	}
 }
 
 /* member tiles
