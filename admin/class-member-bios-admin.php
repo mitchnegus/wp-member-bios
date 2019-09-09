@@ -77,12 +77,12 @@ class Member_Bios_Admin {
 	 */
 	public function enqueue_styles() {
 
-		$stylesheet = plugin_dir_url( __FILE__ ) . 'css/member-bios-admin.css';
 		wp_enqueue_style( 
 			$this->member_bios, 
-			$stylesheet,
+			plugin_dir_url( __FILE__ ) . 'css/member-bios-admin.css',
 			array(),
-			$this->version, 'all'
+			$this->version,
+		 	'all'
 	 	);
 
 	}

@@ -95,7 +95,7 @@ class Member_Bios_Public {
 		wp_enqueue_script(
 			$this->member_bios,
 			plugin_dir_url( __FILE__ ) . 'js/member-bios-public.js',
-			array( 'jquery' ),
+			array('jquery'),
 			$this->version,
 			false
 		);

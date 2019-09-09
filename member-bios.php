@@ -3,7 +3,7 @@
 /**
  * Member Bios
  *
- * The plugin bootstrap file
+ * The plugin bootstrap file.
  *
  * This file is read by WordPress to generate the plugin information in the plugin
  * admin area. This file also includes all of the dependencies used by the plugin,
@@ -83,8 +83,8 @@ function deactivate_member_bios() {
 	Member_Bios_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_member_bios' );
-register_deactivation_hook( __FILE__, 'deactivate_member_bios' );
+\register_activation_hook( __FILE__, '\Member_Bios\activate_member_bios' );
+\register_deactivation_hook( __FILE__, '\Member_Bios\deactivate_member_bios' );
 
 /**
  * The core plugin class that is used to define internationalization,
