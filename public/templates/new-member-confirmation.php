@@ -17,8 +17,10 @@ get_header();
 <div id="primary" class="content-area">
 	<main id="main" class="site-main">
 
-		<h1>Thank you!</h1>
-		<p>Look for your profile to appear on the site soon.</p>
+		<div class="wp-member-bios">
+			<h1>Thank you!</h1>
+			<p>Look for your profile to appear on the site soon.</p>
+		</div><!-- .wp-member-bios -->
 		
 	</main><!-- #main -->
 </div><!-- #primary -->

@@ -70,39 +70,41 @@ function display_member_tile( $name, $position='' ) {
 <div id="primary" class="content-area">
 	<main id="main" class="site-main">
 
-		<div class="clearfix">
-
-			<?php
-			if ( have_posts() ) :
-				global $post;
-				?>
-
-				<header class="entry-header">
-					<h1 class="entry-title">Alumni</h1>
-				</header><!-- .page-header -->
+		<div class="wp-member-bios">
+			<div class="clearfix">
 	
 				<?php
-				// Start the Loop
-				while ( have_posts() ) :
-					the_post();
-					$post_id = $post->ID;
-					$name = get_the_title();
-					$args = array( 'fields' => 'names' );
-					$positions = wp_get_post_terms( $post_id, $taxonomy, $args );
-					$alum_key = array_search( 'Alum', $positions );
-					// Display the name, unless the alum has another role
-					if ( count( $positions ) <= 1 && $alum_key == 0 ) {
-						display_member_tile( $name );
-					} else {
-						unset( $positions[$alum_key] );
-						display_member_tile( $name, array_values( $positions )[0] );
-					}
-				endwhile;
-
-			endif;
-			?>
-
-		</div>
+				if ( have_posts() ) :
+					global $post;
+					?>
+	
+					<header class="entry-header">
+						<h1 class="entry-title">Alumni</h1>
+					</header><!-- .page-header -->
+		
+					<?php
+					// Start the Loop
+					while ( have_posts() ) :
+						the_post();
+						$post_id = $post->ID;
+						$name = get_the_title();
+						$args = array( 'fields' => 'names' );
+						$positions = wp_get_post_terms( $post_id, $taxonomy, $args );
+						$alum_key = array_search( 'Alum', $positions );
+						// Display the name, unless the alum has another role
+						if ( count( $positions ) <= 1 && $alum_key == 0 ) {
+							display_member_tile( $name );
+						} else {
+							unset( $positions[$alum_key] );
+							display_member_tile( $name, array_values( $positions )[0] );
+						}
+					endwhile;
+	
+				endif;
+				?>
+	
+			</div>
+		</div><!-- .wp-member-bios -->
 
 	</main><!-- #main -->
 </div><!-- #primary -->

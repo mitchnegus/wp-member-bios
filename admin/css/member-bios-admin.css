@@ -13,12 +13,12 @@
 
 /* admin member edit pages 
 ------------------------------*/
-input#first_subheader, input#second_subheader {
+.wp-member-bios input#first_subheader, input#second_subheader {
 	width: 30%;
 	min-width: 250px;
 	margin-bottom: 10px;
 }
 
-input#tags {
+.wp-member-bios input#tags {
 	width: 100%;
 }
