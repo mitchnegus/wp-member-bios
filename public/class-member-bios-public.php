@@ -121,6 +121,7 @@ class Member_Bios_Public {
 			'add_new_item' 	=> __( 'Add New Member' ),
 			'edit_item' 		=> __( 'Edit Member' ),
 			'view_item'     => __( 'View Member' ),
+			'view_items'    => __( 'View Members' ),
 			'search_items'  => __( 'Search Members' )
 		);
 
