@@ -184,14 +184,15 @@ class Member_Bios_Admin {
 			// Only save meta data for members posts
 			if ( get_post_type( $post_id ) == $this->members_custom_post_type ) {
 
+				// Do not save (empty) meta data if save comes from "Quick Edit"
+				if (wp_verify_nonce($_POST['_inline_edit'], 'inlineeditnonce'))
+				  return;
+
 				foreach ( $this->member_meta as $meta ) {
 					// Sanitize user input and update the post metadata
 					$meta_key = $meta['meta_key'];
 					$meta_value = sanitize_text_field($_POST[ $meta_key ]);
-					// Make sure that a "Quick Edit" is not saving empty info
-					if ( ! empty( $meta_value ) ) {
-						update_post_meta( $post_id, $meta_key, $meta_value );
-					}
+					update_post_meta( $post_id, $meta_key, $meta_value );
 				}
 
 			}
