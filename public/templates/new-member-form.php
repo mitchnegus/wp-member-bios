@@ -128,6 +128,8 @@ get_header();
 					<input type="submit" value="Submit" />
 				</div>
 			</form>
+			<br>
+			<p class="subtle">You should be redirected to a confirmation page upon successful submission. If not, please contact us.</p>
 		</div><!-- .wp-member-bios -->
 		
 	</main><!-- #main -->

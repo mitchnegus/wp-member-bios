@@ -192,7 +192,12 @@
 
 .wp-member-bios span.new-member-form-label-required {
 	font-weight: normal;
-	color: #A9A9A9;
+	color: #a9a9a9;
+}
+
+.wp-member-bios p.subtle {
+	font-size: 10pt;
+	color: #393939;
 }
 
 /* General classes
