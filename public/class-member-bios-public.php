@@ -358,9 +358,9 @@ class Member_Bios_Public {
 	public function show_all_members( $query ) {
 
 	  if ( ! is_admin() && $query->is_main_query() ) {
-				if ( is_post_type_archive( 'members' ) || is_tax( 'positions' ) ) {
-						$query->set( 'posts_per_page', -1 );
-				}
+			if ( is_post_type_archive( 'members' ) || is_tax( 'positions' ) ) {
+				$query->set( 'posts_per_page', -1 );
+			}
 		}
 
 	}
