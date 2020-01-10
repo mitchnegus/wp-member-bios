@@ -168,7 +168,6 @@ class Member_Bios_Admin {
 			'low'
 		);
 		
-
 	}
 
 	/**
@@ -196,6 +195,7 @@ class Member_Bios_Admin {
 				}
 
 			}
+
 	}
 
 	/**
