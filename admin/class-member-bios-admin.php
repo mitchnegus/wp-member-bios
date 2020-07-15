@@ -33,9 +33,9 @@ class Member_Bios_Admin {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $member_bios    The ID of this plugin.
+	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
-	private $member_bios;
+	private $plugin_name;
 
 	/**
 	 * The version of this plugin.
@@ -50,19 +50,19 @@ class Member_Bios_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $member_bios       The name of the plugin.
+	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version           The version of this plugin.
 	 * @param      array     $options           An array of the options set and added to the database by the plugin.
 	 * @param      array     $member_meta       An array of the meta fields (and corresponding titles) for the custom member post type.
 	 */
-	public function __construct( $member_bios, $version, $options, $member_meta ) {
+	public function __construct( $plugin_name, $version, $options, $member_meta ) {
 
-		$this->member_bios = $member_bios;
+		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		$this->members_custom_post_type = 'members';
 		$this->settings_page_slug = 'member-bios-settings';
 		$this->option_group = 'member-bios-option-group';
 		$this->plugin_options = $options;
+		$this->members_custom_post_type = 'members';
 		$this->member_meta = $member_meta;
 		// All functions prefixed with 'display_' come from `partials`
 		require_once plugin_dir_path( __FILE__ ) . 'partials/member-bios-admin-display.php';
@@ -78,7 +78,7 @@ class Member_Bios_Admin {
 	public function enqueue_styles() {
 
 		wp_enqueue_style( 
-			$this->member_bios, 
+			$this->plugin_name, 
 			plugin_dir_url( __FILE__ ) . 'css/member-bios-admin.css',
 			array(),
 			$this->version,
@@ -98,7 +98,7 @@ class Member_Bios_Admin {
 
 		$script = plugin_dir_url( __FILE__ ) . 'js/member-bios-admin.js';
 		wp_enqueue_script(
-		 	$this->member_bios,
+		 	$this->plugin_name,
 			$script,
 			array( 'jquery' ),
 			$this->version,
@@ -263,7 +263,7 @@ class Member_Bios_Admin {
 	}
 
 	/**
-	 * Regsister new settings for the plugin's settings page
+	 * Register new settings for the plugin's settings page
 	 *
 	 * @since    1.0.0
 	 * @access   private
@@ -276,7 +276,7 @@ class Member_Bios_Admin {
 	}
 
 	/**
-	 * Add a section with fields for managing the maximum headshot size.
+	 * Add a section with fields for managing the group name.
 	 *
 	 * @since    1.0.0
 	 * @access   private
@@ -307,7 +307,7 @@ class Member_Bios_Admin {
 	}
 	
 	/**
-	 * Add a section with fields for managing the maximum headshot size.
+	 * Add a section with fields for managing the archive structure.
 	 *
 	 * @since    1.0.0
 	 * @access   private

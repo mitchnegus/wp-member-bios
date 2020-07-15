@@ -45,9 +45,9 @@ class Member_Bios {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $member_bios    The string used to uniquely identify this plugin.
+	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
-	protected $member_bios;
+	protected $plugin_name;
 
 	/**
 	 * The current version of the plugin.
@@ -75,7 +75,7 @@ class Member_Bios {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->member_bios = 'member-bios';
+		$this->plugin_name = 'member-bios';
 		// Create an array of options that are added to the database by the plugin
 		// 		-> Keys are the in-code reference names
 		// 		-> Values are the option names in the database
@@ -180,7 +180,7 @@ class Member_Bios {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Member_Bios_Admin( 
-			$this->get_member_bios(),
+			$this->get_plugin_name(),
 			$this->get_version(),
 			$this->get_plugin_options(),
 			$this->get_member_meta()
@@ -211,7 +211,7 @@ class Member_Bios {
 	private function define_public_hooks() {
 
 		$plugin_public = new Member_Bios_Public( 
-			$this->get_member_bios(),
+			$this->get_plugin_name(),
 			$this->get_version(),
 			$this->get_plugin_options(),
 			$this->get_member_meta()
@@ -301,8 +301,8 @@ class Member_Bios {
 	 * @since     1.0.0
 	 * @return    string    The name of the plugin.
 	 */
-	public function get_member_bios() {
-		return $this->member_bios;
+	public function get_plugin_name() {
+		return $this->plugin_name;
 	}
 
 	/**

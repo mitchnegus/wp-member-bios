@@ -33,9 +33,9 @@ class Member_Bios_Public {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $member_bios    The ID of this plugin.
+	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
-	private $member_bios;
+	private $plugin_name;
 
 	/**
 	 * The version of this plugin.
@@ -50,14 +50,14 @@ class Member_Bios_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param    string    $member_bios       The name of the plugin.
+	 * @param    string    $plugin_name       The name of the plugin.
 	 * @param    string    $version           The version of this plugin.
 	 * @param    array     $options           An array of the options set and added to the database by the plugin.
 	 * @param    array     $member_meta       An array of the meta fields for the custom member post type.
 	 */
-	public function __construct( $member_bios, $version, $options, $member_meta ) {
+	public function __construct( $plugin_name, $version, $options, $member_meta ) {
 
-		$this->member_bios = $member_bios;
+		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		$this->plugin_options = $options;
 		$this->member_meta = $member_meta;
@@ -74,7 +74,7 @@ class Member_Bios_Public {
 	public function enqueue_styles() {
 
 		wp_enqueue_style(
-			$this->member_bios,
+			$this->plugin_name,
 			plugin_dir_url( __FILE__ ) . 'css/member-bios-public.css',
 			array(),
 			$this->version,
@@ -93,7 +93,7 @@ class Member_Bios_Public {
 	public function enqueue_scripts() {
 
 		wp_enqueue_script(
-			$this->member_bios,
+			$this->plugin_name,
 			plugin_dir_url( __FILE__ ) . 'js/member-bios-public.js',
 			array('jquery'),
 			$this->version,
