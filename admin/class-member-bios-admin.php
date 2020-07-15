@@ -288,9 +288,10 @@ class Member_Bios_Admin {
 		add_settings_section(
 			$section_id,
 			$section_label,
-			'display_group_info_section',
+			'Member_Bios\display_group_info_section',
 			$this->settings_page_slug
 		);
+                                           
 
 		$group_name_id = $this->plugin_options['group_name'];
 		$group_name_label = 'Group Name';
@@ -318,7 +319,7 @@ class Member_Bios_Admin {
 		add_settings_section(
 			$section_id,
 			$section_label,
-			'display_member_archives_section',
+			'Member_Bios\display_member_archives_section',
 			$this->settings_page_slug
 		);
 
@@ -359,7 +360,7 @@ class Member_Bios_Admin {
 		add_settings_section(
 			$section_id,
 			$section_label,
-			'display_member_profile_section',
+			'Member_Bios\display_member_profile_section',
 			$this->settings_page_slug
 		);
 
@@ -419,7 +420,7 @@ class Member_Bios_Admin {
 		add_settings_section(
 			$section_id,
 			$section_label,
-			'display_headshot_section',
+			'Member_Bios\display_headshot_section',
 			$this->settings_page_slug
 		);
 
@@ -449,7 +450,7 @@ class Member_Bios_Admin {
 		add_settings_section(
 			$section_id,
 			$section_label,
-			'display_email_notification_section',
+			'Member_Bios\display_email_notification_section',
 			$this->settings_page_slug
 		);
 
@@ -479,7 +480,7 @@ class Member_Bios_Admin {
 		add_settings_section(
 			$section_id,
 			$section_label,
-			'display_spam_filter_section',
+			'Member_Bios\display_spam_filter_section',
 			$this->settings_page_slug
 		);
 
