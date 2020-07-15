@@ -23,7 +23,7 @@ function display_settings( $option_group, $page_slug ) {
 	?>
 
 	<div class="wrap">
-		<h1><?php esc_html( get_admin_page_title() ); ?></h1>
+		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 		<form action="options.php" method="post">
 
 			<?php 
